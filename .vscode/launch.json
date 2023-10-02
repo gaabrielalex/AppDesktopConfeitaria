@@ -8,7 +8,7 @@
             "type": "java",
             "name": "Current File",
             "request": "launch",
-            "mainClass": "edu.ifmt.confeitaria.main",
+            "mainClass": "edu.ifmt.confeitaria.Main",
             "projectName": "AppDesktopConfeitaria"
         },
         {

@@ -11,7 +11,7 @@ import edu.ifmt.confeitaria.util.themes.NimbusTheme;
  *
  * @author Gabriel
  */
-public class main {
+public class Main {
 
     /**
      * @param args the command line arguments

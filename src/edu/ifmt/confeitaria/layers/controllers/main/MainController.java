@@ -22,7 +22,7 @@ public class MainController {
         this.mainView.setVisible(true);
     }
     
-    public void requestDisplayMenuItemView(SuperController viewController) {  
+    public void requestDisplayMenuItemView(SuperController<?> viewController) {  
         /*Solicita ao controller para que ele exiba a sua view */
         viewController.displayView();
     }

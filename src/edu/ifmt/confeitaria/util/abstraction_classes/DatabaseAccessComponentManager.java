@@ -23,20 +23,16 @@ public class DatabaseAccessComponentManager<T> {
     private JButton btnCancel;
     private JButton btnRefresh;
     private JTable table;
+    private DefaultTableModel tableModel;
 
     //Atributos funcionais
     private Consumer<Object[]> displayDataInFields;
-    private Consumer<List<T>> displayDataInTable;
 
     //Constructors
 
     //Getters e Setters
     public void setDisplayDataInFields(Consumer<Object[]> displayDataInFields) {
         this.displayDataInFields = displayDataInFields;
-    }
-
-    public void setDisplayDataInTable(Consumer<List<T>> displayDataInTable) {
-        this.displayDataInTable = displayDataInTable;
     }
 
     //MÉTODOS
@@ -52,11 +48,11 @@ public class DatabaseAccessComponentManager<T> {
         this.btnCancel = btnCancel;
         this.btnRefresh = btnRefresh;
         this.table = table;
+        this.tableModel = (DefaultTableModel) table.getModel();
 
         /*Setando os atributos funcionais com funções 'vazias'
         para evitar NullPointerException caso não sejam setados*/
         if(this.displayDataInFields == null) this.displayDataInFields = x -> {};
-        if(this.displayDataInTable == null) this.displayDataInTable = x -> {};
 
         //Adicionando os eventos aos componentes
         this.btnInsert.addActionListener((ActionEvent e) -> {
@@ -91,7 +87,7 @@ public class DatabaseAccessComponentManager<T> {
 
         /*Preenchendo a tabela com os dados do banco. Por padrão, ao exibir a interface, a tabela
         é preenchida com todos os dados da sua respectiva tabela no banco de dados, sem filtros*/
-        this.displayDataInTable.accept(this.controller.select());
+        this.displayDataInTable(this.controller.select());
   
         this.setDefaultTableSettings();
     }
@@ -110,14 +106,12 @@ public class DatabaseAccessComponentManager<T> {
     }
 
     public void delete() {
-        /*Exibe o dialog de confirmação de exclusão de registro por meio do método 
-        estático showOptionDialog da classe ConfirmationDeleteRecordDialog. O método
-        retorna um boolean que indica se o usuário clicou no botão OK ou CANCELAR, 
-        caso tenha clicado em OK, o valor retornado é true, caso contrário, é false*/               
+        /*Exibe o dialog de confirmação de exclusão de registro por meio do método estático showOptionDialog
+        da classe ConfirmationDeleteRecordDialog. O método retorna um boolean que indica se o usuário clicou
+        no botão OK ou CANCELAR, caso tenha clicado em OK, o valor retornado é true, caso contrário, é false*/               
         boolean response = ConfirmationDeleteRecordDialog.showDialog();
 
-        /*Estrutura condicional para determinar a ação a
-        ser tomada de acordo com a resposta do usuário*/
+        /*Estrutura condicional para determinar a ação a ser tomada de acordo com a resposta do usuário*/
         if(response){
             System.out.println("OK"); //Mensagem momentânea de teste
         } else {
@@ -136,25 +130,22 @@ public class DatabaseAccessComponentManager<T> {
     }
 
     public void refresh() {
-        this.displayDataInTable.accept(this.controller.remakeLastSelect());
+        this.displayDataInTable(this.controller.remakeLastSelect());
     }
 
     public void captureDataFromSelectedTableRow(ListSelectionEvent e) {
         // Verifica se uma válida foi selecionada
         if ((!e.getValueIsAdjusting() && e.getFirstIndex() >= 0) && this.table.getSelectedRow() >= 0) {
-            /*Captura a linha selecionada e o model da tabela
-            (que é necessário para manipular os dados da tabela)*/
+            /*Captura a linha selecionada e o model da tabela (que é necessário para manipular os dados da tabela)*/
             int selectedRow = this.table.getSelectedRow();
-            DefaultTableModel tableModel = (DefaultTableModel) this.table.getModel();
 
-            /*Cria um vetor de objetos para armazenar os dados da linha selecionada
-            da tabela, em seguida, itera sobre as colunas da tabela para que ocorra
-            a inserção dos dados da linha selecionada no vetor de objetos citado*/ 
-            Object[] dados = new Object[tableModel.getColumnCount()];
-            for (int i = 0; i < tableModel.getColumnCount(); i++) {
+            /*Cria um vetor de objetos para armazenar os dados da linha selecionadada tabela, em seguida, itera sobre
+            as colunas da tabela para que ocorra a inserção dos dados da linha selecionada no vetor de objetos citado*/ 
+            Object[] dados = new Object[this.tableModel.getColumnCount()];
+            for (int i = 0; i < this.tableModel.getColumnCount(); i++) {
                 /* Verifica se o valor da célula é nulo, caso seja, o valor atribuído aos dados será uma string
                 vazia, caso contrário, o valor atribuído aos dados será o próprio valor da célula da tabela*/
-                dados[i] = tableModel.getValueAt(selectedRow, i) == null ? "" : tableModel.getValueAt(selectedRow, i);
+                dados[i] = this.tableModel.getValueAt(selectedRow, i) == null ? "" : this.tableModel.getValueAt(selectedRow, i);
             }
 
             /*Aciona o método que exibe os dados nos campos de inserção/editação de
@@ -176,26 +167,42 @@ public class DatabaseAccessComponentManager<T> {
     }
 
     public void operationTableOnInsert() {
-        /* Quando o insert é acionado, uma linha(a cima da linha que está selecionada)
-        deve ser adicionada na tabela e a mesma(nova linha) deve ser agora a linha
-        selecionada. Isso deve ser feito para mostrar ao usuário que está sendo inserido
-        um novo registro na tabela(que representa os registros do banco de dados). */
+        /*Quando o insert é acionado, uma linha(a cima da linha que está selecionada) deve ser adicionada na
+        tabela e a mesma(nova linha) deve ser agora a linha selecionada. Isso deve ser feito para mostrar ao
+        usuário que está sendo inserido um novo registro na tabela(que representa os registros do banco de dados)*/
 
         // Obtém a linha selecionada
         int selectedRow = this.table.getSelectedRow();
 
         // Insere uma nova linha acima da linha selecionada por meio do model da tabela
-        DefaultTableModel tableModel = (DefaultTableModel) this.table.getModel();
-        tableModel.insertRow(selectedRow, new Object[tableModel.getColumnCount()]);
+        this.tableModel.insertRow(selectedRow, new Object[this.tableModel.getColumnCount()]);
 
         // Seleciona a nova linha
         this.table.setRowSelectionInterval(selectedRow, selectedRow);
     }
 
+    /*Método para preencher a tabela com os dados do banco(Separado do evento de clique do botão
+    para que possa ser chamado em outras partes do código sem a necessidade de repetir o código)*/
+    public void displayDataInTable(List<T> tList) {
+        //Limpando a tabela
+        this.tableModel.setNumRows(0);
+
+        if(tList != null) {
+            //Adicionando os dados na tabela
+            for(T tObject : tList) {
+                this.tableModel.addRow(this.controller.modelToTableRow(tObject));
+            }
+        }
+
+        /*É recomendado que as configurações padrões da tabela sejam atualizadas após a inserção  
+        de dados, pois as mesmas podem ser perdidas ao atualizar todos os dados da tabela)*/
+        this.setDefaultTableSettings();
+    }
+
     /*Método que atualiza a tabela com as configurações padrões*/
     public void setDefaultTableSettings() {
         /*Verifica se a tabela possui linhas antes de 
-        configurar a sua primeira linha como selecionada*/
+        ]configurar a sua primeira linha como selecionada*/
         if(this.table.getRowCount() > 0) {
             this.table.setRowSelectionInterval(0, 0);
         }

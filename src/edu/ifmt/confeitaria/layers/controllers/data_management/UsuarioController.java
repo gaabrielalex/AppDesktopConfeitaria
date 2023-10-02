@@ -47,4 +47,16 @@ public class UsuarioController extends SuperController<Usuario> {
     public List<Usuario> remakeLastSelect(){
         return this.usuarioService.remakeLastSelect();
     }
+
+    @Override
+    /*Método para realizar mapeamento do model(Objeto Usuario) 
+    para um objeto que possa ser inserido na tabela*/
+    public Object[] modelToTableRow(Usuario usuario){
+        return new Object[]{
+            usuario.getIdUsuario(),
+            usuario.getNome(),
+            usuario.getLogin(),
+            usuario.getSenha()
+        };
+    }
 }
