@@ -1,8 +1,5 @@
 package edu.ifmt.confeitaria.layers.models.usuario;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 public class Usuario {
     private int idUsuario;
     private String nome;
@@ -14,13 +11,6 @@ public class Usuario {
         this.nome = nome;
         this.login = login;
         this.senha = senha;
-    }
-
-    public static Usuario fromResultSet(ResultSet resultSet) throws SQLException {
-        return new Usuario(resultSet.getInt("id_usuario"),
-                            resultSet.getString("nome"),
-                            resultSet.getString("login"),
-                            resultSet.getString("senha"));
     }
 
     public int getIdUsuario() {
@@ -76,4 +66,11 @@ public class Usuario {
             return false;
         return true;
     }
+
+    // public static Usuario fromResultSet(ResultSet resultSet) throws SQLException {
+    //     return new Usuario(resultSet.getInt("id_usuario"),
+    //                         resultSet.getString("nome"),
+    //                         resultSet.getString("login"),
+    //                         resultSet.getString("senha"));
+    // }
 }

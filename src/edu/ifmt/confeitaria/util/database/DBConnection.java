@@ -6,7 +6,9 @@ package edu.ifmt.confeitaria.util.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -51,4 +53,19 @@ public class DBConnection {
             DBConnection.connection = null;
         }
     }
+
+    /*Método para fechar a conexão com o banco de dados por meio da 
+    instância única e também os recursos criadoss a partir dela*/
+    public static void closeConnection(Statement statement, ResultSet resultSet) {
+        if (DBConnection.connection != null) {
+            try {
+                DBConnection.connection.close();
+                statement.close();
+                resultSet.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
 }
