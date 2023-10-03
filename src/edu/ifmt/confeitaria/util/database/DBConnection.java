@@ -65,9 +65,9 @@ public class DBConnection {
             try {
                 DBConnection.connection.close();
                 statement.close();
-                // if(resultSet != null) { TODO: Verificar se é necessário fechar o ResultSet
+                if(resultSet != null) {
                     resultSet.close();
-                // }
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }

@@ -337,9 +337,8 @@ public class UsuarioView extends SuperView {
     }//GEN-LAST:event_btnEnabledSenhaActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-        /*Preenchendo a tabela com os dados do banco, passando os valores dos campos de filtro como parâmetro 
-        para o método select da classe UsuarioController que retorna uma lista de usuários para a fillTable*/ 
-        this.usuarioDBCManager.displayDataInTable(this.usuarioController.select(this.edtNomeFiltro.getText(), this.edtLoginFiltro.getText()));
+        //Atulizando a lista de dados. O manager irá atualizar os componentes necessários 
+        this.usuarioDBCManager.updateDataList(this.usuarioController.select(this.edtNomeFiltro.getText(), this.edtLoginFiltro.getText()));
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     /**
@@ -430,7 +429,9 @@ public class UsuarioView extends SuperView {
             
             //Triggering methods
                 //Configurando os componentes de acesso ao banco de dados
-                this.usuarioDBCManager.setDisplayDataInFields(this::displayDataInFields);
+                this.usuarioDBCManager.setModelToTableRow(this::modelToTableRow);
+                this.usuarioDBCManager.setModelToFields(this::modelToFields);
+                this.usuarioDBCManager.setClearFields(this::clearFields);
                 this.usuarioDBCManager.configureComponents(this.usuarioController, this.btnInsert, this.btnUpdate,
                      this.btnDelete, this.btnPost, this.btnCancel, this.btnRefresh, this.tblUsuario); 
 
@@ -482,11 +483,30 @@ public class UsuarioView extends SuperView {
         }
     }
 
-    /*Método para exibir os dados do registro selecionado(na tabela) nos campos de inserção/edição*/
-    public void displayDataInFields(Object[] dados) {
-        edtCodCliente.setText(dados[0].toString());
-        edtNome.setText(dados[1].toString());
-        edtLogin.setText(dados[2].toString());
-        pswdSenha.setText(dados[3].toString());
+    /*Método para realizar mapeamento do model(Objeto Usuario)
+    para um objeto que possa ser inserido na tabela*/
+    public Object[] modelToTableRow(Usuario usuario){
+        return new Object[]{
+            usuario.getIdUsuario(), 
+            usuario.getNome(),
+            usuario.getLogin(),
+            usuario.getSenha()
+        };
+    }
+
+    /*Método para realizar mapeamento do model(Objeto Usuario) para os campos da interface*/
+    public void modelToFields(Usuario usuario) {
+        edtCodCliente.setText(usuario.getIdUsuario().toString());
+        edtNome.setText(usuario.getNome());
+        edtLogin.setText(usuario.getLogin());
+        pswdSenha.setText(usuario.getSenha());
+    }
+
+    //Método para limpar os campos da interface
+    public void clearFields() {
+        edtCodCliente.setText("");
+        edtNome.setText("");
+        edtLogin.setText("");
+        pswdSenha.setText("");
     }
 }

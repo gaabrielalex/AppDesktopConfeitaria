@@ -50,10 +50,4 @@ public class ProdutoController extends SuperController {
         return null;
     }
 
-    @Override
-    public Object[] modelToTableRow(Object model) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-    
 }

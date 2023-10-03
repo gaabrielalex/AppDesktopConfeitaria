@@ -3,6 +3,7 @@ package edu.ifmt.confeitaria.util.abstraction_classes;
 import java.awt.event.ActionEvent;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import javax.swing.JButton;
 import javax.swing.JTable;
@@ -10,16 +11,19 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 
 import edu.ifmt.confeitaria.util.custom_components.ConfirmationDeleteRecordDialog;
+import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
 public class DatabaseAccessComponentManager<T> {
 
     enum Operation {
         INSERT,
-        UPDATE;
+        UPDATE,
+        NONE;
     }
 
     //ATRIBUTOS
     private SuperController<T> controller;
+    private BehaviorSubject<List<T>> tDataList;
     private Operation currentOperation;
 
     //Componentes
@@ -33,19 +37,38 @@ public class DatabaseAccessComponentManager<T> {
     private DefaultTableModel tableModel;
 
     //Atributos funcionais
-    private Consumer<Object[]> displayDataInFields;
+    private Function<T, Object[]> modelToTableRow;
+    private Consumer<T> modelToFields;
+    private Runnable clearFields;
 
     //CONSTRUCTORS
 
-    //GETTERS E SETTERS
-    public void setDisplayDataInFields(Consumer<Object[]> displayDataInFields) {
-        this.displayDataInFields = displayDataInFields;
+    //GETTERS, SETTERS E OBSERVABLES
+    public void updateDataList(List<T> tDataList) {
+        if(tDataList != null){
+            this.tDataList.onNext(tDataList);
+        }
+    }
+
+    public void setModelToTableRow(Function<T, Object[]> modelToTableRow) {
+        this.modelToTableRow = modelToTableRow;
+    }
+
+    public void setModelToFields(Consumer<T> modelToFields) {
+        this.modelToFields = modelToFields;
+    }
+
+    public void setClearFields(Runnable clearFields) {
+        this.clearFields = clearFields;
     }
 
     //MÉTODOS
     public void configureComponents(SuperController<T> controller ,JButton btnInsert, JButton btnUpdate, JButton btnDelete, JButton btnPost, JButton btnCancel, JButton btnRefresh, JTable table) {
-        //Setando o controller
+        //SETANDO ATRIBUTOS
         this.controller = controller;
+        //Criando o observable
+        this.tDataList = BehaviorSubject.create();
+        this.currentOperation = Operation.NONE;
         
         //Setando os componentes
         this.btnInsert = btnInsert;
@@ -59,7 +82,9 @@ public class DatabaseAccessComponentManager<T> {
 
         /*Setando os atributos funcionais com funções 'vazias'
         para evitar NullPointerException caso não sejam setados*/
-        if(this.displayDataInFields == null) this.displayDataInFields = x -> {};
+        if(this.modelToTableRow == null) this.modelToTableRow = x -> null;
+        if(this.modelToFields == null) this.modelToFields = x -> {};
+        if(this.clearFields == null) this.clearFields = () -> {};
 
         //Adicionando os eventos aos componentes
         this.btnInsert.addActionListener((ActionEvent e) -> {
@@ -81,7 +106,7 @@ public class DatabaseAccessComponentManager<T> {
             this.refresh();
         });
         this.table.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
-            this.captureDataFromSelectedTableRow(e);
+            this.informRecordIndexFromSelectedTableRow(e);
         });
 
         /* ---- Setando configurações padrões para os componentes antes de exibir a tela ---- */
@@ -92,24 +117,30 @@ public class DatabaseAccessComponentManager<T> {
         //Desabilitando os botões de confirmação de edição de registro
         this.enableEditConfirmationButtons(false);
 
-        /*Preenchendo a tabela com os dados do banco. Por padrão, ao exibir a interface, a tabela
-        é preenchida com todos os dados da sua respectiva tabela no banco de dados, sem filtros*/
-        this.displayDataInTable(this.controller.select());
+        /*Conecta o observable à lista de usuários. Toda vez
+        que a lista for atualizada, a tabela será atualizada*/
+        this.tDataList.subscribe(this::displayDataInTable);
+
+        /*Atualiza a lista de dados por meio do método select 
+        do controller, realizando uma consulta sem filtros.*/
+        this.updateDataList(this.controller.select());
   
         this.setDefaultTableSettings();
     }
 
     /*  ---- Métodos que serão acionados pelos eventos dos componentes ---- */
     public void insert() {
-        /*Setando a operação atual para no momento da confirmação
-        da edição, saber qual operação foi realizada pelo usuário*/
-        this.currentOperation = Operation.INSERT;
-
-        //Operações visuais
-        this.btnUpdate.setEnabled(false);
-        this.btnDelete.setEnabled(false);
-        this.enableEditConfirmationButtons(true);
-        this.operationTableOnInsert();
+        
+        //As ações são realizadas apenas se não houver nenhuma outra operação em andamento
+        if(this.currentOperation == Operation.NONE) {
+            this.currentOperation = Operation.INSERT;
+    
+            //Operações visuais
+            this.btnUpdate.setEnabled(false);
+            this.btnDelete.setEnabled(false);
+            this.enableEditConfirmationButtons(true);
+            this.operationDataDisplayComponentsOnInsert();
+        }   
     }
 
     public void update() {
@@ -147,27 +178,17 @@ public class DatabaseAccessComponentManager<T> {
     }
 
     public void refresh() {
-        this.displayDataInTable(this.controller.remakeLastSelect());
+        this.updateDataList(this.controller.remakeLastSelect());
     } 
 
-    public void captureDataFromSelectedTableRow(ListSelectionEvent e) {
+    public void informRecordIndexFromSelectedTableRow(ListSelectionEvent e) {
         // Verifica se uma válida foi selecionada
         if ((!e.getValueIsAdjusting() && e.getFirstIndex() >= 0) && this.table.getSelectedRow() >= 0) {
-            /*Captura a linha selecionada e o model da tabela (que é necessário para manipular os dados da tabela)*/
+            //Captura a linha selecionada
             int selectedRow = this.table.getSelectedRow();
 
-            /*Cria um vetor de objetos para armazenar os dados da linha selecionadada tabela, em seguida, itera sobre
-            as colunas da tabela para que ocorra a inserção dos dados da linha selecionada no vetor de objetos citado*/ 
-            Object[] dados = new Object[this.tableModel.getColumnCount()];
-            for (int i = 0; i < this.tableModel.getColumnCount(); i++) {
-                /* Verifica se o valor da célula é nulo, caso seja, o valor atribuído aos dados será uma string
-                vazia, caso contrário, o valor atribuído aos dados será o próprio valor da célula da tabela*/
-                dados[i] = this.tableModel.getValueAt(selectedRow, i) == null ? "" : this.tableModel.getValueAt(selectedRow, i);
-            }
-
-            /*Aciona o método que exibe os dados nos campos de inserção/editação de
-            registros da tela, passando como parâmetro os dados da linha selecionada*/
-            this.displayDataInFields.accept(dados);   
+            //Informa o índice do registro selecionado para a função que exibe os dados nos campos 
+            this.displayDataInFields(selectedRow);  
         }
     }
 
@@ -183,10 +204,15 @@ public class DatabaseAccessComponentManager<T> {
         this.btnCancel.setEnabled(enable);
     }
 
-    public void operationTableOnInsert() {
-        /*Quando o insert é acionado, uma linha(a cima da linha que está selecionada) deve ser adicionada na
-        tabela e a mesma(nova linha) deve ser agora a linha selecionada. Isso deve ser feito para mostrar ao
-        usuário que está sendo inserido um novo registro na tabela(que representa os registros do banco de dados)*/
+    public void operationDataDisplayComponentsOnInsert() {
+        /*Quando o insert é acionado, uma linha(a cima da linha que está selecionada) deve ser adicionada na tabela e a
+        mesma(nova linha) deve ser agora a linha selecionada, bem como os campos devem ser limpos. Isso deve ser feito para
+        mostrar ao usuário que está sendo inserido um novo registro na tabela(que representa os registros do banco de dados)*/
+
+        /*Obs: Essas operações na tabela e nos campos não tem ligação direta com a manipulação dos dados do 
+        banco, nem com a lista de dados obtidas do mesmo(que é usada para exibir as informações nos componentes 
+        necessários) trata-se apenas de uma representação visual. Ou seja, ao inserir uma linha na tabela, não
+        significa que um novo registro foi inserido no banco de dados nem na lista de dados obtidas dele.*/
 
         // Obtém a linha selecionada
         int selectedRow = this.table.getSelectedRow();
@@ -196,6 +222,9 @@ public class DatabaseAccessComponentManager<T> {
 
         // Seleciona a nova linha
         this.table.setRowSelectionInterval(selectedRow, selectedRow);
+
+        //Limpa os campos
+        this.clearFields.run();
     }
 
     /*Método para preencher a tabela com os dados do banco(Separado do evento de clique do botão
@@ -207,7 +236,11 @@ public class DatabaseAccessComponentManager<T> {
         if(tList != null) {
             //Adicionando os dados na tabela
             for(T tObject : tList) {
-                this.tableModel.addRow(this.controller.modelToTableRow(tObject));
+                try {
+                    this.tableModel.addRow(this.modelToTableRow.apply(tObject));
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -216,6 +249,18 @@ public class DatabaseAccessComponentManager<T> {
         this.setDefaultTableSettings();
     }
 
+    //Método para exibir os dados do registro selecionado na tabela nos campos
+    public void displayDataInFields(int recordIndex) {
+        if(this.tDataList.getValue() !=  null) {
+            T selectedRecordObject = this.tDataList.getValue().get(recordIndex);
+            try {
+                this.modelToFields.accept(selectedRecordObject);
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+        }
+        }
+       
     /*Método que atualiza a tabela com as configurações padrões*/
     public void setDefaultTableSettings() {
         /*Verifica se a tabela possui linhas antes de 
