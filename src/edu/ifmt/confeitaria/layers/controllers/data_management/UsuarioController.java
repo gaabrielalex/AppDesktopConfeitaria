@@ -48,9 +48,13 @@ public class UsuarioController extends SuperController<Usuario> {
         return this.usuarioService.remakeLastSelect();
     }
 
-    @Override
+    public void insert(Usuario usuario){
+        this.usuarioService.insert(usuario);
+    }
+
     /*Método para realizar mapeamento do model(Objeto Usuario) 
     para um objeto que possa ser inserido na tabela*/
+    @Override
     public Object[] modelToTableRow(Usuario usuario){
         return new Object[]{
             usuario.getIdUsuario(),

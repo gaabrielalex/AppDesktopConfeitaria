@@ -29,11 +29,10 @@ public class ConfirmationDeleteRecordDialog {
             options[0]
         );
         
-        /*Verifica se o usuário clicou no botão OK, ou seja, se ele confirmou
-        a exclusão. A estrutura faz isso verificando se o valor da variável
-        result é igual ao valor da constante OK_OPTION da classe JOptionPane,
-        caso seja, retorna true, caso contrário, retorna false*/
+        /*Verifica se o usuário clicou no botão OK, ou seja, se ele confirmou a exclusão. A estrutura 
+        faz isso verificando se o valor da variável result é igual ao valor da constante OK_OPTION da
+        classe JOptionPane, caso seja, retorna true, caso contrário, retorna false*/
         return result == JOptionPane.OK_OPTION;
-        
     }
+    
 }

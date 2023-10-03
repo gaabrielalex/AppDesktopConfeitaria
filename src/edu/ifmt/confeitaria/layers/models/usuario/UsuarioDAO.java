@@ -24,6 +24,7 @@ public class UsuarioDAO {
     //Getters and Setters
 
     //Methods
+    /* ------ Operações básicas de banco de dados ------ */
     public List<Usuario> select(String nome, String login) {
         //Obtém a conexão com o banco de dados, cria o Statement e o ResultSet
         Connection connection = DBConnection.getConnection();
@@ -47,7 +48,7 @@ public class UsuarioDAO {
                         "ORDER BY nome, login";
         
         try{
-            //Cria o PreparedStatement com o SQL, configurando os parâmetros
+           //Cria o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
             statement = connection.prepareStatement(sql);
             statement.setString(1, nome);
             statement.setString(2, login);
@@ -93,12 +94,49 @@ public class UsuarioDAO {
         }
     }
 
+    public void insert(Usuario usuario) {
+        //Obtém a conexão com o banco de dados, cria o Statement e o ResultSet
+        Connection connection = DBConnection.getConnection();
+        PreparedStatement statement = null;
+        
+        //Cria a query
+        String sql =    "INSERT INTO usuario(id_cliente, nome, login, senha) " +
+                        "VALUES(?, ?, ?, ?)";
+        
+        try{
+            //Cria o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
+            statement = connection.prepareStatement(sql);
+            
+            // Verifica se o ID do usuário foi fornecido
+            if(usuario.getIdUsuario() == null) {
+                // O ID será gerado pelo PostgreSQL
+                statement.setNull(1, java.sql.Types.INTEGER);
+            } else {
+                // O ID foi fornecido pelo usuário
+                statement.setLong(1, usuario.getIdUsuario());
+            }
+            statement.setString(2, usuario.getNome());
+            statement.setString(3, usuario.getLogin());
+            statement.setString(4, usuario.getSenha());
+            
+            //Executa a query
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } 
+        finally {
+            //Fecha a conexão com o banco de dados e os recursos criados a partir dela
+            DBConnection.closeConnection(statement);
+        }
+    }
+
+    /* ------ Métodos/Operações auxiliares ------ */
     public List<Usuario> resultSetToList(ResultSet resultSet){
         //Cria uma lista de usuários e a preenche com os dados do ResultSet
         List<Usuario> usuarios = new ArrayList<>();
         try {
             while(resultSet.next()) {
-                usuarios.add(new Usuario(resultSet.getInt("id_usuario"),
+                usuarios.add(new Usuario(resultSet.getLong("id_usuario"),
                                          resultSet.getString("nome"),
                                          resultSet.getString("login"),
                                          resultSet.getString("senha")));
@@ -109,4 +147,5 @@ public class UsuarioDAO {
 
         return usuarios;
     }
+
 }

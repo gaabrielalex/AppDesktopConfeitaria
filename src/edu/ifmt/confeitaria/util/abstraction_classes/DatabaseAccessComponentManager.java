@@ -12,8 +12,15 @@ import javax.swing.table.DefaultTableModel;
 import edu.ifmt.confeitaria.util.custom_components.ConfirmationDeleteRecordDialog;
 
 public class DatabaseAccessComponentManager<T> {
-    //Controller
+
+    enum Operation {
+        INSERT,
+        UPDATE;
+    }
+
+    //ATRIBUTOS
     private SuperController<T> controller;
+    private Operation currentOperation;
 
     //Componentes
     private JButton btnInsert;
@@ -28,9 +35,9 @@ public class DatabaseAccessComponentManager<T> {
     //Atributos funcionais
     private Consumer<Object[]> displayDataInFields;
 
-    //Constructors
+    //CONSTRUCTORS
 
-    //Getters e Setters
+    //GETTERS E SETTERS
     public void setDisplayDataInFields(Consumer<Object[]> displayDataInFields) {
         this.displayDataInFields = displayDataInFields;
     }
@@ -94,6 +101,11 @@ public class DatabaseAccessComponentManager<T> {
 
     /*  ---- Métodos que serão acionados pelos eventos dos componentes ---- */
     public void insert() {
+        /*Setando a operação atual para no momento da confirmação
+        da edição, saber qual operação foi realizada pelo usuário*/
+        this.currentOperation = Operation.INSERT;
+
+        //Operações visuais
         this.btnUpdate.setEnabled(false);
         this.btnDelete.setEnabled(false);
         this.enableEditConfirmationButtons(true);
@@ -122,8 +134,13 @@ public class DatabaseAccessComponentManager<T> {
     public void post() {
         this.enableEditingRecordButtons(true);
         this.enableEditConfirmationButtons(false);
-    }
 
+        /*Estrutura condicional para determinar a ação a ser tomada de acordo com a operação atual*/
+        if(this.currentOperation == Operation.INSERT) {
+            System.out.println("INSERT"); //Mensagem momentânea de teste
+        } 
+    }
+ 
     public void cancel() {
         this.enableEditingRecordButtons(true);
         this.enableEditConfirmationButtons(false);
@@ -131,7 +148,7 @@ public class DatabaseAccessComponentManager<T> {
 
     public void refresh() {
         this.displayDataInTable(this.controller.remakeLastSelect());
-    }
+    } 
 
     public void captureDataFromSelectedTableRow(ListSelectionEvent e) {
         // Verifica se uma válida foi selecionada
@@ -154,7 +171,7 @@ public class DatabaseAccessComponentManager<T> {
         }
     }
 
-    /* ---- Outros métodos ---- */
+    /* ------ Métodos/Operações auxiliares ------ */
     public void enableEditingRecordButtons(boolean enable) {
         this.btnInsert.setEnabled(enable);
         this.btnUpdate.setEnabled(enable);

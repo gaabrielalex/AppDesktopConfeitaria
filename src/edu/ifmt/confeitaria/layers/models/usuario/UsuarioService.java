@@ -30,4 +30,11 @@ public class UsuarioService {
         return this.usuarioDAO.remakeLastSelect();
     }
 
+    public void insert(Usuario usuario){
+        //TODO: Validar os dados do usuário???
+
+        //Solicita a inserção ao DAO
+        this.usuarioDAO.insert(usuario);
+    }
+
 }

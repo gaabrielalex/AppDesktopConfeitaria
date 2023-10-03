@@ -54,14 +54,20 @@ public class DBConnection {
         }
     }
 
-    /*Método para fechar a conexão com o banco de dados por meio da 
+    /*Métodos para fechar a conexão com o banco de dados por meio da 
     instância única e também os recursos criadoss a partir dela*/
+    public static void closeConnection(Statement statement) {
+        DBConnection.closeConnection(statement, null);
+    }
+
     public static void closeConnection(Statement statement, ResultSet resultSet) {
         if (DBConnection.connection != null) {
             try {
                 DBConnection.connection.close();
                 statement.close();
-                resultSet.close();
+                // if(resultSet != null) { TODO: Verificar se é necessário fechar o ResultSet
+                    resultSet.close();
+                // }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
