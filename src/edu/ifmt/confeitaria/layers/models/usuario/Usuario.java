@@ -1,23 +1,23 @@
 package edu.ifmt.confeitaria.layers.models.usuario;
 
 public class Usuario {
-    private int idUsuario;
+    private Long idUsuario;
     private String nome;
     private String login;
     private String senha;
 
-    public Usuario(int idUsuario, String nome, String login, String senha) {
+    public Usuario(Long idUsuario, String nome, String login, String senha) {
         this.idUsuario = idUsuario;
         this.nome = nome;
         this.login = login;
         this.senha = senha;
     }
 
-    public int getIdUsuario() {
+    public Long getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
+    public void setIdUsuario(Long idUsuario) {
         this.idUsuario = idUsuario;
     }
 
@@ -49,7 +49,7 @@ public class Usuario {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + idUsuario;
+        result = prime * result + ((idUsuario == null) ? 0 : idUsuario.hashCode());
         return result;
     }
 
@@ -62,10 +62,14 @@ public class Usuario {
         if (getClass() != obj.getClass())
             return false;
         Usuario other = (Usuario) obj;
-        if (idUsuario != other.idUsuario)
+        if (idUsuario == null) {
+            if (other.idUsuario != null)
+                return false;
+        } else if (!idUsuario.equals(other.idUsuario))
             return false;
         return true;
     }
+
 
     // public static Usuario fromResultSet(ResultSet resultSet) throws SQLException {
     //     return new Usuario(resultSet.getInt("id_usuario"),
