@@ -31,28 +31,38 @@ public class UsuarioDAO {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
-        /*Define as strings como vazias caso sejam nulas. Desta forma, a pesquisa 
-        não ignorará os filtros onde os valores de comparação não foram fornecidos*/
-        nome = (nome == null) ? "" : nome;
-        login = (login == null) ? "" : login;
-        
-        /*Define o padrão de pesquisa em relação as strings por meio da adição das %*/
-        nome= "%" + nome + "%";
-        login = "%" + login + "%";
+        /*Verifica se os parâmetros foram fornecidos e se não são vazios, ou seja,
+        confere se o usuário deseja realizar a pesquisa por nome e/ou login*/
+        boolean selectByName = nome != null && !nome.isEmpty();
+        boolean selectByLogin = login != null && !login.isEmpty();
         
         //Cria a query
         String sql =    "SELECT *"+
                         "FROM usuario " +
-                        "WHERE unaccent(nome) ILIKE unaccent(?)" + 
-                            "AND unaccent(login) ILIKE unaccent(?)" +
+                        "WHERE 1 = 1" +
+                            (selectByName ?  "AND unaccent(nome) ILIKE unaccent(?)" : "") +  //Se o usuário deseja pesquisar por nome, adiciona a condição à query
+                            (selectByLogin ? "AND unaccent(login) ILIKE unaccent(?)" : "") + //Se o usuário deseja pesquisar por login, adiciona a condição à query
                         "ORDER BY nome, login";
-        
-        try{
-           //Cria o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
-            statement = connection.prepareStatement(sql);
-            statement.setString(0, nome);
-            statement.setString(2, login);
 
+        /*Define o padrão de pesquisa em relação aos parâmetros fornecidos pelo usuário*/
+        nome= "%" + nome + "%";
+        login = "%" + login + "%";
+
+        //Define uma variável para armazenar o índice do parâmetro a ser configurado
+        int paramIndexCount = 1;
+
+        try{
+           //Cria o PreparedStatement com o SQL
+            statement = connection.prepareStatement(sql);
+
+            //Configura os parâmetros necessários
+            if(selectByName) {
+                statement.setString(paramIndexCount, nome);
+                paramIndexCount++; //Incrementa o índice do parâmetro para que o próximo seja configurado corretamente
+            } 
+            if(selectByLogin) {
+                statement.setString(paramIndexCount, login);
+            }
             //Armazena o SQL para haver refefência da última consulta realizada pelo DAO
             this.lastSQLSelect = statement.toString();
 

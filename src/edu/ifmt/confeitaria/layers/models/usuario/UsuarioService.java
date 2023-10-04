@@ -13,13 +13,13 @@ public class UsuarioService {
 
     //Methods
     public List<Usuario> select(){
-        return this.select("", "");
+        return this.select(null, null);
     }
 
     public List<Usuario> select(String nome, String login) {
         //Remove os espaços em branco do início e do fim das strings
-        nome = nome.stripLeading().stripTrailing();
-        login = login.stripLeading().stripTrailing();
+        if(nome != null) nome = nome.stripLeading().stripTrailing();
+        if(login != null) login = login.stripLeading().stripTrailing();
 
         //Solicita os dados ao DAO
         return this.usuarioDAO.select(nome, login);
