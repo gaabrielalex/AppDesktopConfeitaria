@@ -15,15 +15,16 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
 public class DatabaseAccessComponentManager<T> {
 
-    enum Operation {
+    public enum Operation {
         INSERT,
         UPDATE,
         NONE;
     }
 
     //ATRIBUTOS
-    private SuperController<T> controller;
     private BehaviorSubject<List<T>> tDataList;
+    private BehaviorSubject<T> tSelectedRecord;
+    private SuperController<T> controller;
     private Operation currentOperation;
 
     //Componentes
@@ -50,6 +51,12 @@ public class DatabaseAccessComponentManager<T> {
         }
     }
 
+    public void updateSelectedRecord(int recordIndex) {
+        if(this.tDataList.getValue() != null && recordIndex >= 0 && recordIndex < this.tDataList.getValue().size()) {
+            this.tSelectedRecord.onNext(this.tDataList.getValue().get(recordIndex));
+        }   
+    }
+
     public void setModelToTableRow(Function<T, Object[]> modelToTableRow) {
         this.modelToTableRow = modelToTableRow;
     }
@@ -64,10 +71,12 @@ public class DatabaseAccessComponentManager<T> {
 
     //MÉTODOS
     public void configureComponents(SuperController<T> controller ,JButton btnInsert, JButton btnUpdate, JButton btnDelete, JButton btnPost, JButton btnCancel, JButton btnRefresh, JTable table) {
-        //SETANDO ATRIBUTOS
-        this.controller = controller;
-        //Criando o observable
+        //Criando os observables
         this.tDataList = BehaviorSubject.create();
+        this.tSelectedRecord = BehaviorSubject.create();
+
+        //Setando os atributos
+        this.controller = controller;
         this.currentOperation = Operation.NONE;
         
         //Setando os componentes
@@ -121,6 +130,10 @@ public class DatabaseAccessComponentManager<T> {
         que a lista for atualizada, a tabela será atualizada*/
         this.tDataList.subscribe(this::displayDataInTable);
 
+        /*Conecta o observable ao registro selecionado. Toda vez que o registro
+        selecionado for atualizado, os novos dados serão exibidos nos campos*/
+        this.tSelectedRecord.subscribe(this::displayDataInFields);
+
         /*Atualiza a lista de dados por meio do método select 
         do controller, realizando uma consulta sem filtros.*/
         this.updateDataList(this.controller.select());
@@ -130,7 +143,6 @@ public class DatabaseAccessComponentManager<T> {
 
     /*  ---- Métodos que serão acionados pelos eventos dos componentes ---- */
     public void insert() {
-        
         //As ações são realizadas apenas se não houver nenhuma outra operação em andamento
         if(this.currentOperation == Operation.NONE) {
             this.currentOperation = Operation.INSERT;
@@ -187,8 +199,8 @@ public class DatabaseAccessComponentManager<T> {
             //Captura a linha selecionada
             int selectedRow = this.table.getSelectedRow();
 
-            //Informa o índice do registro selecionado para a função que exibe os dados nos campos 
-            this.displayDataInFields(selectedRow);  
+            //Atualiza o registro selecionado
+            this.updateSelectedRecord(selectedRow);
         }
     }
 
@@ -217,14 +229,19 @@ public class DatabaseAccessComponentManager<T> {
         // Obtém a linha selecionada
         int selectedRow = this.table.getSelectedRow();
 
-        // Insere uma nova linha acima da linha selecionada por meio do model da tabela
-        this.tableModel.insertRow(selectedRow, new Object[this.tableModel.getColumnCount()]);
+        // // Insere uma nova linha acima da linha selecionada por meio do model da tabela
+        // this.tableModel.insertRow(selectedRow, new Object[this.tableModel.getColumnCount()]);
 
-        // Seleciona a nova linha
-        this.table.setRowSelectionInterval(selectedRow, selectedRow);
+        // // Seleciona a nova linha
+        // this.table.setRowSelectionInterval(selectedRow, selectedRow);
 
-        //Limpa os campos
-        this.clearFields.run();
+        // //Limpa os campos
+        // this.clearFields.run();
+
+        //TODO: Teste
+        List<T> tList = this.tDataList.getValue();
+        tList.add(selectedRow, null);
+        this.updateDataList(tList);
     }
 
     /*Método para preencher a tabela com os dados do banco(Separado do evento de clique do botão
@@ -243,23 +260,15 @@ public class DatabaseAccessComponentManager<T> {
                 }
             }
         }
-
         /*É recomendado que as configurações padrões da tabela sejam atualizadas após a inserção  
         de dados, pois as mesmas podem ser perdidas ao atualizar todos os dados da tabela)*/
         this.setDefaultTableSettings();
     }
 
-    //Método para exibir os dados do registro selecionado na tabela nos campos
-    public void displayDataInFields(int recordIndex) {
-        if(this.tDataList.getValue() !=  null) {
-            T selectedRecordObject = this.tDataList.getValue().get(recordIndex);
-            try {
-                this.modelToFields.accept(selectedRecordObject);
-            } catch (Throwable e) {
-                e.printStackTrace();
-            }
-        }
-        }
+    //Método para exibir os dados do registro selecionado nos campos
+    public void displayDataInFields(T tSelectedRecord) {
+        this.modelToFields.accept(tSelectedRecord);
+    }
        
     /*Método que atualiza a tabela com as configurações padrões*/
     public void setDefaultTableSettings() {
