@@ -338,7 +338,7 @@ public class UsuarioView extends SuperView {
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         //Atulizando a lista de dados. O manager irá atualizar os componentes necessários 
-        this.usuarioDBCManager.updateDataList(this.usuarioController.select(this.edtNomeFiltro.getText(), this.edtLoginFiltro.getText()));
+        this.usuarioDBCManager.updateTemporaryTDataList(this.usuarioController.select(this.edtNomeFiltro.getText(), this.edtLoginFiltro.getText()));
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     /**
