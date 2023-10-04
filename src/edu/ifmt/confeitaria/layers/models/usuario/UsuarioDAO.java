@@ -31,26 +31,26 @@ public class UsuarioDAO {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
-        /*Define as strings como vazias caso sejam nulas.*/
+        /*Define as strings como vazias caso sejam nulas. Desta forma, a pesquisa 
+        não ignorará os filtros onde os valores de comparação não foram fornecidos*/
         nome = (nome == null) ? "" : nome;
         login = (login == null) ? "" : login;
         
-        /*Define o padrão de pesquisa em relação 
-        as strings por meio da adição das %*/
+        /*Define o padrão de pesquisa em relação as strings por meio da adição das %*/
         nome= "%" + nome + "%";
         login = "%" + login + "%";
         
         //Cria a query
         String sql =    "SELECT *"+
                         "FROM usuario " +
-                        "WHERE unaccent(nome) ILIKE unaccent(?)" +
+                        "WHERE unaccent(nome) ILIKE unaccent(?)" + 
                             "AND unaccent(login) ILIKE unaccent(?)" +
                         "ORDER BY nome, login";
         
         try{
            //Cria o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
             statement = connection.prepareStatement(sql);
-            statement.setString(1, nome);
+            statement.setString(0, nome);
             statement.setString(2, login);
 
             //Armazena o SQL para haver refefência da última consulta realizada pelo DAO

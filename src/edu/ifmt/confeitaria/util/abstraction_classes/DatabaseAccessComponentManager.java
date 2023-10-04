@@ -77,7 +77,6 @@ public class DatabaseAccessComponentManager<T> {
 
         //Setando os atributos
         this.controller = controller;
-        this.currentOperation = Operation.NONE;
         
         //Setando os componentes
         this.btnInsert = btnInsert;
@@ -118,13 +117,8 @@ public class DatabaseAccessComponentManager<T> {
             this.informRecordIndexFromSelectedTableRow(e);
         });
 
-        /* ---- Setando configurações padrões para os componentes antes de exibir a tela ---- */
-        /*Habilitando os botões de edição de registro(como padrão eles devem
-        estar habilitados, porém, por garantia, habilitamos eles aqui)*/
-        this.enableEditingRecordButtons(true);
-
-        //Desabilitando os botões de confirmação de edição de registro
-        this.enableEditConfirmationButtons(false);
+        //Setando as configurações padrões do manager
+        this.resetManagerDefaultSettings();
 
         /*Conecta o observable à lista de usuários. Toda vez
         que a lista for atualizada, a tabela será atualizada*/
@@ -137,16 +131,17 @@ public class DatabaseAccessComponentManager<T> {
         /*Atualiza a lista de dados temporária por meio do método
         select do controller, realizando uma consulta sem filtros*/
         this.updateTemporaryTDataList(this.controller.select());
-  
+        
+        //Atualiza as configurações padrões da tabela
         this.setDefaultTableSettings();
     }
 
     /*  ---- Métodos que serão acionados pelos eventos dos componentes ---- */
-    public void insert() {
+    private void insert() {
         //As ações são realizadas apenas se não houver nenhuma outra operação em andamento
         if(this.currentOperation == Operation.NONE) {
             this.currentOperation = Operation.INSERT;
-    
+
             //Operações visuais
             this.btnUpdate.setEnabled(false);
             this.btnDelete.setEnabled(false);
@@ -155,12 +150,12 @@ public class DatabaseAccessComponentManager<T> {
         }   
     }
 
-    public void update() {
+    private void update() {
         this.enableEditingRecordButtons(false);
         this.enableEditConfirmationButtons(true);
     }
 
-    public void delete() {
+    private void delete() {
         /*Exibe o dialog de confirmação de exclusão de registro por meio do método estático showOptionDialog
         da classe ConfirmationDeleteRecordDialog. O método retorna um boolean que indica se o usuário clicou
         no botão OK ou CANCELAR, caso tenha clicado em OK, o valor retornado é true, caso contrário, é false*/               
@@ -174,26 +169,38 @@ public class DatabaseAccessComponentManager<T> {
         }
     }
 
-    public void post() {
-        this.enableEditingRecordButtons(true);
-        this.enableEditConfirmationButtons(false);
+    private void post() {
+        try{
+            /*Estrutura condicional para determinar a ação a ser tomada de acordo com a operação atual*/
+            if(this.currentOperation == Operation.INSERT) {
+                System.out.println("INSERT REALIZADO"); //Mensagem momentânea de teste
+            }
 
-        /*Estrutura condicional para determinar a ação a ser tomada de acordo com a operação atual*/
-        if(this.currentOperation == Operation.INSERT) {
-            System.out.println("INSERT"); //Mensagem momentânea de teste
-        } 
+            this.resetManagerDefaultSettings();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
  
-    public void cancel() {
-        this.enableEditingRecordButtons(true);
-        this.enableEditConfirmationButtons(false);
+    private void cancel() {
+        try{
+            /*Estrutura condicional para determinar a ação a ser tomada de acordo com a operação atual*/
+            if(this.currentOperation == Operation.INSERT) {
+                System.out.println("INSERT CANCELADO"); //Mensagem momentânea de teste
+            }
+
+            this.resetManagerDefaultSettings();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
-    public void refresh() {
+    private void refresh() {  
         this.updateTemporaryTDataList(this.controller.remakeLastSelect());
+        this.resetManagerDefaultSettings();
     } 
 
-    public void informRecordIndexFromSelectedTableRow(ListSelectionEvent e) {
+    private void informRecordIndexFromSelectedTableRow(ListSelectionEvent e) {
         // Verifica se uma válida foi selecionada
         if ((!e.getValueIsAdjusting() && e.getFirstIndex() >= 0) && this.table.getSelectedRow() >= 0) {
             //Captura a linha selecionada
@@ -205,18 +212,59 @@ public class DatabaseAccessComponentManager<T> {
     }
 
     /* ------ Métodos/Operações auxiliares ------ */
-    public void enableEditingRecordButtons(boolean enable) {
+    private void enableEditingRecordButtons(boolean enable) {
         this.btnInsert.setEnabled(enable);
         this.btnUpdate.setEnabled(enable);
         this.btnDelete.setEnabled(enable);
     }
     
-    public void enableEditConfirmationButtons(boolean enable) {
+    private void enableEditConfirmationButtons(boolean enable) {
         this.btnPost.setEnabled(enable);
         this.btnCancel.setEnabled(enable);
     }
 
-    public void operationDataDisplayComponentsOnInsert() {
+    private void resetManagerDefaultSettings() {
+        this.currentOperation = Operation.NONE;
+        this.enableEditingRecordButtons(true);
+        this.enableEditConfirmationButtons(false);
+    }
+
+    /*Método para preencher a tabela com os dados do banco(Separado do evento de clique do botão
+    para que possa ser chamado em outras partes do código sem a necessidade de repetir o código)*/
+    private void displayDataInTable(List<T> tList) {
+        //Limpando a tabela
+        this.tableModel.setNumRows(0);
+
+        if(tList != null) {
+            //Adicionando os dados na tabela
+            for(T tObject : tList) {
+                try {
+                    this.tableModel.addRow(this.modelToTableRow.apply(tObject));
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        /*É recomendado que as configurações padrões da tabela sejam atualizadas após a inserção  
+        de dados, pois as mesmas podem ser perdidas ao atualizar todos os dados da tabela)*/
+        this.setDefaultTableSettings();
+    }
+
+    //Método para exibir os dados do registro selecionado nos campos
+    private void displayDataInFields(T tSelectedRecord) {
+        this.modelToFields.accept(tSelectedRecord);
+    }
+       
+    /*Método que atualiza a tabela com as configurações padrões*/
+    private void setDefaultTableSettings() {
+        /*Verifica se a tabela possui linhas antes de 
+        ]configurar a sua primeira linha como selecionada*/
+        if(this.table.getRowCount() > 0) {
+            this.table.setRowSelectionInterval(0, 0);
+        }
+    }
+
+    private void operationDataDisplayComponentsOnInsert() {
         /*Quando o insert é acionado, uma linha(a cima da linha que está selecionada) deve ser adicionada na tabela e a
         mesma(nova linha) deve ser agora a linha selecionada, bem como os campos devem ser limpos. Isso deve ser feito para
         mostrar ao usuário que está sendo inserido um novo registro na tabela(que representa os registros do banco de dados)*/
@@ -237,46 +285,5 @@ public class DatabaseAccessComponentManager<T> {
 
         //Limpa os campos
         this.clearFields.run();
-
-        // //TODO: Teste
-        // List<T> tList = this.tDataList.getValue();
-        // tList.add(selectedRow, null);
-        // this.updateDataList(tList);
-        
-    }
-
-    /*Método para preencher a tabela com os dados do banco(Separado do evento de clique do botão
-    para que possa ser chamado em outras partes do código sem a necessidade de repetir o código)*/
-    public void displayDataInTable(List<T> tList) {
-        //Limpando a tabela
-        this.tableModel.setNumRows(0);
-
-        if(tList != null) {
-            //Adicionando os dados na tabela
-            for(T tObject : tList) {
-                try {
-                    this.tableModel.addRow(this.modelToTableRow.apply(tObject));
-                } catch (Throwable e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        /*É recomendado que as configurações padrões da tabela sejam atualizadas após a inserção  
-        de dados, pois as mesmas podem ser perdidas ao atualizar todos os dados da tabela)*/
-        this.setDefaultTableSettings();
-    }
-
-    //Método para exibir os dados do registro selecionado nos campos
-    public void displayDataInFields(T tSelectedRecord) {
-        this.modelToFields.accept(tSelectedRecord);
-    }
-       
-    /*Método que atualiza a tabela com as configurações padrões*/
-    public void setDefaultTableSettings() {
-        /*Verifica se a tabela possui linhas antes de 
-        ]configurar a sua primeira linha como selecionada*/
-        if(this.table.getRowCount() > 0) {
-            this.table.setRowSelectionInterval(0, 0);
-        }
     }
 }
