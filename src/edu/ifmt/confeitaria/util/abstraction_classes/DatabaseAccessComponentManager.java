@@ -1,6 +1,8 @@
 package edu.ifmt.confeitaria.util.abstraction_classes;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -22,9 +24,11 @@ public class DatabaseAccessComponentManager<T> {
     }
 
     //ATRIBUTOS
+    private Class<T> modelClass;
+    private SuperController<T> controller;
     private BehaviorSubject<List<T>> temporaryTDataList;
     private BehaviorSubject<T> tSelectedRecord;
-    private SuperController<T> controller;
+    private BehaviorSubject<Integer> selectedRecordIndex;
     private Operation currentOperation;
 
     //Componentes
@@ -36,25 +40,41 @@ public class DatabaseAccessComponentManager<T> {
     private JButton btnRefresh;
     private JTable table;
     private DefaultTableModel tableModel;
+    //Componente setado separadamente(fora do método configureComponents)
+    private List<Component> fields;
 
     //Atributos funcionais
     private Function<T, Object[]> modelToTableRow;
     private Consumer<T> modelToFields;
-    private Runnable clearFields;
 
     //CONSTRUCTORS
 
     //GETTERS, SETTERS E OBSERVABLES
-    public void updateTemporaryTDataList(List<T> tDataList) {
+    private void updateTemporaryTDataList(List<T> tDataList) {
         if(tDataList != null){
             this.temporaryTDataList.onNext(tDataList);
         }
     }
 
-    public void updateSelectedRecord(int recordIndex) {
+    private void updateSelectedRecordIndex(int recordIndex) {
         if(this.temporaryTDataList.getValue() != null && recordIndex >= 0 && recordIndex < this.temporaryTDataList.getValue().size()) {
-            this.tSelectedRecord.onNext(this.temporaryTDataList.getValue().get(recordIndex));
+            this.selectedRecordIndex.onNext(recordIndex);
         }   
+    }
+
+    /*O método "updateTemporaryTDataList" é privado, pois a atualização da lista de dados não deve ser feita
+    diretamente por meio de classes externas, pois isso poderia causar comportamentos inesperados. Logo, deve
+    haver outro método que seja responsável por tratar a atualização da lista de dados vindo de classes externas*/
+    public void setTemporaryTDataList(List<T> tDataList) {
+        /*Caso houver uma operação em andamento, a mesma será tratada como cancelada 
+        se a lista de dados for atualizada por meio de uma classe externa*/
+        this.cancel();
+        this.updateTemporaryTDataList(tDataList);
+    }
+
+    //Componente setado separadamente(fora do método configureComponents)
+    public void setFields(List<Component> fields) {
+        this.fields = fields;
     }
 
     public void setModelToTableRow(Function<T, Object[]> modelToTableRow) {
@@ -65,17 +85,10 @@ public class DatabaseAccessComponentManager<T> {
         this.modelToFields = modelToFields;
     }
 
-    public void setClearFields(Runnable clearFields) {
-        this.clearFields = clearFields;
-    }
-
     //MÉTODOS
-    public void configureComponents(SuperController<T> controller ,JButton btnInsert, JButton btnUpdate, JButton btnDelete, JButton btnPost, JButton btnCancel, JButton btnRefresh, JTable table) {
-        //Criando os observables
-        this.temporaryTDataList = BehaviorSubject.create();
-        this.tSelectedRecord = BehaviorSubject.create();
-
+    public void configureComponents(Class<T> modelClass ,SuperController<T> controller ,JButton btnInsert, JButton btnUpdate, JButton btnDelete, JButton btnPost, JButton btnCancel, JButton btnRefresh, JTable table) {
         //Setando os atributos
+        this.modelClass = modelClass;
         this.controller = controller;
         
         //Setando os componentes
@@ -88,11 +101,15 @@ public class DatabaseAccessComponentManager<T> {
         this.table = table;
         this.tableModel = (DefaultTableModel) table.getModel();
 
+        //Criando os observables
+        this.temporaryTDataList = BehaviorSubject.create();
+        this.tSelectedRecord = BehaviorSubject.create();
+        this.selectedRecordIndex = BehaviorSubject.create();
+
         /*Setando os atributos funcionais com funções 'vazias'
         para evitar NullPointerException caso não sejam setados*/
         if(this.modelToTableRow == null) this.modelToTableRow = x -> null;
         if(this.modelToFields == null) this.modelToFields = x -> {};
-        if(this.clearFields == null) this.clearFields = () -> {};
 
         //Adicionando os eventos aos componentes
         this.btnInsert.addActionListener((ActionEvent e) -> {
@@ -128,6 +145,13 @@ public class DatabaseAccessComponentManager<T> {
         selecionado for atualizado, os novos dados serão exibidos nos campos*/
         this.tSelectedRecord.subscribe(this::displayDataInFields);
 
+        /*Conecta o observable ao índice do registro selecionado. Toda vez que o índice
+        do registro selecionado for atualizado, o registro selecionado será atualizado*/
+        this.selectedRecordIndex.subscribe((index) -> {
+            this.tSelectedRecord.onNext(this.temporaryTDataList.getValue().get(this.selectedRecordIndex.getValue()));
+
+        });
+
         /*Atualiza a lista de dados temporária por meio do método
         select do controller, realizando uma consulta sem filtros*/
         this.updateTemporaryTDataList(this.controller.select());
@@ -141,18 +165,26 @@ public class DatabaseAccessComponentManager<T> {
         //As ações são realizadas apenas se não houver nenhuma outra operação em andamento
         if(this.currentOperation == Operation.NONE) {
             this.currentOperation = Operation.INSERT;
+            this.addNewRecordTemporaryDataList();
 
             //Operações visuais
+            this.table.setEnabled(false);
             this.btnUpdate.setEnabled(false);
             this.btnDelete.setEnabled(false);
-            this.enableEditConfirmationButtons(true);
-            this.operationDataDisplayComponentsOnInsert();
+            this.enableEditConfirmationButtons(true);  
         }   
     }
 
     private void update() {
-        this.enableEditingRecordButtons(false);
-        this.enableEditConfirmationButtons(true);
+        //As ações são realizadas apenas se não houver nenhuma outra operação em andamento
+        if(this.currentOperation == Operation.NONE) {      
+            this.currentOperation = Operation.UPDATE;
+    
+            //Operações visuais
+            this.table.setEnabled(false);
+            this.enableEditingRecordButtons(false);
+            this.enableEditConfirmationButtons(true);
+        }
     }
 
     private void delete() {
@@ -186,7 +218,20 @@ public class DatabaseAccessComponentManager<T> {
         try{
             /*Estrutura condicional para determinar a ação a ser tomada de acordo com a operação atual*/
             if(this.currentOperation == Operation.INSERT) {
+                /*Caso o usuário cancele a inserção do registro, o registro em branco que foi adicionado na 
+                lista de dados temporária deve ser removido, pois o mesmo não será inserido no banco de dados*/
+                this.temporaryTDataList.getValue().remove(this.tSelectedRecord.getValue());
+
+                /*Atualiza a lista de dados temporária diretamente, pois o observable 
+                não notifica a alteração quando apenas itens da lista são alterados*/
+                this.updateTemporaryTDataList(this.temporaryTDataList.getValue());
+
                 System.out.println("INSERT CANCELADO"); //Mensagem momentânea de teste
+            } else if(this.currentOperation == Operation.UPDATE) {
+                /*Caso o usuário cancele a edição do registro, os campos devem ser atualizados manualmente
+                com os dados originais do registro que havia sido selecionado para atualização*/
+                this.displayDataInFields(this.tSelectedRecord.getValue());
+                System.out.println("UPDATE CANCELADO"); //Mensagem momentânea de teste
             }
 
             this.resetManagerDefaultSettings();
@@ -196,8 +241,8 @@ public class DatabaseAccessComponentManager<T> {
     }
 
     private void refresh() {  
-        this.updateTemporaryTDataList(this.controller.remakeLastSelect());
         this.resetManagerDefaultSettings();
+        this.updateTemporaryTDataList(this.controller.remakeLastSelect());
     } 
 
     private void informRecordIndexFromSelectedTableRow(ListSelectionEvent e) {
@@ -206,8 +251,8 @@ public class DatabaseAccessComponentManager<T> {
             //Captura a linha selecionada
             int selectedRow = this.table.getSelectedRow();
 
-            //Atualiza o registro selecionado
-            this.updateSelectedRecord(selectedRow);
+            //Atualiza o índice do registro selecionado
+            this.updateSelectedRecordIndex(selectedRow);
         }
     }
 
@@ -225,6 +270,7 @@ public class DatabaseAccessComponentManager<T> {
 
     private void resetManagerDefaultSettings() {
         this.currentOperation = Operation.NONE;
+        this.table.setEnabled(true);
         this.enableEditingRecordButtons(true);
         this.enableEditConfirmationButtons(false);
     }
@@ -252,38 +298,43 @@ public class DatabaseAccessComponentManager<T> {
 
     //Método para exibir os dados do registro selecionado nos campos
     private void displayDataInFields(T tSelectedRecord) {
+
         this.modelToFields.accept(tSelectedRecord);
     }
        
-    /*Método que atualiza a tabela com as configurações padrões*/
+    /*Método que atualiza a tabela com as suas configurações padrões*/
     private void setDefaultTableSettings() {
-        /*Verifica se a tabela possui linhas antes de 
-        ]configurar a sua primeira linha como selecionada*/
-        if(this.table.getRowCount() > 0) {
+        /*Verfica se a operação atual é de inserção, se for, define a linha selecionada da tabela com valor igual ao índice
+        do registro selecionado, pois quando o insert é acionado, toda a tabela é atualizada, e isso faz com que não haja
+        mais uma linha selecionada, então é ecessário selecionar a linha que estava selecionada antes da atualização*/
+        if(this.currentOperation == Operation.INSERT) {
+            this.table.setRowSelectionInterval(this.selectedRecordIndex.getValue(), this.selectedRecordIndex.getValue());
+
+        //Verifica se há registros na tabela, se houver, define a primeira linha da tabela como selecionada(configuração padrão)
+        } else  if(this.table.getRowCount() > 0) {
             this.table.setRowSelectionInterval(0, 0);
+            //Atualiza a barra de rolagem para que a primeira linha da tabela fique visível
+            this.table.scrollRectToVisible(this.table.getCellRect(0, 0, true)); 
         }
     }
 
-    private void operationDataDisplayComponentsOnInsert() {
-        /*Quando o insert é acionado, uma linha(a cima da linha que está selecionada) deve ser adicionada na tabela e a
-        mesma(nova linha) deve ser agora a linha selecionada, bem como os campos devem ser limpos. Isso deve ser feito para
-        mostrar ao usuário que está sendo inserido um novo registro na tabela(que representa os registros do banco de dados)*/
+    private void addNewRecordTemporaryDataList() {
+        /*Quando o insert é acionado, um novo registro, a cima do registro selecionado, deve ser adicionado na lista de dados 
+        temporária, logo, os compoentes visuais que estão consumindo os dados dessa lista, serão atualizados e exibirão o novo 
+        registro em branco, simulando a inserção de um novo registro no BD. Ou seja, toda essa operação é apenas uma prévia da  
+        inserção de um novo registro no banco de dados, que só será realizada de fato quando o usuário clicar no botão POST.*/
 
-        /*Obs: Essas operações na tabela e nos campos não tem ligação direta com a manipulação dos dados do 
-        banco, nem com a lista de dados obtidas do mesmo(que é usada para exibir as informações nos componentes 
-        necessários) trata-se apenas de uma representação visual. Ou seja, ao inserir uma linha na tabela, não
-        significa que um novo registro foi inserido no banco de dados nem na lista de dados obtidas dele.*/
-
-        // Obtém a linha selecionada
-        int selectedRow = this.table.getSelectedRow();
-
-        // Insere uma nova linha acima da linha selecionada por meio do model da tabela
-        this.tableModel.insertRow(selectedRow, new Object[this.tableModel.getColumnCount()]);
-
-        // Seleciona a nova linha
-        this.table.setRowSelectionInterval(selectedRow, selectedRow);
-
-        //Limpa os campos
-        this.clearFields.run();
+        try {
+            T tObject = (T) this.modelClass.getConstructor().newInstance();
+            this.temporaryTDataList.getValue().add(this.selectedRecordIndex.getValue(), tObject);
+            // tDataList.add(this.selectedRecordIndex.getValue(), tObject);
+        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException | NoSuchMethodException e) {
+            this.currentOperation = Operation.NONE;
+            e.printStackTrace(); 
+        }
+        
+        /*Atualiza a lista de dados temporária diretamente, pois o observable 
+        não notifica a alteração quando apenas itens da lista são alterados*/
+        this.updateTemporaryTDataList(this.temporaryTDataList.getValue());
     }
 }

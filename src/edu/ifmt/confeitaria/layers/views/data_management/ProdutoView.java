@@ -414,7 +414,7 @@ public class ProdutoView extends SuperView {
             
             //Triggering methods
                 //Configurando os componentes de acesso ao banco de dados
-                this.produtoDBCManager.configureComponents(this.produtoController ,this.btnInsert, this.btnUpdate,
+                this.produtoDBCManager.configureComponents(null, this.produtoController ,this.btnInsert, this.btnUpdate,
                     this.btnDelete, this.btnPost, this.btnCancel, this.btnRefresh, this.tblProduto);
     }
     

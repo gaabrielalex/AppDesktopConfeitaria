@@ -338,7 +338,7 @@ public class UsuarioView extends SuperView {
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         //Atulizando a lista de dados. O manager irá atualizar os componentes necessários 
-        this.usuarioDBCManager.updateTemporaryTDataList(this.usuarioController.select(this.edtNomeFiltro.getText(), this.edtLoginFiltro.getText()));
+        this.usuarioDBCManager.setTemporaryTDataList(this.usuarioController.select(this.edtNomeFiltro.getText(), this.edtLoginFiltro.getText()));
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     /**
@@ -431,9 +431,8 @@ public class UsuarioView extends SuperView {
                 //Configurando os componentes de acesso ao banco de dados
                 this.usuarioDBCManager.setModelToTableRow(this::modelToTableRow);
                 this.usuarioDBCManager.setModelToFields(this::modelToFields);
-                this.usuarioDBCManager.setClearFields(this::clearFields);
-                this.usuarioDBCManager.configureComponents(this.usuarioController, this.btnInsert, this.btnUpdate,
-                     this.btnDelete, this.btnPost, this.btnCancel, this.btnRefresh, this.tblUsuario); 
+                this.usuarioDBCManager.configureComponents(Usuario.class, this.usuarioController, this.btnInsert,
+                 this.btnUpdate, this.btnDelete, this.btnPost, this.btnCancel, this.btnRefresh, this.tblUsuario); 
 
                 //Por padrão, a senha não é visível ao exibir a interface
                 this.setPasswordsVisibility();                  
@@ -496,17 +495,14 @@ public class UsuarioView extends SuperView {
 
     /*Método para realizar mapeamento do model(Objeto Usuario) para os campos da interface*/
     public void modelToFields(Usuario usuario) {
-        edtCodCliente.setText(usuario.getIdUsuario().toString());
-        edtNome.setText(usuario.getNome());
-        edtLogin.setText(usuario.getLogin());
-        pswdSenha.setText(usuario.getSenha());
+        if(usuario.getIdUsuario() == null) {
+            this.edtCodCliente.setText("");
+        } else {
+            this.edtCodCliente.setText(usuario.getIdUsuario().toString());
+        }
+        this.edtNome.setText(usuario.getNome());
+        this.edtLogin.setText(usuario.getLogin());
+        this.pswdSenha.setText(usuario.getSenha());
     }
 
-    //Método para limpar os campos da interface
-    public void clearFields() {
-        edtCodCliente.setText("");
-        edtNome.setText("");
-        edtLogin.setText("");
-        pswdSenha.setText("");
-    }
 }

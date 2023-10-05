@@ -6,6 +6,10 @@ public class Usuario {
     private String login;
     private String senha;
 
+    /*Construtor vazio para configurações do DatabaseAcessComponentManager*/
+    public Usuario() {
+    }
+   
     public Usuario(Long idUsuario, String nome, String login, String senha) {
         this.idUsuario = idUsuario;
         this.nome = nome;
@@ -69,12 +73,4 @@ public class Usuario {
             return false;
         return true;
     }
-
-
-    // public static Usuario fromResultSet(ResultSet resultSet) throws SQLException {
-    //     return new Usuario(resultSet.getInt("id_usuario"),
-    //                         resultSet.getString("nome"),
-    //                         resultSet.getString("login"),
-    //                         resultSet.getString("senha"));
-    // }
 }

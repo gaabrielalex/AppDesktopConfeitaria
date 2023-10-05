@@ -429,8 +429,8 @@ public class ClienteView extends SuperView {
             
             //Triggering methods
                 //Configurando os componentes de acesso ao banco de dados
-                this.clienteDBCManager.configureComponents(this.clienteController, this.btnInsert, this.btnUpdate,
-                    this.btnDelete, this.btnPost, this.btnCancel, this.btnRefresh, this.tblCliente);
+                this.clienteDBCManager.configureComponents( null, this.clienteController, this.btnInsert,
+                 this.btnUpdate, this.btnDelete, this.btnPost, this.btnCancel, this.btnRefresh, this.tblCliente);
     }
     
     //Getters e Setters
