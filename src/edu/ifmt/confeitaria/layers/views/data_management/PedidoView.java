@@ -1053,11 +1053,11 @@ public class PedidoView extends SuperView {
                 /*Por padrão os campos da tabela referentes ao cliente vem reduzidos */
                 this.resizeCustomerFields(false);
 
-                //Configurando os componentes de acesso ao banco de dados do pedido
+                //Configurando o DatabaseAccessComponentManager do pedido
                 this.pedidoDBCManager.configureComponents(null, this.pedidoController ,this.btnInsertPedido, this.btnUpdatePedido, 
                     this.btnDeletePedido, this.btnPostPedido, this.btnCancelPedido, this.btnRefreshPedido, this.tblPedido);
 
-                //Configurando os componentes de acesso ao banco de dados do item do pedido
+                //Configurando o DatabaseAccessComponentManager do item do pedido
                 this.itemPedidoDBCManager.configureComponents(null, this.itemPedidoController ,this.btnInsertItemPedido, this.btnUpdateItemPedido,
                     this.btnDeleteItemPedido, this.btnPostItemPedido, this.btnCancelItemPedido, this.btnRefreshItemPedido, this.tblItemPedido);
     }

@@ -413,7 +413,7 @@ public class ProdutoView extends SuperView {
             //Default attribute values
             
             //Triggering methods
-                //Configurando os componentes de acesso ao banco de dados
+                //Configurando o DatabaseAccessComponentManager
                 this.produtoDBCManager.configureComponents(null, this.produtoController ,this.btnInsert, this.btnUpdate,
                     this.btnDelete, this.btnPost, this.btnCancel, this.btnRefresh, this.tblProduto);
     }
