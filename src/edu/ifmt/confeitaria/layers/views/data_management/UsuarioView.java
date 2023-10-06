@@ -417,7 +417,7 @@ public class UsuarioView extends SuperView {
     private int defaultColumnPreferredWidth;
 
     //Constructors
-    public UsuarioView(UsuarioController usuarioController, DatabaseAccessComponentManager<Usuario> usuarioDBCManager, JFrame previousView) {
+    public UsuarioView(UsuarioController usuarioController, DatabaseAccessComponentManager<Usuario> usuarioDBCManager, JFrame previousView) { 
         //Default codes
         this.initComponents();
         super.setDefaultViewSettings("Cadastro de Usuários", previousView);
