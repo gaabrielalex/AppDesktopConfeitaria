@@ -10,6 +10,10 @@ import edu.ifmt.confeitaria.layers.models.usuario.Usuario;
 import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperView;
 
+import java.awt.Component;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.swing.JFrame;
 
 /**
@@ -428,11 +432,13 @@ public class UsuarioView extends SuperView {
             this.defaultColumnPreferredWidth = 0;
             
             //Triggering methods
-                //Configurando os componentes de acesso ao banco de dados
+                //Configurando o DatabaseAccessComponentManager
+                List<Component> fields = Arrays.asList(this.edtCodCliente, this.edtNome, this.edtLogin, this.pswdSenha);
+                this.usuarioDBCManager.setFields(fields);
                 this.usuarioDBCManager.setModelToTableRow(this::modelToTableRow);
                 this.usuarioDBCManager.setModelToFields(this::modelToFields);
                 this.usuarioDBCManager.configureComponents(Usuario.class, this.usuarioController, this.btnInsert,
-                 this.btnUpdate, this.btnDelete, this.btnPost, this.btnCancel, this.btnRefresh, this.tblUsuario); 
+                this.btnUpdate, this.btnDelete, this.btnPost, this.btnCancel, this.btnRefresh, this.tblUsuario); 
 
                 //Por padrão, a senha não é visível ao exibir a interface
                 this.setPasswordsVisibility();                  
