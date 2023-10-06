@@ -1066,13 +1066,10 @@ public class PedidoView extends SuperView {
     
     //Métodos
 
-    /*Método que regula o tamanho dos campos da tabela de pesquisa
-    referentes ao clientes com o propósito de não mostrar todas as
-    informações do cliente na tabela de pesquisa, mas sim apenas o 
-    nome. Caso o usuário queira ver todas as informações do cliente,
-    ele deve clicar no botão "Expandir informações do cliente" na área
-    de pesquisa. Caso queira reduzir novamente, basta clicar no botão 
-    "Reduzir". O sistema tratará de redimensionar as colunas da tabela*/
+    /*Método que regula o tamanho dos campos da tabela de pesquisa referentes ao clientes com o propósito de não mostrar
+    todas as informações do cliente na tabela de pesquisa, mas sim apenas o nome. Caso o usuário queira ver todas as
+    informações do cliente, ele deve clicar no botão "Expandir informações do "cliente" na área de pesquisa. Caso queira
+    reduzir novamente, basta clicar no botão "Reduzir". O sistema tratará de redimensionar as colunas da tabela*/
     public final void resizeCustomerFields(boolean expand) {
         //Tamanho que as colunas terão após serem redimensionadas
         int newColumnWidth = 10;
