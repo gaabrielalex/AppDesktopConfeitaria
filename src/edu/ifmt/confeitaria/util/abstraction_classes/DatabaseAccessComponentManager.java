@@ -74,6 +74,7 @@ public class DatabaseAccessComponentManager<T> {
 
     //Componente setado separadamente(fora do método configureComponents)
     public void setFields(List<Component> fields) {
+        this.setDefaultFieldSettings(fields);
         this.fields = fields;
     }
 
@@ -179,6 +180,10 @@ public class DatabaseAccessComponentManager<T> {
         //As ações são realizadas apenas se não houver nenhuma outra operação em andamento
         if(this.currentOperation == Operation.NONE) {      
             this.currentOperation = Operation.UPDATE;
+
+            /*Força que os campos sejam atualizados com os dados do registro selecionado. Obs: Há um observable que é 
+            responsável por isso, porém, nesse caso, devido a conflitos de configurações, é necessário forçar a atualização*/
+            this.displayDataInFields(this.tSelectedRecord.getValue());
     
             //Operações visuais
             this.table.setEnabled(false);
@@ -206,6 +211,15 @@ public class DatabaseAccessComponentManager<T> {
             /*Estrutura condicional para determinar a ação a ser tomada de acordo com a operação atual*/
             if(this.currentOperation == Operation.INSERT) {
                 System.out.println("INSERT REALIZADO"); //Mensagem momentânea de teste
+            } else if(this.currentOperation == Operation.UPDATE) {
+                /*É necessário atualizar a operação atual para NONE antes do método "resetManagerDefaultSettings"(que também
+                atualiza a operação atual para NONE). Isso é necessário pois o método "resetManagerDefaultSettings" só será
+                chamado após o método que atualiza os dados dos campos. E isso pode causar problemas, pois o método de atualização
+                dos campos tratará a operação atual como UPDATE, não como NONE(que é o esperado se a atualização for cancelada).
+                Logo, é necessário atualizar a operação atual para NONE antes que o método que atualiza os campos seja chamado*/
+                this.currentOperation = Operation.NONE;
+
+                System.out.println("UPDATE REALIZADO"); //Mensagem momentânea de teste
             }
 
             this.resetManagerDefaultSettings();
@@ -228,9 +242,19 @@ public class DatabaseAccessComponentManager<T> {
 
                 System.out.println("INSERT CANCELADO"); //Mensagem momentânea de teste
             } else if(this.currentOperation == Operation.UPDATE) {
+                /*É necessário atualizar a operação atual para NONE antes do método "resetManagerDefaultSettings"(que também
+                atualiza a operação atual para NONE). Isso é necessário pois o método "resetManagerDefaultSettings" só será
+                chamado após o método que atualiza os dados dos campos. E isso pode causar problemas, pois o método de atualização
+                dos campos tratará a operação atual como UPDATE, não como NONE(que é o esperado se a atualização for cancelada).
+                Logo, é necessário atualizar a operação atual para NONE antes que o método que atualiza os campos seja chamado*/
+                this.currentOperation = Operation.NONE;
+
                 /*Caso o usuário cancele a edição do registro, os campos devem ser atualizados manualmente
-                com os dados originais do registro que havia sido selecionado para atualização*/
-                this.displayDataInFields(this.tSelectedRecord.getValue());
+                com os dados originais do registro que havia sido selecionado para atualização. Como quem 
+                notifica a atualização dos campos é um observable, e os dados da mesma não foram alterados
+                de fato, apenas copiados para os campos, então é necessário forçar a atualização dos campos*/
+                this.displayDataInFields(this.tSelectedRecord.getValue()); 
+                 
                 System.out.println("UPDATE CANCELADO"); //Mensagem momentânea de teste
             }
 
@@ -275,6 +299,32 @@ public class DatabaseAccessComponentManager<T> {
         this.enableEditConfirmationButtons(false);
     }
 
+     /*Método que atualiza a tabela com as suas configurações padrões*/
+    private void setDefaultTableSettings() {
+        /*Verfica se a operação atual é de inserção, se for, define a linha selecionada da tabela com valor igual ao índice
+        do registro selecionado, pois quando o insert é acionado, toda a tabela é atualizada, e isso faz com que não haja
+        mais uma linha selecionada, então é ecessário selecionar a linha que estava selecionada antes da atualização*/
+        if(this.currentOperation == Operation.INSERT) {
+            this.table.setRowSelectionInterval(this.selectedRecordIndex.getValue(), this.selectedRecordIndex.getValue());
+
+        //Verifica se há registros na tabela, se houver, define a primeira linha da tabela como selecionada(configuração padrão)
+        } else  if(this.table.getRowCount() > 0) {
+            this.table.setRowSelectionInterval(0, 0);
+            //Atualiza a barra de rolagem para que a primeira linha da tabela fique visível
+            this.table.scrollRectToVisible(this.table.getCellRect(0, 0, true)); 
+        }
+    }
+
+    private void setDefaultFieldSettings(List<Component> fields) {
+        fields.forEach( field -> {
+            field.addFocusListener(new java.awt.event.FocusAdapter() {
+                public void focusGained(java.awt.event.FocusEvent evt) {
+                    update();
+                }
+            });
+        });
+    }
+
     /*Método para preencher a tabela com os dados do banco(Separado do evento de clique do botão
     para que possa ser chamado em outras partes do código sem a necessidade de repetir o código)*/
     private void displayDataInTable(List<T> tList) {
@@ -297,24 +347,23 @@ public class DatabaseAccessComponentManager<T> {
     }
 
     //Método para exibir os dados do registro selecionado nos campos
-    private void displayDataInFields(T tSelectedRecord) {
-
-        this.modelToFields.accept(tSelectedRecord);
-    }
-       
-    /*Método que atualiza a tabela com as suas configurações padrões*/
-    private void setDefaultTableSettings() {
-        /*Verfica se a operação atual é de inserção, se for, define a linha selecionada da tabela com valor igual ao índice
-        do registro selecionado, pois quando o insert é acionado, toda a tabela é atualizada, e isso faz com que não haja
-        mais uma linha selecionada, então é ecessário selecionar a linha que estava selecionada antes da atualização*/
-        if(this.currentOperation == Operation.INSERT) {
-            this.table.setRowSelectionInterval(this.selectedRecordIndex.getValue(), this.selectedRecordIndex.getValue());
-
-        //Verifica se há registros na tabela, se houver, define a primeira linha da tabela como selecionada(configuração padrão)
-        } else  if(this.table.getRowCount() > 0) {
-            this.table.setRowSelectionInterval(0, 0);
-            //Atualiza a barra de rolagem para que a primeira linha da tabela fique visível
-            this.table.scrollRectToVisible(this.table.getCellRect(0, 0, true)); 
+    private void displayDataInFields(T tSelectedRecord) {        
+        /*Os campos só exibirão os dados se a operação atual for de atualização ou se os mesmos forem setados
+        para serem gerenciados pelo manager (que configurará os campos adequadamente para que possam
+        exibir os dados do registro selecionado fora de uma operação de atualização sem causar erros)*/
+        if((this.currentOperation == Operation.UPDATE || this.fields != null && this.fields.size() > 0)){
+            this.modelToFields.accept(tSelectedRecord);
+        } else if(this.currentOperation == Operation.NONE && (this.fields == null || this.fields.size() == 0)) {
+            /*Caso a operação atual for NONE e se os campos que exibem os dados não foram setados para serem gerenciados
+            pelo manager, esse método garantirá que os campos não exibam nenhum dado, pois isso pode causar erros.
+            Essa ação é realizada passando um objeto vazio para o método que atualiza os campos*/
+            try {
+                T tObject = (T) this.modelClass.getConstructor().newInstance();
+                this.modelToFields.accept(tObject);
+            } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+                    | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -323,7 +372,6 @@ public class DatabaseAccessComponentManager<T> {
         temporária, logo, os compoentes visuais que estão consumindo os dados dessa lista, serão atualizados e exibirão o novo 
         registro em branco, simulando a inserção de um novo registro no BD. Ou seja, toda essa operação é apenas uma prévia da  
         inserção de um novo registro no banco de dados, que só será realizada de fato quando o usuário clicar no botão POST.*/
-
         try {
             T tObject = (T) this.modelClass.getConstructor().newInstance();
             this.temporaryTDataList.getValue().add(this.selectedRecordIndex.getValue(), tObject);
