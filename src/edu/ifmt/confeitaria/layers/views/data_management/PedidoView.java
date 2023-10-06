@@ -1059,7 +1059,7 @@ public class PedidoView extends SuperView {
                 this.resizeCustomerFields(false);
 
                 //Configurando o DatabaseAccessComponentManager do pedido
-                List<Component> fields = Arrays.asList(this.btnPesquisarCliente, this.edtCodPedido, this.edtCliente, this.edtCodCliente, this.dtChooserDtEntrega,
+                List<Component> fields = Arrays.asList(this.edtCodPedido, this.edtCliente, this.edtCodCliente, this.dtChooserDtEntrega,
                     this.dtChooserDtPedido, this.edtVlrTotalPedido, this.edtDesconto, this.cmbMtdPagto, this.edtDestinatario, this.ckBRetirada, this.cmbSttsPagto,this.cmbSttsPedido, this.edtObs); 
                 this.pedidoDBCManager.setFields(fields);
                 this.pedidoDBCManager.configureComponents(null, this.pedidoController ,this.btnInsertPedido, this.btnUpdatePedido, 
