@@ -31,7 +31,6 @@ public abstract class SuperView extends javax.swing.JFrame{
         this.setLocationRelativeTo(null); 
         this.setTitle(title);
         this.setDefaultCloseOperation(2);
-        this.setResizable(false);    
         this.getContentPane().setBackground(DEFAULT_BACKGROUND_COLOR);
 
         /*Define a cor de fundo padrão de todos os JPanels da view*/

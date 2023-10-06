@@ -30,27 +30,18 @@ public class AutenticacaoView extends SuperView  {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnEntrar = new javax.swing.JButton();
-        edtLogin = new javax.swing.JTextField();
-        lblLogin = new javax.swing.JLabel();
-        lblSenha = new javax.swing.JLabel();
+        logoImage = new javax.swing.JLabel();
         lblTitulo = new javax.swing.JLabel();
         lblSubTitulo = new javax.swing.JLabel();
+        lblLogin = new javax.swing.JLabel();
+        lblSenha = new javax.swing.JLabel();
+        edtLogin = new javax.swing.JTextField();
         edtPswdSenha = new javax.swing.JPasswordField();
-        logoImage = new javax.swing.JLabel();
+        btnEntrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btnEntrar.setText("Entrar");
-        btnEntrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEntrarActionPerformed(evt);
-            }
-        });
-
-        lblLogin.setText("Login:");
-
-        lblSenha.setText("Senha:");
+        logoImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/ifmt/confeitaria/assets/images/logos/logo9.jpg"))); // NOI18N
 
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -62,7 +53,16 @@ public class AutenticacaoView extends SuperView  {
         lblSubTitulo.setText("Autentique-se");
         lblSubTitulo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        logoImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/ifmt/confeitaria/assets/images/logos/logo9.jpg"))); // NOI18N
+        lblLogin.setText("Login:");
+
+        lblSenha.setText("Senha:");
+
+        btnEntrar.setText("Entrar");
+        btnEntrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEntrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
