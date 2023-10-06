@@ -170,8 +170,7 @@ public class DatabaseAccessComponentManager<T> {
 
             //Operações visuais
             this.table.setEnabled(false);
-            this.btnUpdate.setEnabled(false);
-            this.btnDelete.setEnabled(false);
+            this.enableEditingRecordButtons(false);
             this.enableEditConfirmationButtons(true);  
         }   
     }
