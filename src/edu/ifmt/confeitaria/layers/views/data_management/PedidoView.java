@@ -10,6 +10,10 @@ import edu.ifmt.confeitaria.layers.controllers.data_management.PedidoController;
 import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperView;
 
+import java.awt.Component;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.swing.JFrame;
 import javax.swing.JTable;
 
@@ -63,10 +67,10 @@ public class PedidoView extends SuperView {
         lblCliente = new javax.swing.JLabel();
         lblCodPedido = new javax.swing.JLabel();
         btnPesquisarCliente = new javax.swing.JButton();
-        dChooserDtPedido = new com.toedter.calendar.JDateChooser();
+        dtChooserDtPedido = new com.toedter.calendar.JDateChooser();
         edtCliente = new javax.swing.JTextField();
         lblObs = new javax.swing.JLabel();
-        dChooserDtEntrega = new com.toedter.calendar.JDateChooser();
+        dtChooserDtEntrega = new com.toedter.calendar.JDateChooser();
         edtCodPedido = new javax.swing.JTextField();
         lblSttsPedido = new javax.swing.JLabel();
         cmbSttsPagto = new javax.swing.JComboBox<>();
@@ -374,13 +378,13 @@ public class PedidoView extends SuperView {
             }
         });
 
-        dChooserDtPedido.setDateFormatString("dd/MM/y  H:m");
+        dtChooserDtPedido.setDateFormatString("dd/MM/y  H:m");
 
         edtCliente.setEditable(false);
 
         lblObs.setText("Observações:");
 
-        dChooserDtEntrega.setDateFormatString("dd/MM/y  H:m");
+        dtChooserDtEntrega.setDateFormatString("dd/MM/y  H:m");
 
         lblSttsPedido.setText("Stts Pedido:");
 
@@ -470,7 +474,7 @@ public class PedidoView extends SuperView {
                                                 .addGroup(pnlEditingPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                                     .addComponent(edtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlEditingPedidoLayout.createSequentialGroup()
-                                                        .addComponent(dChooserDtPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(dtChooserDtPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addGap(18, 18, 18)
                                                         .addComponent(lblDtEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -479,7 +483,7 @@ public class PedidoView extends SuperView {
                                                         .addComponent(lblCodCliente)
                                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                         .addComponent(edtCodCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                    .addComponent(dChooserDtEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addComponent(dtChooserDtEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addGap(18, 18, 18)
                                                 .addComponent(btnPesquisarCliente)))
                                         .addGap(0, 0, Short.MAX_VALUE))))
@@ -514,11 +518,12 @@ public class PedidoView extends SuperView {
                             .addComponent(btnPesquisarCliente)
                             .addComponent(edtCodCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlEditingPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(lblDtPedido)
-                            .addComponent(dChooserDtPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblDtEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(dChooserDtEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(pnlEditingPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlEditingPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(lblDtPedido)
+                                .addComponent(dtChooserDtPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblDtEntrega, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addComponent(dtChooserDtEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlEditingPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(edtDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -542,7 +547,7 @@ public class PedidoView extends SuperView {
                 .addGroup(pnlEditingPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblObs)
                     .addComponent(edtObs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addComponent(recordEditingPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
@@ -958,8 +963,8 @@ public class PedidoView extends SuperView {
     private javax.swing.JComboBox<String> cmbSttsPedido;
     private javax.swing.JComboBox<String> cmbSttsPedidoFiltro;
     private javax.swing.JComboBox<String> cmbTipoChocFiltro;
-    private com.toedter.calendar.JDateChooser dChooserDtEntrega;
-    private com.toedter.calendar.JDateChooser dChooserDtPedido;
+    private com.toedter.calendar.JDateChooser dtChooserDtEntrega;
+    private com.toedter.calendar.JDateChooser dtChooserDtPedido;
     private javax.swing.JPanel editConfirmationWithRefreshItemPedido;
     private javax.swing.JPanel editConfirmationWithRefreshPedido;
     private javax.swing.JTextField edtCliente;
@@ -1054,6 +1059,9 @@ public class PedidoView extends SuperView {
                 this.resizeCustomerFields(false);
 
                 //Configurando o DatabaseAccessComponentManager do pedido
+                List<Component> fields = Arrays.asList(this.btnPesquisarCliente, this.edtCodPedido, this.edtCliente, this.edtCodCliente, this.dtChooserDtEntrega,
+                    this.dtChooserDtPedido, this.edtVlrTotalPedido, this.edtDesconto, this.cmbMtdPagto, this.edtDestinatario, this.ckBRetirada, this.cmbSttsPagto,this.cmbSttsPedido, this.edtObs); 
+                this.pedidoDBCManager.setFields(fields);
                 this.pedidoDBCManager.configureComponents(null, this.pedidoController ,this.btnInsertPedido, this.btnUpdatePedido, 
                     this.btnDeletePedido, this.btnPostPedido, this.btnCancelPedido, this.btnRefreshPedido, this.tblPedido);
 

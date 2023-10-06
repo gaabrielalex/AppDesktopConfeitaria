@@ -225,7 +225,7 @@
                                                       <Group type="103" groupAlignment="1" attributes="0">
                                                           <Component id="edtCliente" alignment="1" min="-2" pref="222" max="-2" attributes="0"/>
                                                           <Group type="102" alignment="0" attributes="0">
-                                                              <Component id="dChooserDtPedido" min="-2" pref="150" max="-2" attributes="0"/>
+                                                              <Component id="dtChooserDtPedido" min="-2" pref="150" max="-2" attributes="0"/>
                                                               <EmptySpace type="separate" max="-2" attributes="0"/>
                                                               <Component id="lblDtEntrega" min="-2" pref="54" max="-2" attributes="0"/>
                                                           </Group>
@@ -237,7 +237,7 @@
                                                               <EmptySpace max="-2" attributes="0"/>
                                                               <Component id="edtCodCliente" min="-2" pref="77" max="-2" attributes="0"/>
                                                           </Group>
-                                                          <Component id="dChooserDtEntrega" min="-2" pref="150" max="-2" attributes="0"/>
+                                                          <Component id="dtChooserDtEntrega" min="-2" pref="150" max="-2" attributes="0"/>
                                                       </Group>
                                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                                       <Component id="btnPesquisarCliente" min="-2" max="-2" attributes="0"/>
@@ -279,7 +279,7 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="lblCliente" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="edtCliente" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -288,13 +288,15 @@
                                   <Component id="edtCodCliente" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="lblDtPedido" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="dChooserDtPedido" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblDtEntrega" alignment="1" min="-2" pref="22" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="lblDtPedido" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="dtChooserDtPedido" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="lblDtEntrega" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Component id="dChooserDtEntrega" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="dtChooserDtEntrega" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -323,7 +325,7 @@
                           <Component id="lblObs" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="edtObs" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="7" max="32767" attributes="0"/>
                       <Component id="recordEditingPedido" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   </Group>
@@ -835,7 +837,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPesquisarClienteActionPerformed"/>
               </Events>
             </Component>
-            <Component class="com.toedter.calendar.JDateChooser" name="dChooserDtPedido">
+            <Component class="com.toedter.calendar.JDateChooser" name="dtChooserDtPedido">
               <Properties>
                 <Property name="dateFormatString" type="java.lang.String" value="dd/MM/y  H:m"/>
               </Properties>
@@ -850,7 +852,7 @@
                 <Property name="text" type="java.lang.String" value="Observa&#xe7;&#xf5;es:"/>
               </Properties>
             </Component>
-            <Component class="com.toedter.calendar.JDateChooser" name="dChooserDtEntrega">
+            <Component class="com.toedter.calendar.JDateChooser" name="dtChooserDtEntrega">
               <Properties>
                 <Property name="dateFormatString" type="java.lang.String" value="dd/MM/y  H:m"/>
               </Properties>
