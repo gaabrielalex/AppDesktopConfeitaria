@@ -2,15 +2,24 @@ package edu.ifmt.confeitaria.util.abstraction_classes;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.beans.PropertyChangeEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.JToggleButton;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
+
+import com.toedter.calendar.JDateChooser;
 
 import edu.ifmt.confeitaria.util.custom_components.ConfirmationDeleteRecordDialog;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
@@ -30,6 +39,7 @@ public class DatabaseAccessComponentManager<T> {
     private BehaviorSubject<T> tSelectedRecord;
     private BehaviorSubject<Integer> selectedRecordIndex;
     private Operation currentOperation;
+    private boolean activateUpdateWhenFieldsChange;
 
     //Componentes
     private JButton btnInsert;
@@ -57,9 +67,19 @@ public class DatabaseAccessComponentManager<T> {
     }
 
     private void updateSelectedRecordIndex(int recordIndex) {
+        /* O atributo "activateUpdateWhenFieldsChange" é setado como false para que o método "update" não seja acionado quando
+        o índice do registro selecionado for atualizado, pois isso causaria um loop infinito, pois o método "update" atualiza o
+        índice do registro selecionado, e isso acionaria o método "update" novamente, e assim por diante. Logo, desligamos essa
+        funcionabilidade dos fields temporariamente para que não haja esse probelma. Após o índice do registro selecionado ser
+        atualizado, o atributo "activateUpdateWhenFieldsChange" é setado como true novamente, para que o método "update" volte
+        a ser acionado quando os fields forem atualizados*/
+        this.activateUpdateWhenFieldsChange = false; 
+
         if(this.temporaryTDataList.getValue() != null && recordIndex >= 0 && recordIndex < this.temporaryTDataList.getValue().size()) {
             this.selectedRecordIndex.onNext(recordIndex);
-        }   
+        } 
+        
+        this.activateUpdateWhenFieldsChange = true;
     }
 
     /*O método "updateTemporaryTDataList" é privado, pois a atualização da lista de dados não deve ser feita
@@ -106,6 +126,9 @@ public class DatabaseAccessComponentManager<T> {
         this.temporaryTDataList = BehaviorSubject.create();
         this.tSelectedRecord = BehaviorSubject.create();
         this.selectedRecordIndex = BehaviorSubject.create();
+
+        //Setando os valores iniciais dos atributos
+        this.activateUpdateWhenFieldsChange = true;
 
         /*Setando os atributos funcionais com funções 'vazias'
         para evitar NullPointerException caso não sejam setados*/
@@ -176,13 +199,18 @@ public class DatabaseAccessComponentManager<T> {
     }
 
     private void update() {
-        //As ações são realizadas apenas se não houver nenhuma outra operação em andamento
-        if(this.currentOperation == Operation.NONE) {      
+        /*As ações são realizadas apenas se não houver nenhuma outra operação em andamento
+        e se a opção "iniciar atualização quando os campos forem alterados" estiver ativada*/
+        if(this.currentOperation == Operation.NONE && this.activateUpdateWhenFieldsChange) {    
             this.currentOperation = Operation.UPDATE;
 
-            /*Força que os campos sejam atualizados com os dados do registro selecionado. Obs: Há um observable que é 
-            responsável por isso, porém, nesse caso, devido a conflitos de configurações, é necessário forçar a atualização*/
-            this.displayDataInFields(this.tSelectedRecord.getValue());
+            /*Verifica se os campos foram setados para serem gerenciados pelo manager antes acionar o método de atualização dos mesmos. Obs: Forçar 
+            atualização dos campos, como mencionado no comentário abaixo, é necessário para resolver conflitos de configurações desses campos.*/
+            if(this.fields == null || this.fields.size() == 0){
+                /*Força que os campos sejam atualizados com os dados do registro selecionado. Obs: Há um observable que é 
+                responsável por isso, porém, nesse caso, devido a conflitos de configurações, é necessário forçar a atualização*/
+                this.displayDataInFields(this.tSelectedRecord.getValue());
+            }
     
             //Operações visuais
             this.table.setEnabled(false);
@@ -314,16 +342,6 @@ public class DatabaseAccessComponentManager<T> {
         }
     }
 
-    private void setDefaultFieldSettings(List<Component> fields) {
-        fields.forEach( field -> {
-            field.addFocusListener(new java.awt.event.FocusAdapter() {
-                public void focusGained(java.awt.event.FocusEvent evt) {
-                    update();
-                }
-            });
-        });
-    }
-
     /*Método para preencher a tabela com os dados do banco(Separado do evento de clique do botão
     para que possa ser chamado em outras partes do código sem a necessidade de repetir o código)*/
     private void displayDataInTable(List<T> tList) {
@@ -357,8 +375,15 @@ public class DatabaseAccessComponentManager<T> {
             pelo manager, esse método garantirá que os campos não exibam nenhum dado, pois isso pode causar erros.
             Essa ação é realizada passando um objeto vazio para o método que atualiza os campos*/
             try {
+                /*Desligando a funcionalidade de atualização dos campos quando os 
+                mesmos forem atualizados, pois isso causaria um loop infinito*/
+                this.activateUpdateWhenFieldsChange = false;
+
                 T tObject = (T) this.modelClass.getConstructor().newInstance();
                 this.modelToFields.accept(tObject);
+
+                //Ligando a funcionalidade novamente
+                this.activateUpdateWhenFieldsChange = true;
             } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
                     | InvocationTargetException | NoSuchMethodException | SecurityException e) {
                 e.printStackTrace();
@@ -384,4 +409,42 @@ public class DatabaseAccessComponentManager<T> {
         não notifica a alteração quando apenas itens da lista são alterados*/
         this.updateTemporaryTDataList(this.temporaryTDataList.getValue());
     }
+
+    private void setDefaultFieldSettings(List<Component> fields) {
+        /*Adiciona os eventos aos campos para que os mesmos possam acionar o método "update" quando os dados
+        dos campos forem alterados.*/
+        fields.forEach( field -> {
+            if(field instanceof JDateChooser){
+                ((JDateChooser) field).addPropertyChangeListener((PropertyChangeEvent evt) -> {
+                    if(evt.getPropertyName().equals("date")){
+                        update();
+                    }
+                });
+            } else if(field instanceof JTextField){
+                ((JTextField) field).getDocument().addDocumentListener(new DocumentListener() {
+                    @Override
+                    public void insertUpdate(DocumentEvent e) {
+                        update();
+                    }
+                    @Override
+                    public void removeUpdate(DocumentEvent e) {
+                        update();
+                    }
+                    @Override
+                    public void changedUpdate(DocumentEvent e) {
+                        update();
+                    }
+                });
+            } else if(field instanceof JToggleButton){
+                ((JToggleButton) field).addItemListener((ItemEvent evt) -> {
+                    update();
+                });
+            } else if(field instanceof JComboBox){
+                ((JComboBox<?>) field).addItemListener((ItemEvent evt) -> {
+                    update();
+                });
+            }
+        });
+    }
+
 }
