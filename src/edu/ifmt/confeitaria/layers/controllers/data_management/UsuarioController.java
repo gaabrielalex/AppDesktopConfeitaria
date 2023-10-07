@@ -49,7 +49,9 @@ public class UsuarioController extends SuperController<Usuario> {
     }
 
     @Override
-    public void insert(Usuario usuario) {
-        this.usuarioService.insert(usuario);
+    public boolean insert(Usuario usuario) {
+        /*Solicita a inserção ao Service já retornando o 
+        resultado, se a inserção foi bem sucedida ou não*/
+        return this.usuarioService.insert(usuario);
     }
 }
