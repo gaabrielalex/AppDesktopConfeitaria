@@ -237,7 +237,10 @@ public class DatabaseAccessComponentManager<T> {
         try{
             /*Estrutura condicional para determinar a ação a ser tomada de acordo com a operação atual*/
             if(this.currentOperation == Operation.INSERT) {
-                System.out.println("INSERT REALIZADO"); //Mensagem momentânea de teste
+            
+
+
+
             } else if(this.currentOperation == Operation.UPDATE) {
                 /*É necessário atualizar a operação atual para NONE antes do método "resetManagerDefaultSettings"(que também
                 atualiza a operação atual para NONE). Isso é necessário pois o método "resetManagerDefaultSettings" só será
@@ -446,5 +449,4 @@ public class DatabaseAccessComponentManager<T> {
             }
         });
     }
-
 }

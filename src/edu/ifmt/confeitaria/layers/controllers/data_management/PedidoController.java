@@ -44,4 +44,9 @@ public class PedidoController extends SuperController {
         return null;
     }
 
+    @Override
+    public void insert(Object modelObject) {
+        // TODO Auto-generated method stub
+    }
+
 }

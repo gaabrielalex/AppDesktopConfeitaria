@@ -503,7 +503,7 @@ public class UsuarioView extends SuperView {
     public void modelToFields(Usuario usuario) {
         if(usuario.getIdUsuario() == null) {
             this.edtCodCliente.setText("");
-        } else {
+        } else { 
             this.edtCodCliente.setText(usuario.getIdUsuario().toString());
         }
         this.edtNome.setText(usuario.getNome());

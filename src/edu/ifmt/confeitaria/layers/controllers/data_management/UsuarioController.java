@@ -48,8 +48,8 @@ public class UsuarioController extends SuperController<Usuario> {
         return this.usuarioService.remakeLastSelect();
     }
 
-    public void insert(Usuario usuario){
+    @Override
+    public void insert(Usuario usuario) {
         this.usuarioService.insert(usuario);
     }
-
 }

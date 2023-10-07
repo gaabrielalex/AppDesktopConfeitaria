@@ -30,7 +30,7 @@ public class UsuarioService {
         return this.usuarioDAO.remakeLastSelect();
     }
 
-    public void insert(Usuario usuario){
+    public void insert(Usuario usuario) {
         //Solicita a inserção ao DAO
         this.usuarioDAO.insert(usuario);
     }

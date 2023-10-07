@@ -15,5 +15,6 @@ public abstract class SuperController<T> {
   public abstract void displayView();
   public abstract List<T> select();
   public abstract List<T> remakeLastSelect();
+  public abstract void insert(T object);
 }
     
