@@ -4,7 +4,6 @@
  */
 package edu.ifmt.confeitaria.layers.models.usuario;
 
- import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,8 +23,7 @@ public class UsuarioDAO {
     public List<Usuario> selectById(Long idUsuario) {
         if(idUsuario == null) return null;
 
-        //Obtém a conexão com o banco de dados, cria o Statement e o ResultSet
-        Connection connection = DBConnection.getConnection();
+        //Cria o Statement e o ResultSet
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
@@ -36,7 +34,7 @@ public class UsuarioDAO {
 
         try{
             //Cria o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
-            statement = connection.prepareStatement(sql);
+            statement = DBConnection.getConnection().prepareStatement(sql);
             statement.setLong(1, idUsuario);
 
             //Obtém o ResultSet exexutando a query
@@ -56,8 +54,7 @@ public class UsuarioDAO {
     public List<Usuario> selectByLogin(String login) {
        if(login == null) return null;
 
-        //Obtém a conexão com o banco de dados, cria o Statement e o ResultSet
-        Connection connection = DBConnection.getConnection();
+        //Cria o Statement e o ResultSet
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
@@ -68,7 +65,7 @@ public class UsuarioDAO {
 
         try{
             //Cria o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
-            statement = connection.prepareStatement(sql);
+            statement = DBConnection.getConnection().prepareStatement(sql);
             statement.setString(1, login);
 
             //Obtém o ResultSet exexutando a query
@@ -87,8 +84,6 @@ public class UsuarioDAO {
     
 
     public List<Usuario> select(String nome, String login) {
-        //Obtém a conexão com o banco de dados, cria o Statement e o ResultSet
-        Connection connection = DBConnection.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
@@ -113,8 +108,8 @@ public class UsuarioDAO {
         int paramIndexCount = 1;
 
         try{
-           //Cria o PreparedStatement com o SQL
-            statement = connection.prepareStatement(sql);
+            //Cria o PreparedStatement com o SQL
+            statement = DBConnection.getConnection().prepareStatement(sql);
 
             //Configura os parâmetros necessários
             if(selectByName) {
@@ -142,14 +137,12 @@ public class UsuarioDAO {
     }
 
     public List<Usuario> remakeLastSelect() {
-        //Obtém a conexão com o banco de dados, cria o Statement e o ResultSet
-        Connection connection = DBConnection.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
         try{
             //Cria o PreparedStatement com o SQL da última consulta
-            statement = connection.prepareStatement(this.lastSQLSelect);
+            statement = DBConnection.getConnection().prepareStatement(this.lastSQLSelect);
 
             //Obtém o ResultSet exexutando a query
             resultSet = statement.executeQuery();
@@ -166,18 +159,16 @@ public class UsuarioDAO {
     }
 
     public boolean insert(Usuario usuario) {
-        //Obtém a conexão com o banco de dados, cria o Statement e o ResultSet
-        Connection connection = DBConnection.getConnection();
         PreparedStatement statement = null;
 
         try {
             //Verifica se o ID do usuário foi fornecido ou se é válido
             if(usuario.getIdUsuario() == null || usuario.getIdUsuario() == 0) {
                 //Se não foi, realiza a inserção sem o ID
-                this.insertWithoutId(usuario, connection, statement);
+                this.insertWithoutId(usuario, statement);
             } else {
                 //Se foi, realiza a inserção com o ID
-                this.insertWithId(usuario, connection, statement);
+                this.insertWithId(usuario, statement);
             }
 
             //Se a inserção foi realizada com sucesso, retorna true
@@ -192,13 +183,13 @@ public class UsuarioDAO {
 
     /*Método para inserir um usuário sem o ID. O método é privado pois as solicitações de inserção
     devem ser feitas através do método insert(Usuario usuario) para que o ID seja verificado por ele*/
-    private void insertWithoutId(Usuario usuario, Connection connection, PreparedStatement statement) throws SQLException {
+    private void insertWithoutId(Usuario usuario, PreparedStatement statement) throws SQLException {
         //Cria a query
         String sql =    "INSERT INTO usuario(nome, login, senha) " +
                         "VALUES(?, ?, ?)";
          
         //Cria o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
-        statement = connection.prepareStatement(sql);
+        statement = DBConnection.getConnection().prepareStatement(sql);
         statement.setString(1, usuario.getNome());
         statement.setString(2, usuario.getLogin());
         statement.setString(3, usuario.getSenha());
@@ -212,13 +203,13 @@ public class UsuarioDAO {
 
     /*Método para inserir um usuário com o ID. O método é privado pois as solicitações de inserção
     devem ser feitas através do método insert(Usuario usuario) para que o ID seja verificado por ele*/
-    private void insertWithId(Usuario usuario, Connection connection, PreparedStatement statement) throws SQLException {
+    private void insertWithId(Usuario usuario, PreparedStatement statement) throws SQLException {
         //Cria a query
         String sql =    "INSERT INTO usuario(id_usuario, nome, login, senha) " +
                         "VALUES(?, ?, ?, ?)";
         
         //Cria o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
-        statement = connection.prepareStatement(sql);
+        statement = DBConnection.getConnection().prepareStatement(sql);
         statement.setLong(1, usuario.getIdUsuario());
         statement.setString(2, usuario.getNome());
         statement.setString(3, usuario.getLogin());
@@ -232,20 +223,17 @@ public class UsuarioDAO {
     }
 
     /* ------ Métodos/Operações auxiliares ------ */
-    public List<Usuario> resultSetToList(ResultSet resultSet){
-        //Cria uma lista de usuários e a preenche com os dados do ResultSet
+    public List<Usuario> resultSetToList(ResultSet resultSet) throws SQLException {
         List<Usuario> usuarios = new ArrayList<>();
-        try {
-            while(resultSet.next()) {
-                usuarios.add(new Usuario(resultSet.getLong("id_usuario"),
-                                         resultSet.getString("nome"),
-                                         resultSet.getString("login"),
-                                         resultSet.getString("senha")));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        
+        //Percorre o ResultSet preenchendo a lista de usuários
+        while(resultSet.next()) {
+            usuarios.add(new Usuario(resultSet.getLong("id_usuario"),
+                                        resultSet.getString("nome"),
+                                        resultSet.getString("login"),
+                                        resultSet.getString("senha")));
         }
-
+        
         return usuarios;
     }
 

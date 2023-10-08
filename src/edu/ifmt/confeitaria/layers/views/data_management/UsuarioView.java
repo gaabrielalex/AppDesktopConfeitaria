@@ -7,6 +7,7 @@ package edu.ifmt.confeitaria.layers.views.data_management;
 
 import edu.ifmt.confeitaria.layers.controllers.data_management.UsuarioController;
 import edu.ifmt.confeitaria.layers.models.usuario.Usuario;
+import edu.ifmt.confeitaria.util.UtilMethods;
 import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperView;
 
@@ -470,7 +471,8 @@ public class UsuarioView extends SuperView {
                 this.setPasswordsVisibility();
                 
                 //Adicionando as validações dos campos
-                this.addCodUsuarioValidation();
+                UtilMethods.addTextChangeListeners(this.edtCodCliente, this::validateCodUsuario);
+                UtilMethods.addTextChangeListeners(this.edtLogin, this::validateLogin);
     }
     //Getters e Setters 
     public int getDefaultColumnMaxWidth() {
@@ -552,23 +554,6 @@ public class UsuarioView extends SuperView {
 
 
     //MÉTODOS PARA ADICIONAR VALIDAÇÕES AOS CAMPOS
-    public void addCodUsuarioValidation() {
-        this.edtCodCliente.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                validateCodUsuario();
-            }
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                validateCodUsuario();
-            }
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                validateCodUsuario();
-            }
-        });
-    }
-
     public void validateCodUsuario() {
         Long id = null;
 
@@ -580,17 +565,36 @@ public class UsuarioView extends SuperView {
             }
         }
 
-        /*Se o id já existir no banco de dados, se o id for diferente ao id do registro atual(que 
-        está sendo editado) e a operação atual for de inserção ou atualização, o label de validação
-        ficará vermelho, caso contrário, ficará da cor de fundo da view, para não ficar visível*/
-        if(this.usuarioController.isIdExists(id) 
-          && !this.usuarioDBCManager.getTSelectedRecord().getValue().getIdUsuario().equals(id)
-          && (this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.INSERT
-          || this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.UPDATE)) {
+        /*Se o usuário estiver atualizando um registro e o id do registro selecionado(que está sendo editado) for
+        diferente do id que está sendo digitado ou se o usuário estiver inserindo um novo registro e, atendendo
+        algum dos casos anteriores, se o id já existir, a label de validação ficará vermelha, mostrando o erro*/
+        if(     ((this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.UPDATE
+                    && !this.usuarioDBCManager.getTSelectedRecord().getValue().getIdUsuario().equals(id))
+                || this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.INSERT)
+            && this.usuarioController.isIdExists(id) 
+            ) {
 
             this.lblCodUsuarioValidation.setForeground(SuperView.ERROR_COLOR);
         } else {
             this.lblCodUsuarioValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
+        }
+    }
+
+    public void validateLogin() {
+        String login = this.edtLogin.getText();
+
+        /*Se o usuário estiver atualizando um registro e o login do registro selecionado(que está sendo editado) for
+        diferente do login que está sendo digitado ou se o usuário estiver inserindo um novo registro e, atendendo
+        algum dos casos anteriores, se o login já existir, a label de validação ficará vermelha, mostrando o erro*/
+        if(     ((this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.UPDATE
+                    && !this.usuarioDBCManager.getTSelectedRecord().getValue().getLogin().equals(login))
+                || this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.INSERT)
+            && this.usuarioController.isLoginExists(login) 
+            ) {
+
+            this.lblLoginValidation.setForeground(SuperView.ERROR_COLOR);
+        } else {
+            this.lblLoginValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
         }
     }
 }

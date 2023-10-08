@@ -22,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 
 import com.toedter.calendar.JDateChooser;
 
+import edu.ifmt.confeitaria.util.UtilMethods;
 import edu.ifmt.confeitaria.util.custom_components.ConfirmationDeleteRecordDialog;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
@@ -433,20 +434,8 @@ public class DatabaseAccessComponentManager<T> {
                     }
                 });
             } else if(field instanceof JTextField){
-                ((JTextField) field).getDocument().addDocumentListener(new DocumentListener() {
-                    @Override
-                    public void insertUpdate(DocumentEvent e) {
-                        update();
-                    }
-                    @Override
-                    public void removeUpdate(DocumentEvent e) {
-                        update();
-                    }
-                    @Override
-                    public void changedUpdate(DocumentEvent e) {
-                        update();
-                    }
-                });
+                UtilMethods.addTextChangeListeners((JTextField) field, this::update);
+                
             } else if(field instanceof JToggleButton){
                 ((JToggleButton) field).addItemListener((ItemEvent evt) -> {
                     update();

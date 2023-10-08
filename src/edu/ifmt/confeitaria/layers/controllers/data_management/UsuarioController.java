@@ -61,4 +61,9 @@ public class UsuarioController extends SuperController<Usuario> {
         //Solicita a Service a verificação já retornando o resultado
         return this.usuarioService.isIdExists(idUsuario);
     }
+
+    public boolean isLoginExists(String login){
+        //Solicita a Service a verificação já retornando o resultado
+        return this.usuarioService.isLoginExists(login);
+    }
 }

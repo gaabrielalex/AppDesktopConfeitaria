@@ -49,4 +49,18 @@ public class UsuarioService {
         }
     }
 
+    public boolean isLoginExists(String login){
+        //Solicta ao DAO a lista de usuários com o login especificado
+        List<Usuario> usuarios = this.usuarioDAO.selectByLogin(login);
+
+        if(usuarios != null) {
+            //Verifica se a lista está vazia
+            boolean response = usuarios.size() > 0;
+            return response;
+
+        } else {
+            return false;
+        }
+    }
+
 }
