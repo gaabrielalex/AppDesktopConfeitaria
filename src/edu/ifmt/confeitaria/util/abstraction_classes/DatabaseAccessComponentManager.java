@@ -15,15 +15,13 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 
 import com.toedter.calendar.JDateChooser;
 
 import edu.ifmt.confeitaria.util.UtilMethods;
-import edu.ifmt.confeitaria.util.custom_components.ConfirmationDeleteRecordDialog;
+import edu.ifmt.confeitaria.util.custom_components.CustomDialogs;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
 public class DatabaseAccessComponentManager<T> {
@@ -236,10 +234,10 @@ public class DatabaseAccessComponentManager<T> {
     }
 
     private void delete() {
-        /*Exibe o dialog de confirmação de exclusão de registro por meio do método estático showOptionDialog
-        da classe ConfirmationDeleteRecordDialog. O método retorna um boolean que indica se o usuário clicou
-        no botão OK ou CANCELAR, caso tenha clicado em OK, o valor retornado é true, caso contrário, é false*/               
-        boolean response = ConfirmationDeleteRecordDialog.showDialog();
+        /*Exibe o dialog de confirmação de exclusão de registro por meio do método estático correspondente
+        da classe CustomDialogs. O método retorna um boolean que indica se o usuário clicou no botão OK ou
+        ou CANCELAR, caso tenha clicado em OK, o valor retornado é true, caso contrário, é false*/               
+        boolean response = CustomDialogs.ConfirmationDeleteRecord();
 
         /*Estrutura condicional para determinar a ação a ser tomada de acordo com a resposta do usuário*/
         if(response){
@@ -258,7 +256,7 @@ public class DatabaseAccessComponentManager<T> {
             // Solita a inserção do objeto no BD por meio da controller, armazenando a resposta de sucesso ou não da operação
             boolean response = this.controller.insert(tObject);
 
-            if(response){
+            if(response) {
                 this.resetManagerDefaultSettings();
 
                 //Atualiza a lista de dados temporária para as mudanças serem refletidas nos componentes visuais
@@ -266,6 +264,9 @@ public class DatabaseAccessComponentManager<T> {
 
                 /*Força a atualização da lista pois o observable não notifica alterações quando apenas itens da lista são alterados*/
                 this.updateTemporaryTDataList(this.temporaryTDataList.getValue());
+            } else {
+                //Exibe um dialog de erro de cadastro
+                CustomDialogs.registrationError();
             }
 
         } else if(this.currentOperation == Operation.UPDATE) {

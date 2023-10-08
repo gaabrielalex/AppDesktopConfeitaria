@@ -29,9 +29,17 @@ public class UsuarioService {
     }
 
     public boolean insert(Usuario usuario) {
-        /*Solicita a inserção ao DAO já retornando o resultado,
-        se a inserção foi bem sucedida ou não*/
-        return this.usuarioDAO.insert(usuario);
+        //Valida os dados do usuário
+        if(usuario != null && usuario.getNome().length() <= 100 && usuario.getLogin().length() <= 30 && usuario.getSenha().length() <= 30
+                && !this.isIdExists(usuario.getIdUsuario()) && !this.isLoginExists(usuario.getLogin())) {
+
+            /*Caso os dados sejam válidos, solicita ao DAO a inserção
+            do usuário no banco de daods já retornando o resultado*/
+            return this.usuarioDAO.insert(usuario);
+        } else {
+            return false;
+        }
+        
     }
 
     /* ----- Regras de negócio ----- */

@@ -10,9 +10,9 @@ import javax.swing.JOptionPane;
  *
  * @author Gabriel
  */
-public class ConfirmationDeleteRecordDialog {
+public class CustomDialogs {
     
-    public static boolean showDialog() {
+    public static boolean ConfirmationDeleteRecord() {
         //Cria um array de opções para o dialog
         Object[] options = { "Ok", "Cancelar" };
 
@@ -34,5 +34,27 @@ public class ConfirmationDeleteRecordDialog {
         classe JOptionPane, caso seja, retorna true, caso contrário, retorna false*/
         return result == JOptionPane.OK_OPTION;
     }
+
+    public static void registrationError() {
+        //Exibe um dialog de erro de cadastro
+        CustomDialogs.standardErrorDataManipulation("Erro ao cadastrar registro!");
+    }
+
+    public static void updateError() {
+        //Exibe um dialog de erro de atualização
+        CustomDialogs.standardErrorDataManipulation("Erro ao atualizar registro!");
+    }
+
+    public static void standardErrorDataManipulation(String message) {
+        //Exibe um dialog de erro de banco de dados
+        JOptionPane.showMessageDialog(
+            null,
+            message +
+            "\nVerifique os dados e tente novamente.",
+            "Erro",
+            JOptionPane.ERROR_MESSAGE
+        );
+    }
+
     
 }
