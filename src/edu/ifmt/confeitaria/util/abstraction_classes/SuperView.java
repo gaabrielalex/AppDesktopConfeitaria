@@ -20,11 +20,12 @@ import javax.swing.JTable;
  */
 public abstract class SuperView extends javax.swing.JFrame{
     //Atributos
-    private static final Color DEFAULT_BACKGROUND_COLOR = new Color(237, 237, 237);
+    public static final Color DEFAULT_BACKGROUND_COLOR = new Color(237, 237, 237);
+    public static final Color ERROR_COLOR = new Color(255, 0, 0);
       
     //Constructors   
     
-    //Getters e Setters 
+    //Getters e Setters
      
     //Métodos
     public void setDefaultViewSettings(String title, JFrame previousView) {

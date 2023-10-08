@@ -112,6 +112,14 @@ public class DatabaseAccessComponentManager<T> {
         this.fieldsToModel = fieldsToModel;
     }
 
+    public BehaviorSubject<T> getTSelectedRecord() {
+        return tSelectedRecord;
+    }
+
+    public Operation getCurrentOperation() {
+        return currentOperation;
+    }
+
     //MÉTODOS
     public void configureComponents(Class<T> modelClass ,SuperController<T> controller ,JButton btnInsert, JButton btnUpdate, JButton btnDelete, JButton btnPost, JButton btnCancel, JButton btnRefresh, JTable table) {
         //Setando os atributos
@@ -278,8 +286,6 @@ public class DatabaseAccessComponentManager<T> {
             /*Atualiza a lista de dados temporária diretamente, pois o observable 
             não notifica a alteração quando apenas itens da lista são alterados*/
             this.updateTemporaryTDataList(this.temporaryTDataList.getValue());
-
-            System.out.println("INSERT CANCELADO"); //Mensagem momentânea de teste
         } else if(this.currentOperation == Operation.UPDATE) {
             this.resetManagerDefaultSettings();
 
@@ -294,8 +300,6 @@ public class DatabaseAccessComponentManager<T> {
 
             //Ativa a funcionalidade novamente
             this.activateUpdateWhenFieldsChange = true;
-                
-            System.out.println("UPDATE CANCELADO"); //Mensagem momentânea de teste
         }
     }
 

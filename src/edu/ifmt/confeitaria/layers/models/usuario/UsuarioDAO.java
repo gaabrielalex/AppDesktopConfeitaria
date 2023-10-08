@@ -18,13 +18,74 @@ import edu.ifmt.confeitaria.util.database.DBConnection;
  * @author Gabriel
  */
 public class UsuarioDAO {
-    //Attributes
     private String lastSQLSelect;
 
-    //Getters and Setters
-
-    //Methods
     /* ------ Operações básicas de banco de dados ------ */
+    public List<Usuario> selectById(Long idUsuario) {
+        if(idUsuario == null) return null;
+
+        //Obtém a conexão com o banco de dados, cria o Statement e o ResultSet
+        Connection connection = DBConnection.getConnection();
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        //Cria a query
+        String sql =    "SELECT * " +
+                        "FROM usuario " +
+                            "WHERE id_usuario = ?";
+
+        try{
+            //Cria o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
+            statement = connection.prepareStatement(sql);
+            statement.setLong(1, idUsuario);
+
+            //Obtém o ResultSet exexutando a query
+            resultSet = statement.executeQuery();
+            
+            return this.resultSetToList(resultSet); 
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } 
+        finally {
+            //Fecha a conexão com o banco de dados e os recursos criados a partir dela
+            DBConnection.closeConnection(statement, resultSet);
+        }
+    }
+
+    public List<Usuario> selectByLogin(String login) {
+       if(login == null) return null;
+
+        //Obtém a conexão com o banco de dados, cria o Statement e o ResultSet
+        Connection connection = DBConnection.getConnection();
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        //Cria a query
+        String sql =    "SELECT * " +
+                        "FROM usuario " +
+                            "WHERE login = ?";
+
+        try{
+            //Cria o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, login);
+
+            //Obtém o ResultSet exexutando a query
+            resultSet = statement.executeQuery();
+            
+            return this.resultSetToList(resultSet); 
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } 
+        finally {
+            //Fecha a conexão com o banco de dados e os recursos criados a partir dela
+            DBConnection.closeConnection(statement, resultSet);
+        }
+    }
+    
+
     public List<Usuario> select(String nome, String login) {
         //Obtém a conexão com o banco de dados, cria o Statement e o ResultSet
         Connection connection = DBConnection.getConnection();
@@ -39,9 +100,9 @@ public class UsuarioDAO {
         //Cria a query
         String sql =    "SELECT *"+
                         "FROM usuario " +
-                        "WHERE 1 = 1" +
-                            (selectByName ?  "AND unaccent(nome) ILIKE unaccent(?)" : "") +  //Se o usuário deseja pesquisar por nome, adiciona a condição à query
-                            (selectByLogin ? "AND unaccent(login) ILIKE unaccent(?)" : "") + //Se o usuário deseja pesquisar por login, adiciona a condição à query
+                            "WHERE 1 = 1" +
+                                (selectByName ?  "AND unaccent(nome) ILIKE unaccent(?)" : "") +  //Se o usuário deseja pesquisar por nome, adiciona a condição à query
+                                (selectByLogin ? "AND unaccent(login) ILIKE unaccent(?)" : "") + //Se o usuário deseja pesquisar por login, adiciona a condição à query
                         "ORDER BY nome, login";
 
         /*Define o padrão de pesquisa em relação aos parâmetros fornecidos pelo usuário*/

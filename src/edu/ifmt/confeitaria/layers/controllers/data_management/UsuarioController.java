@@ -34,6 +34,7 @@ public class UsuarioController extends SuperController<Usuario> {
         this.usuarioView.setVisible(true);
     }
 
+    /* ----- Métodos principais de manipulação de dados ----- */
     @Override
     public List<Usuario> select() {
         return this.usuarioService.select();
@@ -50,8 +51,14 @@ public class UsuarioController extends SuperController<Usuario> {
 
     @Override
     public boolean insert(Usuario usuario) {
-        /*Solicita a inserção ao Service já retornando o 
+        /*Solicita a inserção a Service já retornando o 
         resultado, se a inserção foi bem sucedida ou não*/
         return this.usuarioService.insert(usuario);
+    }
+
+    /* ----- Regras de negócio ----- */
+    public boolean isIdExists(Long idUsuario){
+        //Solicita a Service a verificação já retornando o resultado
+        return this.usuarioService.isIdExists(idUsuario);
     }
 }

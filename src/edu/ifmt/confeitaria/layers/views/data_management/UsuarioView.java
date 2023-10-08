@@ -15,6 +15,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
@@ -60,8 +63,8 @@ public class UsuarioView extends SuperView {
         btnUpdate = new javax.swing.JButton();
         edtNome = new javax.swing.JFormattedTextField();
         edtCodCliente = new javax.swing.JFormattedTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblCodUsuarioValidation = new javax.swing.JLabel();
+        lblLoginValidation = new javax.swing.JLabel();
         editConfirmationWithRefresh = new javax.swing.JPanel();
         btnPost = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
@@ -213,13 +216,13 @@ public class UsuarioView extends SuperView {
 
         edtCodCliente.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(204, 51, 0));
-        jLabel1.setText("Código já existente !!!");
+        lblCodUsuarioValidation.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        lblCodUsuarioValidation.setForeground(new java.awt.Color(204, 51, 0));
+        lblCodUsuarioValidation.setText("Código já existente !!!");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(204, 51, 0));
-        jLabel2.setText("Login já existente !!!");
+        lblLoginValidation.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        lblLoginValidation.setForeground(new java.awt.Color(204, 51, 0));
+        lblLoginValidation.setText("Login já existente !!!");
 
         javax.swing.GroupLayout pnlEditingUsuarioLayout = new javax.swing.GroupLayout(pnlEditingUsuario);
         pnlEditingUsuario.setLayout(pnlEditingUsuarioLayout);
@@ -238,7 +241,7 @@ public class UsuarioView extends SuperView {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(pswdSenha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblLoginValidation, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(edtLogin)
                                 .addComponent(edtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)))
@@ -248,7 +251,7 @@ public class UsuarioView extends SuperView {
                                 .addComponent(lblCodCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblCodUsuarioValidation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(edtCodCliente)))
                             .addGroup(pnlEditingUsuarioLayout.createSequentialGroup()
                                 .addGap(55, 55, 55)
@@ -271,14 +274,14 @@ public class UsuarioView extends SuperView {
                     .addComponent(edtCodCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblNome))
                 .addGap(0, 0, 0)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblCodUsuarioValidation, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(edtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblLogin)
                     .addComponent(btnEnabledSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblLoginValidation, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSenha)
@@ -288,7 +291,7 @@ public class UsuarioView extends SuperView {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jLabel1.getAccessibleContext().setAccessibleName("");
+        lblCodUsuarioValidation.getAccessibleContext().setAccessibleName("");
 
         btnPost.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/ifmt/confeitaria/assets/images/icons8-accept-30.png"))); // NOI18N
         btnPost.setToolTipText("Salvar");
@@ -413,12 +416,12 @@ public class UsuarioView extends SuperView {
     private javax.swing.JTextField edtLoginFiltro;
     private javax.swing.JFormattedTextField edtNome;
     private javax.swing.JTextField edtNomeFiltro;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCodCliente;
+    private javax.swing.JLabel lblCodUsuarioValidation;
     private javax.swing.JLabel lblLogin;
     private javax.swing.JLabel lblLoginFiltro;
+    private javax.swing.JLabel lblLoginValidation;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblNomeFiltro;
     private javax.swing.JLabel lblSenha;
@@ -450,6 +453,8 @@ public class UsuarioView extends SuperView {
             //Default attribute values
             this.defaultColumnMaxWidth = 0;
             this.defaultColumnPreferredWidth = 0;
+            this.lblCodUsuarioValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
+            this.lblLoginValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
             
             //Triggering methods
                 //Configurando o DatabaseAccessComponentManager
@@ -463,6 +468,9 @@ public class UsuarioView extends SuperView {
 
                 //Por padrão, a senha não é visível ao exibir a interface
                 this.setPasswordsVisibility();
+                
+                //Adicionando as validações dos campos
+                this.addCodUsuarioValidation();
     }
     //Getters e Setters 
     public int getDefaultColumnMaxWidth() {
@@ -542,4 +550,47 @@ public class UsuarioView extends SuperView {
        );
     }
 
+
+    //MÉTODOS PARA ADICIONAR VALIDAÇÕES AOS CAMPOS
+    public void addCodUsuarioValidation() {
+        this.edtCodCliente.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                validateCodUsuario();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                validateCodUsuario();
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                validateCodUsuario();
+            }
+        });
+    }
+
+    public void validateCodUsuario() {
+        Long id = null;
+
+        if(!this.edtCodCliente.getText().isEmpty()) {
+            try {
+                id = Long.parseLong(this.edtCodCliente.getText());
+            } catch(NumberFormatException e) {
+             
+            }
+        }
+
+        /*Se o id já existir no banco de dados, se o id for diferente ao id do registro atual(que 
+        está sendo editado) e a operação atual for de inserção ou atualização, o label de validação
+        ficará vermelho, caso contrário, ficará da cor de fundo da view, para não ficar visível*/
+        if(this.usuarioController.isIdExists(id) 
+          && !this.usuarioDBCManager.getTSelectedRecord().getValue().getIdUsuario().equals(id)
+          && (this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.INSERT
+          || this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.UPDATE)) {
+
+            this.lblCodUsuarioValidation.setForeground(SuperView.ERROR_COLOR);
+        } else {
+            this.lblCodUsuarioValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
+        }
+    }
 }
