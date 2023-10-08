@@ -31,7 +31,7 @@ public class UsuarioService {
     public boolean insert(Usuario usuario) {
         //Valida os dados do usuário
         if(usuario != null && usuario.getNome().length() <= 100 && usuario.getLogin().length() <= 30 && usuario.getSenha().length() <= 30
-                && !this.isIdExists(usuario.getIdUsuario()) && !this.isLoginExists(usuario.getLogin())) {
+                && usuario.getIdUsuario() > 0 && !this.isIdExists(usuario.getIdUsuario()) && !this.isLoginExists(usuario.getLogin())) {
 
             /*Caso os dados sejam válidos, solicita ao DAO a inserção
             do usuário no banco de daods já retornando o resultado*/

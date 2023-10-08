@@ -7,7 +7,7 @@ package edu.ifmt.confeitaria.layers.views.data_management;
 
 import edu.ifmt.confeitaria.layers.controllers.data_management.UsuarioController;
 import edu.ifmt.confeitaria.layers.models.usuario.Usuario;
-import edu.ifmt.confeitaria.util.UtilMethods;
+import edu.ifmt.confeitaria.util.UtilResources;
 import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperView;
 
@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -468,8 +469,8 @@ public class UsuarioView extends SuperView {
                 this.setPasswordsVisibility();
                 
                 //Adicionando as validações dos campos
-                UtilMethods.addTextChangeListeners(this.edtCodCliente, this::validateCodUsuario);
-                UtilMethods.addTextChangeListeners(this.edtLogin, this::validateLogin);
+                UtilResources.addTextChangeListeners(this.edtCodCliente, this::validateCodUsuario);
+                UtilResources.addTextChangeListeners(this.edtLogin, this::validateLogin);
     }
     //Getters e Setters 
     public int getDefaultColumnMaxWidth() {
@@ -552,8 +553,11 @@ public class UsuarioView extends SuperView {
 
     //MÉTODOS PARA ADICIONAR VALIDAÇÕES AOS CAMPOS
     public void validateCodUsuario() {
-        Long id = null;
+        //Permitindo apenas números positivos
+        UtilResources.allowOnlyPositiveNumbers(edtCodCliente);
 
+        //Capturando o id digitado
+        Long id = null;
         if(!this.edtCodCliente.getText().isEmpty()) {
             try {
                 id = Long.parseLong(this.edtCodCliente.getText());
@@ -561,16 +565,15 @@ public class UsuarioView extends SuperView {
              
             }
         }
-
         /*Se o usuário estiver atualizando um registro e o id do registro selecionado(que está sendo editado) for
         diferente do id que está sendo digitado ou se o usuário estiver inserindo um novo registro e, atendendo
         algum dos casos anteriores, se o id já existir, a label de validação ficará vermelha, mostrando o erro*/
         if(     ((this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.UPDATE
-                    && !this.usuarioDBCManager.getTSelectedRecord().getValue().getIdUsuario().equals(id))
-                || this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.INSERT)
-            && this.usuarioController.isIdExists(id) 
-            ) {
-
+                && !this.usuarioDBCManager.getTSelectedRecord().getValue().getIdUsuario().equals(id))
+                    || this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.INSERT)
+                        && this.usuarioController.isIdExists(id)) {
+            
+            this.lblCodUsuarioValidation.setText("Código já existente !!!");
             this.lblCodUsuarioValidation.setForeground(SuperView.ERROR_COLOR);
         } else {
             this.lblCodUsuarioValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
@@ -584,11 +587,11 @@ public class UsuarioView extends SuperView {
         diferente do login que está sendo digitado ou se o usuário estiver inserindo um novo registro e, atendendo
         algum dos casos anteriores, se o login já existir, a label de validação ficará vermelha, mostrando o erro*/
         if(     ((this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.UPDATE
-                    && !this.usuarioDBCManager.getTSelectedRecord().getValue().getLogin().equals(login))
-                || this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.INSERT)
-            && this.usuarioController.isLoginExists(login) 
-            ) {
-
+                && !this.usuarioDBCManager.getTSelectedRecord().getValue().getLogin().equals(login))
+                    || this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.INSERT)
+                        && this.usuarioController.isLoginExists(login)) {
+            
+            this.lblLoginValidation.setText("Login já existente !!!");
             this.lblLoginValidation.setForeground(SuperView.ERROR_COLOR);
         } else {
             this.lblLoginValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
