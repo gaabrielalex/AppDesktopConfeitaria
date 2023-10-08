@@ -44,8 +44,7 @@ public class UsuarioDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
-        } 
-        finally {
+        } finally {
             //Fecha a conexão com o banco de dados e os recursos criados a partir dela
             DBConnection.closeConnection(statement, resultSet);
         }
@@ -75,8 +74,7 @@ public class UsuarioDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
-        } 
-        finally {
+        } finally {
             //Fecha a conexão com o banco de dados e os recursos criados a partir dela
             DBConnection.closeConnection(statement, resultSet);
         }
@@ -129,8 +127,7 @@ public class UsuarioDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
-        } 
-        finally {
+        } finally {
             //Fecha a conexão com o banco de dados e os recursos criados a partir dela
             DBConnection.closeConnection(statement, resultSet);
         }
@@ -151,8 +148,7 @@ public class UsuarioDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
-        } 
-        finally {
+        } finally {
             //Fecha a conexão com o banco de dados e os recursos criados a partir dela
             DBConnection.closeConnection(statement, resultSet);
         }
@@ -220,6 +216,42 @@ public class UsuarioDAO {
 
         //Fecha a conexão com o banco de dados e os recursos criados a partir dela
         DBConnection.closeConnection(statement);
+    }
+
+    public boolean update(Usuario usuario, Long originalID) {
+        if(originalID == null) return false;
+
+        //Cria o PreparedStatement
+        PreparedStatement statement = null;
+
+        try {
+            //Cria a query
+            String sql =    "UPDATE usuario " +
+                            "SET id_usuario = ?, nome = ?, login = ?, senha = ? " +
+                                "WHERE id_usuario = ?";
+            
+            //Cria o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
+            statement = DBConnection.getConnection().prepareStatement(sql);
+            statement.setLong(1, usuario.getIdUsuario());
+            statement.setString(2, usuario.getNome());
+            statement.setString(3, usuario.getLogin());
+            statement.setString(4, usuario.getSenha());
+            statement.setLong(5, originalID);
+            
+            //Executa a query
+            statement.executeUpdate();
+
+            //Se a atualização foi realizada com sucesso, retorna true
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            //Se a atualização não foi realizada com sucesso, retorna false
+            return false;
+        } finally {
+            //Fecha a conexão com o banco de dados e os recursos criados a partir dela
+            DBConnection.closeConnection(statement);
+        }
     }
 
     /* ------ Métodos/Operações auxiliares ------ */
