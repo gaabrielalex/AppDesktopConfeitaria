@@ -8,6 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -56,6 +57,7 @@ public class DatabaseAccessComponentManager<T> {
     //Atributos funcionais
     private Function<T, Object[]> modelToTableRow;
     private Consumer<T> modelToFields;
+    private Supplier<T> fieldsToModel;
 
     //CONSTRUCTORS
 
@@ -104,6 +106,10 @@ public class DatabaseAccessComponentManager<T> {
 
     public void setModelToFields(Consumer<T> modelToFields) {
         this.modelToFields = modelToFields;
+    } 
+
+    public void setFieldsToModel(Supplier<T> fieldsToModel) {
+        this.fieldsToModel = fieldsToModel;
     }
 
     //MÉTODOS
@@ -134,6 +140,7 @@ public class DatabaseAccessComponentManager<T> {
         para evitar NullPointerException caso não sejam setados*/
         if(this.modelToTableRow == null) this.modelToTableRow = x -> null;
         if(this.modelToFields == null) this.modelToFields = x -> {};
+        if(this.fieldsToModel == null) this.fieldsToModel = () -> null;
 
         //Adicionando os eventos aos componentes
         this.btnInsert.addActionListener((ActionEvent e) -> {
@@ -234,63 +241,61 @@ public class DatabaseAccessComponentManager<T> {
     }
 
     private void post() {
-        try{
-            /*Estrutura condicional para determinar a ação a ser tomada de acordo com a operação atual*/
-            if(this.currentOperation == Operation.INSERT) {
-            
+        /*Estrutura condicional para determinar a ação a ser tomada de acordo com a operação atual*/
+        if(this.currentOperation == Operation.INSERT) {
+            //Captura os dados dos campos já em formato de objeto
+            T tObject = this.fieldsToModel.get();
 
+            // Solita a inserção do objeto no BD por meio da controller, armazenando a resposta de sucesso ou não da operação
+            boolean response = this.controller.insert(tObject);
 
+            if(response){
+                this.resetManagerDefaultSettings();
 
-            } else if(this.currentOperation == Operation.UPDATE) {
-                /*É necessário atualizar a operação atual para NONE antes do método "resetManagerDefaultSettings"(que também
-                atualiza a operação atual para NONE). Isso é necessário pois o método "resetManagerDefaultSettings" só será
-                chamado após o método que atualiza os dados dos campos. E isso pode causar problemas, pois o método de atualização
-                dos campos tratará a operação atual como UPDATE, não como NONE(que é o esperado se a atualização for cancelada).
-                Logo, é necessário atualizar a operação atual para NONE antes que o método que atualiza os campos seja chamado*/
-                this.currentOperation = Operation.NONE;
+                //Atualiza a lista de dados temporária para as mudanças serem refletidas nos componentes visuais
+                this.temporaryTDataList.getValue().set(this.selectedRecordIndex.getValue(), tObject);
 
-                System.out.println("UPDATE REALIZADO"); //Mensagem momentânea de teste
+                /*Força a atualização da lista pois o observable não notifica alterações quando apenas itens da lista são alterados*/
+                this.updateTemporaryTDataList(this.temporaryTDataList.getValue());
             }
 
+        } else if(this.currentOperation == Operation.UPDATE) {
             this.resetManagerDefaultSettings();
-        }catch(Exception e){
-            e.printStackTrace();
+
+            System.out.println("UPDATE REALIZADO"); //Mensagem momentânea de teste
         }
     }
  
     private void cancel() {
-        try{
-            /*Estrutura condicional para determinar a ação a ser tomada de acordo com a operação atual*/
-            if(this.currentOperation == Operation.INSERT) {
-                /*Caso o usuário cancele a inserção do registro, o registro em branco que foi adicionado na 
-                lista de dados temporária deve ser removido, pois o mesmo não será inserido no banco de dados*/
-                this.temporaryTDataList.getValue().remove(this.tSelectedRecord.getValue());
+        /*Estrutura condicional para determinar a ação a ser tomada de acordo com a operação atual*/
+        if(this.currentOperation == Operation.INSERT) {
+             this.resetManagerDefaultSettings();
+ 
+            /*Caso o usuário cancele a inserção do registro, o registro em branco que foi adicionado na 
+            lista de dados temporária deve ser removido, pois o mesmo não será inserido no banco de dados*/
+            this.temporaryTDataList.getValue().remove(this.tSelectedRecord.getValue());
 
-                /*Atualiza a lista de dados temporária diretamente, pois o observable 
-                não notifica a alteração quando apenas itens da lista são alterados*/
-                this.updateTemporaryTDataList(this.temporaryTDataList.getValue());
+            /*Atualiza a lista de dados temporária diretamente, pois o observable 
+            não notifica a alteração quando apenas itens da lista são alterados*/
+            this.updateTemporaryTDataList(this.temporaryTDataList.getValue());
 
-                System.out.println("INSERT CANCELADO"); //Mensagem momentânea de teste
-            } else if(this.currentOperation == Operation.UPDATE) {
-                /*É necessário atualizar a operação atual para NONE antes do método "resetManagerDefaultSettings"(que também
-                atualiza a operação atual para NONE). Isso é necessário pois o método "resetManagerDefaultSettings" só será
-                chamado após o método que atualiza os dados dos campos. E isso pode causar problemas, pois o método de atualização
-                dos campos tratará a operação atual como UPDATE, não como NONE(que é o esperado se a atualização for cancelada).
-                Logo, é necessário atualizar a operação atual para NONE antes que o método que atualiza os campos seja chamado*/
-                this.currentOperation = Operation.NONE;
-
-                /*Caso o usuário cancele a edição do registro, os campos devem ser atualizados manualmente
-                com os dados originais do registro que havia sido selecionado para atualização. Como quem 
-                notifica a atualização dos campos é um observable, e os dados da mesma não foram alterados
-                de fato, apenas copiados para os campos, então é necessário forçar a atualização dos campos*/
-                this.displayDataInFields(this.tSelectedRecord.getValue()); 
-                 
-                System.out.println("UPDATE CANCELADO"); //Mensagem momentânea de teste
-            }
-
+            System.out.println("INSERT CANCELADO"); //Mensagem momentânea de teste
+        } else if(this.currentOperation == Operation.UPDATE) {
             this.resetManagerDefaultSettings();
-        }catch(Exception e){
-            e.printStackTrace();
+
+            //Desativa a funcionalidade antes de atualizar os campos para evitar um loop infinito
+            this.activateUpdateWhenFieldsChange = false;
+
+            /*Caso o usuário cancele a edição do registro, os campos devem ser atualizados manualmente
+            com os dados originais do registro que havia sido selecionado para atualização. Como quem 
+            notifica a atualização dos campos é um observable, e os dados da mesma não foram alterados
+            de fato, apenas copiados para os campos, então é necessário forçar a atualização dos campos*/
+            this.displayDataInFields(this.tSelectedRecord.getValue());
+
+            //Ativa a funcionalidade novamente
+            this.activateUpdateWhenFieldsChange = true;
+                
+            System.out.println("UPDATE CANCELADO"); //Mensagem momentânea de teste
         }
     }
 
@@ -375,7 +380,7 @@ public class DatabaseAccessComponentManager<T> {
             this.modelToFields.accept(tSelectedRecord);
         } else if(this.currentOperation == Operation.NONE && (this.fields == null || this.fields.size() == 0)) {
             /*Caso a operação atual for NONE e se os campos que exibem os dados não foram setados para serem gerenciados
-            pelo manager, esse método garantirá que os campos não exibam nenhum dado, pois isso pode causar erros.
+            pelo manager, esse método garantirá que os campos não exibam nenhum dado, pois isso poderia causar erros.
             Essa ação é realizada passando um objeto vazio para o método que atualiza os campos*/
             try {
                 /*Desligando a funcionalidade de atualização dos campos quando os 

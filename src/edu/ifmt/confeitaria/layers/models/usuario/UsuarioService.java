@@ -30,9 +30,10 @@ public class UsuarioService {
         return this.usuarioDAO.remakeLastSelect();
     }
 
-    public void insert(Usuario usuario) {
-        //Solicita a inserção ao DAO
-        this.usuarioDAO.insert(usuario);
+    public boolean insert(Usuario usuario) {
+        /*Solicita a inserção ao DAO já retornando o resultado,
+        se a inserção foi bem sucedida ou não*/
+        return this.usuarioDAO.insert(usuario);
     }
 
 }

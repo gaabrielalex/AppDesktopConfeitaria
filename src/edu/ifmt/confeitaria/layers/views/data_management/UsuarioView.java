@@ -48,11 +48,9 @@ public class UsuarioView extends SuperView {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUsuario = new javax.swing.JTable();
         btnEnabledSenha = new javax.swing.JButton();
-        edtNome = new javax.swing.JTextField();
         lblSenha = new javax.swing.JLabel();
         edtLogin = new javax.swing.JTextField();
         lblLogin = new javax.swing.JLabel();
-        edtCodCliente = new javax.swing.JTextField();
         lblNome = new javax.swing.JLabel();
         pswdSenha = new javax.swing.JPasswordField();
         lblCodCliente = new javax.swing.JLabel();
@@ -60,6 +58,10 @@ public class UsuarioView extends SuperView {
         btnInsert = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
+        edtNome = new javax.swing.JFormattedTextField();
+        edtCodCliente = new javax.swing.JFormattedTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         editConfirmationWithRefresh = new javax.swing.JPanel();
         btnPost = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
@@ -207,6 +209,18 @@ public class UsuarioView extends SuperView {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        edtNome.setColumns(5);
+
+        edtCodCliente.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(204, 51, 0));
+        jLabel1.setText("Código já existente !!!");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(204, 51, 0));
+        jLabel2.setText("Login já existente !!!");
+
         javax.swing.GroupLayout pnlEditingUsuarioLayout = new javax.swing.GroupLayout(pnlEditingUsuario);
         pnlEditingUsuario.setLayout(pnlEditingUsuarioLayout);
         pnlEditingUsuarioLayout.setHorizontalGroup(
@@ -214,32 +228,32 @@ public class UsuarioView extends SuperView {
             .addGroup(pnlEditingUsuarioLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlFiltroUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlEditingUsuarioLayout.createSequentialGroup()
-                        .addGap(24, 24, 24)
+                        .addGap(10, 10, 10)
                         .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(pnlEditingUsuarioLayout.createSequentialGroup()
-                                .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblNome, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(edtNome)
-                                    .addComponent(edtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(pnlEditingUsuarioLayout.createSequentialGroup()
-                                .addComponent(lblSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(pswdSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lblSenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblNome, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                            .addComponent(lblLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pswdSenha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(edtLogin)
+                                .addComponent(edtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)))
                         .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlEditingUsuarioLayout.createSequentialGroup()
-                                .addGap(39, 39, 39)
+                                .addGap(28, 28, 28)
                                 .addComponent(lblCodCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(edtCodCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(edtCodCliente)))
                             .addGroup(pnlEditingUsuarioLayout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addComponent(btnEnabledSenha))))
-                    .addComponent(pnlFiltroUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10))
+                                .addGap(55, 55, 55)
+                                .addComponent(btnEnabledSenha)))))
+                .addContainerGap(10, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEditingUsuarioLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(recordEditing, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -251,26 +265,30 @@ public class UsuarioView extends SuperView {
                 .addGap(10, 10, 10)
                 .addComponent(pnlFiltroUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblNome))
-                    .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblCodCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(edtCodCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCodCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edtCodCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNome))
+                .addGap(0, 0, 0)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(edtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblLogin)
                     .addComponent(btnEnabledSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(0, 0, 0)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSenha)
                     .addComponent(pswdSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
+                .addGap(18, 18, 18)
                 .addComponent(recordEditing, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
+
+        jLabel1.getAccessibleContext().setAccessibleName("");
 
         btnPost.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/ifmt/confeitaria/assets/images/icons8-accept-30.png"))); // NOI18N
         btnPost.setToolTipText("Salvar");
@@ -390,11 +408,13 @@ public class UsuarioView extends SuperView {
     private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JPanel editConfirmationWithRefresh;
-    private javax.swing.JTextField edtCodCliente;
+    private javax.swing.JFormattedTextField edtCodCliente;
     private javax.swing.JTextField edtLogin;
     private javax.swing.JTextField edtLoginFiltro;
-    private javax.swing.JTextField edtNome;
+    private javax.swing.JFormattedTextField edtNome;
     private javax.swing.JTextField edtNomeFiltro;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCodCliente;
     private javax.swing.JLabel lblLogin;
@@ -433,15 +453,16 @@ public class UsuarioView extends SuperView {
             
             //Triggering methods
                 //Configurando o DatabaseAccessComponentManager
-                List<Component> fields = Arrays.asList(this.edtCodCliente, this.edtNome, this.edtLogin, this.pswdSenha);
+                List<Component> fields = Arrays.asList(this.edtCodCliente, this.edtNome, this.edtLogin, this.pswdSenha);;
                 this.usuarioDBCManager.setFields(fields);
                 this.usuarioDBCManager.setModelToTableRow(this::modelToTableRow);
                 this.usuarioDBCManager.setModelToFields(this::modelToFields);
+                this.usuarioDBCManager.setFieldsToModel(this::fieldsToModel);
                 this.usuarioDBCManager.configureComponents(Usuario.class, this.usuarioController, this.btnInsert,
                 this.btnUpdate, this.btnDelete, this.btnPost, this.btnCancel, this.btnRefresh, this.tblUsuario); 
 
                 //Por padrão, a senha não é visível ao exibir a interface
-                this.setPasswordsVisibility();                  
+                this.setPasswordsVisibility();
     }
     //Getters e Setters 
     public int getDefaultColumnMaxWidth() {
@@ -509,6 +530,16 @@ public class UsuarioView extends SuperView {
         this.edtNome.setText(usuario.getNome());
         this.edtLogin.setText(usuario.getLogin());
         this.pswdSenha.setText(usuario.getSenha());
+    }
+
+    //Método para realizar mapeamento dos campos da interface para um objeto Usuario
+    public Usuario fieldsToModel() {
+       return new Usuario(
+            this.edtCodCliente.getText().isEmpty() ? null : Long.parseLong(this.edtCodCliente.getText()),
+            this.edtNome.getText(),
+            this.edtLogin.getText(),
+            this.pswdSenha.getPassword().toString()
+       );
     }
 
 }

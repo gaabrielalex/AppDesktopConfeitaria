@@ -104,40 +104,70 @@ public class UsuarioDAO {
         }
     }
 
-    public void insert(Usuario usuario) {
+    public boolean insert(Usuario usuario) {
         //Obtém a conexão com o banco de dados, cria o Statement e o ResultSet
         Connection connection = DBConnection.getConnection();
         PreparedStatement statement = null;
-        
-        //Cria a query
-        String sql =    "INSERT INTO usuario(id_cliente, nome, login, senha) " +
-                        "VALUES(?, ?, ?, ?)";
-        
-        try{
-            //Cria o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
-            statement = connection.prepareStatement(sql);
-            
-            // Verifica se o ID do usuário foi fornecido
-            if(usuario.getIdUsuario() == null) {
-                // O ID será gerado pelo PostgreSQL
-                statement.setNull(1, java.sql.Types.INTEGER);
+
+        try {
+            //Verifica se o ID do usuário foi fornecido ou se é válido
+            if(usuario.getIdUsuario() == null || usuario.getIdUsuario() == 0) {
+                //Se não foi, realiza a inserção sem o ID
+                this.insertWithoutId(usuario, connection, statement);
             } else {
-                // O ID foi fornecido pelo usuário
-                statement.setLong(1, usuario.getIdUsuario());
+                //Se foi, realiza a inserção com o ID
+                this.insertWithId(usuario, connection, statement);
             }
-            statement.setString(2, usuario.getNome());
-            statement.setString(3, usuario.getLogin());
-            statement.setString(4, usuario.getSenha());
-            
-            //Executa a query
-            statement.executeUpdate();
+
+            //Se a inserção foi realizada com sucesso, retorna true
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
+
+            //Se a inserção não foi realizada com sucesso, retorna false
+            return false;
         } 
-        finally {
-            //Fecha a conexão com o banco de dados e os recursos criados a partir dela
-            DBConnection.closeConnection(statement);
-        }
+    }
+
+    /*Método para inserir um usuário sem o ID. O método é privado pois as solicitações de inserção
+    devem ser feitas através do método insert(Usuario usuario) para que o ID seja verificado por ele*/
+    private void insertWithoutId(Usuario usuario, Connection connection, PreparedStatement statement) throws SQLException {
+        //Cria a query
+        String sql =    "INSERT INTO usuario(nome, login, senha) " +
+                        "VALUES(?, ?, ?)";
+         
+        //Cria o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
+        statement = connection.prepareStatement(sql);
+        statement.setString(1, usuario.getNome());
+        statement.setString(2, usuario.getLogin());
+        statement.setString(3, usuario.getSenha());
+        
+        //Executa a query
+        statement.executeUpdate();
+
+        //Fecha a conexão com o banco de dados e os recursos criados a partir dela
+        DBConnection.closeConnection(statement);
+    }
+
+    /*Método para inserir um usuário com o ID. O método é privado pois as solicitações de inserção
+    devem ser feitas através do método insert(Usuario usuario) para que o ID seja verificado por ele*/
+    private void insertWithId(Usuario usuario, Connection connection, PreparedStatement statement) throws SQLException {
+        //Cria a query
+        String sql =    "INSERT INTO usuario(id_usuario, nome, login, senha) " +
+                        "VALUES(?, ?, ?, ?)";
+        
+        //Cria o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
+        statement = connection.prepareStatement(sql);
+        statement.setLong(1, usuario.getIdUsuario());
+        statement.setString(2, usuario.getNome());
+        statement.setString(3, usuario.getLogin());
+        statement.setString(4, usuario.getSenha());
+        
+        //Executa a query
+        statement.executeUpdate();
+
+        //Fecha a conexão com o banco de dados e os recursos criados a partir dela
+        DBConnection.closeConnection(statement);
     }
 
     /* ------ Métodos/Operações auxiliares ------ */
