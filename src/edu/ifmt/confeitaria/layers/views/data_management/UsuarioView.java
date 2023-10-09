@@ -7,9 +7,10 @@ package edu.ifmt.confeitaria.layers.views.data_management;
 
 import edu.ifmt.confeitaria.layers.controllers.data_management.UsuarioController;
 import edu.ifmt.confeitaria.layers.models.usuario.Usuario;
-import edu.ifmt.confeitaria.util.UtilResources;
 import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperView;
+import edu.ifmt.confeitaria.util.service.ServiceUtils;
+import edu.ifmt.confeitaria.util.view.ViewUtils;
 
 import java.awt.Component;
 import java.util.Arrays;
@@ -470,8 +471,8 @@ public class UsuarioView extends SuperView {
                 this.setPasswordsVisibility();
                 
                 //Adicionando as validações dos campos
-                UtilResources.addTextChangeListeners(this.edtCodCliente, this::validateCodUsuario);
-                UtilResources.addTextChangeListeners(this.edtLogin, this::validateLogin);
+                ViewUtils.addTextChangeListeners(this.edtCodCliente, this::validateCodUsuario);
+                ViewUtils.addTextChangeListeners(this.edtLogin, this::validateLogin);
     }
     //Getters e Setters 
     public int getDefaultColumnMaxWidth() {
@@ -563,7 +564,7 @@ public class UsuarioView extends SuperView {
                 if(id <= 0) {
                     this.lblCodUsuarioValidation.setText("Código inválido !!!");
                     this.lblCodUsuarioValidation.setForeground(SuperView.ERROR_COLOR);
-                } else if(id >= UtilResources.MAX_ID_VALUE) {
+                } else if(id >= ServiceUtils.MAX_ID_VALUE) {
                     this.lblCodUsuarioValidation.setText("Limite máx. excedido !!!");
                     this.lblCodUsuarioValidation.setForeground(SuperView.ERROR_COLOR);
                 }

@@ -20,8 +20,8 @@ import javax.swing.table.DefaultTableModel;
 
 import com.toedter.calendar.JDateChooser;
 
-import edu.ifmt.confeitaria.util.UtilResources;
 import edu.ifmt.confeitaria.util.custom_components.CustomDialogs;
+import edu.ifmt.confeitaria.util.view.ViewUtils;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
 public class DatabaseAccessComponentManager<T extends SuperModel> {
@@ -446,7 +446,7 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
                     }
                 });
             } else if(field instanceof JTextField){
-                UtilResources.addTextChangeListeners((JTextField) field, this::update);
+                ViewUtils.addTextChangeListeners((JTextField) field, this::update);
                 
             } else if(field instanceof JToggleButton){
                 ((JToggleButton) field).addItemListener((ItemEvent evt) -> {
