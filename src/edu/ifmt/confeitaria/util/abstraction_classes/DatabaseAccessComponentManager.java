@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
 import com.toedter.calendar.JDateChooser;
 
 import edu.ifmt.confeitaria.util.custom_components.CustomDialogs;
-import edu.ifmt.confeitaria.util.view.ViewUtils;
+import edu.ifmt.confeitaria.util.views.ViewUtils;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
 public class DatabaseAccessComponentManager<T extends SuperModel> {
