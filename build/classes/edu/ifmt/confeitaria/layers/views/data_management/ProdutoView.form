@@ -67,7 +67,7 @@
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="lblObs" max="32767" attributes="0"/>
                               <Component id="lblDescricao" alignment="0" max="32767" attributes="0"/>
@@ -86,9 +86,9 @@
                                       <Component id="lblVlrUnt" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="edtVlrUnt" min="-2" pref="90" max="-2" attributes="0"/>
-                                      <Component id="edtCodProduto" min="-2" pref="90" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="edtCodProduto" pref="120" max="32767" attributes="0"/>
+                                      <Component id="edtVlrUnt" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <Component id="edtObs" max="32767" attributes="0"/>
