@@ -1,6 +1,8 @@
 package edu.ifmt.confeitaria.layers.models.usuario;
 
-public class Usuario extends SuperModel{
+import edu.ifmt.confeitaria.util.abstraction_classes.SuperModel;
+
+public class Usuario extends SuperModel {
     private String nome;
     private String login;
     private String senha;
