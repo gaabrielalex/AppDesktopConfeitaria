@@ -9,6 +9,7 @@ import edu.ifmt.confeitaria.layers.models.usuario.UsuarioService;
 import edu.ifmt.confeitaria.layers.views.data_management.UsuarioView;
 import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperController;
+import edu.ifmt.confeitaria.util.services.ValidationResponses;
 
 import java.util.List;
 
@@ -74,4 +75,8 @@ public class UsuarioController extends SuperController<Usuario> {
         return this.usuarioService.isLoginExists(login);
     }
 
+    public ValidationResponses validateLogin(String login, String originalLogin) {
+        //Solicta a Service a validação já retornando o resultado
+        return this.usuarioService.validateLogin(login, originalLogin);
+    }
 }

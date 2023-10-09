@@ -7,10 +7,13 @@ package edu.ifmt.confeitaria.layers.views.data_management;
 
 import edu.ifmt.confeitaria.layers.controllers.data_management.UsuarioController;
 import edu.ifmt.confeitaria.layers.models.usuario.Usuario;
+import edu.ifmt.confeitaria.layers.models.usuario.UsuarioDAO;
+import edu.ifmt.confeitaria.layers.models.usuario.UsuarioService;
 import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperView;
-import edu.ifmt.confeitaria.util.service.ServiceUtils;
-import edu.ifmt.confeitaria.util.view.ViewUtils;
+import edu.ifmt.confeitaria.util.services.ServiceUtils;
+import edu.ifmt.confeitaria.util.services.ValidationResponses;
+import edu.ifmt.confeitaria.util.views.ViewUtils;
 
 import java.awt.Component;
 import java.util.Arrays;
@@ -237,15 +240,17 @@ public class UsuarioView extends SuperView {
                             .addComponent(lblSenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblNome, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
                             .addComponent(lblLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pswdSenha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(edtLogin)
-                                .addComponent(edtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))
                             .addGroup(pnlEditingUsuarioLayout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(lblLoginValidation, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(pswdSenha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(edtLogin)
+                                        .addComponent(edtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEditingUsuarioLayout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(lblLoginValidation, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlEditingUsuarioLayout.createSequentialGroup()
                                 .addGap(28, 28, 28)
@@ -592,20 +597,26 @@ public class UsuarioView extends SuperView {
             this.lblCodUsuarioValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
         }
     }
-
+    
     public void validateLogin() {
-        String login = this.edtLogin.getText();
-
-        /*Se o usuário estiver atualizando um registro e o login do registro selecionado(que está sendo editado) for
-        diferente do login que está sendo digitado ou se o usuário estiver inserindo um novo registro e, atendendo
-        algum dos casos anteriores, se o login já existir, a label de validação ficará vermelha, mostrando o erro*/
-        if(     ((this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.UPDATE
-                && !this.usuarioDBCManager.getTSelectedRecord().getValue().getLogin().equals(login))
-                    || this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.INSERT)
-                        && this.usuarioController.isLoginExists(login)) {
+        if(this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.INSERT 
+                || this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.UPDATE) {
             
-            this.lblLoginValidation.setText("Login já existente !!!");
-            this.lblLoginValidation.setForeground(SuperView.ERROR_COLOR);
+            String login = this.edtLogin.getText();
+            String orinalLogin = this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.UPDATE
+                ? this.usuarioDBCManager.getTSelectedRecord().getValue().getLogin() : null;
+
+            ValidationResponses response = this.usuarioController.validateLogin(login, orinalLogin);
+    
+            if(response == ValidationResponses.MAX_LENGTH_EXCEEDED) {
+                this.lblLoginValidation.setText("Limite máx. de " + UsuarioService.LOGIN_MAX_LENGTH + " caracteres !!!");
+                this.lblLoginValidation.setForeground(SuperView.ERROR_COLOR);
+            } else if(response == ValidationResponses.ALREADY_EXISTS) {
+                this.lblLoginValidation.setText("Login já existente !!!");
+                this.lblLoginValidation.setForeground(SuperView.ERROR_COLOR);
+            } else if(response == ValidationResponses.VALID) {
+                this.lblLoginValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
+            }
         } else {
             this.lblLoginValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
         }

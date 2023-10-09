@@ -2,9 +2,11 @@ package edu.ifmt.confeitaria.layers.models.usuario;
 
 import java.util.List;
 
-import edu.ifmt.confeitaria.util.service.ServiceUtils;
+import edu.ifmt.confeitaria.util.services.ServiceUtils;
+import edu.ifmt.confeitaria.util.services.ValidationResponses;
 
 public class UsuarioService {
+    public static final int LOGIN_MAX_LENGTH = 30;
     private final UsuarioDAO usuarioDAO;
 
     public UsuarioService(UsuarioDAO usuarioDAO) {
@@ -95,7 +97,7 @@ public class UsuarioService {
         return(usuario != null && usuario.getNome().length() <= 100 
                     && usuario.getSenha().length() <= 30
                     && this.validateID(usuario.getID(), usuarioOriginal == null ? null : usuarioOriginal.getID())
-                    && this.validateLogin(usuario.getLogin(), usuarioOriginal == null ? null : usuarioOriginal.getLogin()));
+                    && ValidationResponses.VALID == this.validateLogin(usuario.getLogin(), usuarioOriginal == null ? null : usuarioOriginal.getLogin()));
     }
 
     //Método para validar o ID, privado pois só deve ser usado internamente
@@ -114,18 +116,19 @@ public class UsuarioService {
         }
     }
 
-    //Método para validar o login, privado pois só deve ser usado internamente
-    private boolean validateLogin(String login, String originalLogin) {
+    public ValidationResponses validateLogin(String login, String originalLogin) {
         //Verifica se o login tem menos de 30 caracteres
-        if(login.length() <= 30 ) {
+        if(login.length() <= UsuarioService.LOGIN_MAX_LENGTH) {
             /*Se sim, verifica se o login é diferente do login original, 
             sendo diferente, verifica se ele já existe no banco de dados*/
-            if(!login.equals(originalLogin)){
-                return !this.isLoginExists(login);
+            if(!login.equals(originalLogin) && this.isLoginExists(login)) {
+                return ValidationResponses.ALREADY_EXISTS;
+            } else {
+                return ValidationResponses.VALID;
             }
-            return true;
         } else {
-            return false;
+            return ValidationResponses.MAX_LENGTH_EXCEEDED;
         }
+
     }
 }
