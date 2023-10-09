@@ -98,7 +98,7 @@ public class UsuarioService {
 
     //Método para validar o ID, privado pois só deve ser usado internamente
     private boolean validateID(Usuario usuario, Long originalID) {
-        //Verifica se o ID é nulo ou ou maior
+        //Verifica se o ID não é nulo e se é maior que 0
         if(usuario.getID() != null && usuario.getID() > 0) {
             /*Verifica se o ID é diferente do ID original, se 
             for, verifica se ele já existe no banco de dados*/
