@@ -94,20 +94,20 @@ public class UsuarioService {
     private boolean validateData(Usuario usuario, Usuario usuarioOriginal) {
         return(usuario != null && usuario.getNome().length() <= 100 
                     && usuario.getSenha().length() <= 30
-                    && this.validateID(usuario, usuarioOriginal == null ? null : usuarioOriginal.getID())
-                    && this.validateLogin(usuario, usuarioOriginal == null ? null : usuarioOriginal.getLogin()));
+                    && this.validateID(usuario.getID(), usuarioOriginal == null ? null : usuarioOriginal.getID())
+                    && this.validateLogin(usuario.getLogin(), usuarioOriginal == null ? null : usuarioOriginal.getLogin()));
     }
 
     //Método para validar o ID, privado pois só deve ser usado internamente
-    private boolean validateID(Usuario usuario, Long originalID) {
+    private boolean validateID(Long ID, Long originalID) {
         //Verifica se o ID não é nulo e se é maior que 0
-        if(usuario.getID() != null && usuario.getID() > 0 && usuario.getID() <= ServiceUtils.MAX_ID_VALUE) {
+        if(ID != null && ID > 0 && ID <= ServiceUtils.MAX_ID_VALUE) {
             /*Verifica se o ID é diferente do ID original, se for, verifica se ele já existe no BD*/
-            if(!usuario.getID().equals(originalID)) {
-                return !this.isIdExists(usuario.getID());
+            if(!ID.equals(originalID)) {
+                return !this.isIdExists(ID);
             }
             return true;
-        } else if(usuario.getID() == null) {
+        } else if(ID == null) {
             return true;
         } else {
             return false;
@@ -115,13 +115,13 @@ public class UsuarioService {
     }
 
     //Método para validar o login, privado pois só deve ser usado internamente
-    private boolean validateLogin(Usuario usuario, String originalLogin) {
+    private boolean validateLogin(String login, String originalLogin) {
         //Verifica se o login tem menos de 30 caracteres
-        if(usuario.getLogin().length() <= 30 ) {
+        if(login.length() <= 30 ) {
             /*Se sim, verifica se o login é diferente do login original, 
             sendo diferente, verifica se ele já existe no banco de dados*/
-            if(!usuario.getLogin().equals(originalLogin)){
-                return !this.isLoginExists(usuario.getLogin());
+            if(!login.equals(originalLogin)){
+                return !this.isLoginExists(login);
             }
             return true;
         } else {
