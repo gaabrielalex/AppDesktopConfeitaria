@@ -12,6 +12,7 @@ import java.util.function.Supplier;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
@@ -24,7 +25,7 @@ import edu.ifmt.confeitaria.util.UtilResources;
 import edu.ifmt.confeitaria.util.custom_components.CustomDialogs;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
-public class DatabaseAccessComponentManager<T> {
+public class DatabaseAccessComponentManager<T extends SuperModel> {
 
     public enum Operation {
         INSERT,
@@ -248,11 +249,11 @@ public class DatabaseAccessComponentManager<T> {
     }
 
     private void post() {
+        //Captura os dados dos campos já em formato de objeto
+        T tObject = this.fieldsToModel.get();
+
         /*Estrutura condicional para determinar a ação a ser tomada de acordo com a operação atual*/
         if(this.currentOperation == Operation.INSERT) {
-            //Captura os dados dos campos já em formato de objeto
-            T tObject = this.fieldsToModel.get();
-
             // Solita a inserção do objeto no BD por meio da controller, armazenando a resposta de sucesso ou não da operação
             boolean response = this.controller.insert(tObject);
 
@@ -268,11 +269,22 @@ public class DatabaseAccessComponentManager<T> {
                 //Exibe um dialog de erro de cadastro
                 CustomDialogs.registrationError();
             }
-
         } else if(this.currentOperation == Operation.UPDATE) {
-            this.resetManagerDefaultSettings();
+            // Solita a atualização do objeto no BD por meio da controller, armazenando a resposta de sucesso ou não da operação
+            boolean response = this.controller.update(tObject, this.tSelectedRecord.getValue());
 
-            System.out.println("UPDATE REALIZADO"); //Mensagem momentânea de teste
+             if(response) {
+                this.resetManagerDefaultSettings();
+
+                //Atualiza a lista de dados temporária para as mudanças serem refletidas nos componentes visuais
+                this.temporaryTDataList.getValue().set(this.selectedRecordIndex.getValue(), tObject);
+
+                /*Força a atualização da lista pois o observable não notifica alterações quando apenas itens da lista são alterados*/
+                this.updateTemporaryTDataList(this.temporaryTDataList.getValue());
+            } else {
+                //Exibe um dialog de erro de atualização 
+                CustomDialogs.updateError();
+            }
         }
     }
  
