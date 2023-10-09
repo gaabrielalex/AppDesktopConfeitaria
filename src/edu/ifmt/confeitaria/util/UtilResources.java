@@ -6,8 +6,9 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 public class UtilResources {
-    public static String specialCharacters= " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
-    public static String numbers = "0123456789";
+    public static String SPECIAL_CHARACTERS= " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+    public static String NUMBERS = "0123456789";
+    public static Long MAX_ID_VALUE = 2147483647L;
 
     public static void allowOnlyPositiveNumbers(JTextField field) {
         String fieldText = field.getText();
@@ -19,7 +20,7 @@ public class UtilResources {
                         field.setText("");
                     }
                 });
-            } else if(!UtilResources.numbers.contains(fieldText.charAt(i) + "")) {
+            } else if(!UtilResources.NUMBERS.contains(fieldText.charAt(i) + "")) {
                 final String newFielText = fieldText.replace(String.valueOf(fieldText.charAt(i)), "");
 
                 SwingUtilities.invokeLater(new Runnable() {
