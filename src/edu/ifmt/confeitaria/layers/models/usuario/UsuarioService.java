@@ -6,7 +6,9 @@ import edu.ifmt.confeitaria.util.services.ServiceUtils;
 import edu.ifmt.confeitaria.util.services.ValidationResponses;
 
 public class UsuarioService {
+    public static final int NOME_MAX_LENGTH = 100;
     public static final int LOGIN_MAX_LENGTH = 30;
+    public static final int SENHA_MAX_LENGTH = 30;
     private final UsuarioDAO usuarioDAO;
 
     public UsuarioService(UsuarioDAO usuarioDAO) {
@@ -94,10 +96,11 @@ public class UsuarioService {
 
     //Método para validar os dados, privado pois só deve ser usado internamente
     private boolean validateData(Usuario usuario, Usuario usuarioOriginal) {
-        return(usuario != null && usuario.getNome().length() <= 100 
-                    && usuario.getSenha().length() <= 30
-                    && ValidationResponses.VALID == this.validateID(usuario.getID(), usuarioOriginal == null ? null : usuarioOriginal.getID())
-                    && ValidationResponses.VALID == this.validateLogin(usuario.getLogin(), usuarioOriginal == null ? null : usuarioOriginal.getLogin()));
+        return(usuario != null 
+                && ValidationResponses.VALID == this.validateNome(usuario.getNome())
+                && ValidationResponses.VALID == this.validateSenha(usuario.getSenha())
+                && ValidationResponses.VALID == this.validateID(usuario.getID(), usuarioOriginal == null ? null : usuarioOriginal.getID())
+                && ValidationResponses.VALID == this.validateLogin(usuario.getLogin(), usuarioOriginal == null ? null : usuarioOriginal.getLogin()));
     }
 
     //Método para validar o ID, privado pois só deve ser usado internamente
@@ -120,6 +123,15 @@ public class UsuarioService {
         }
     }
 
+    public ValidationResponses validateNome(String nome) {
+        //Verifica se o nome tem menos de 100 caracteres
+        if(nome.length() <= UsuarioService.NOME_MAX_LENGTH) {
+            return ValidationResponses.VALID;
+        } else {
+            return ValidationResponses.MAX_LENGTH_EXCEEDED;
+        }
+    }
+
     public ValidationResponses validateLogin(String login, String originalLogin) {
         //Verifica se o login tem menos de 30 caracteres
         if(login.length() <= UsuarioService.LOGIN_MAX_LENGTH) {
@@ -133,6 +145,14 @@ public class UsuarioService {
         } else {
             return ValidationResponses.MAX_LENGTH_EXCEEDED;
         }
+    }
 
+    public ValidationResponses validateSenha(String senha) {
+        //Verifica se a senha tem menos de 30 caracteres
+        if(senha.length() <= UsuarioService.SENHA_MAX_LENGTH) {
+            return ValidationResponses.VALID;
+        } else {
+            return ValidationResponses.MAX_LENGTH_EXCEEDED;
+        }
     }
 }
