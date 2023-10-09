@@ -136,7 +136,7 @@ public class UsuarioView extends SuperView {
                         .addGap(41, 41, 41)
                         .addComponent(btnPesquisar))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         pnlFiltroUsuarioLayout.setVerticalGroup(
             pnlFiltroUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -239,10 +239,12 @@ public class UsuarioView extends SuperView {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(pswdSenha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblLoginValidation, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(edtLogin)
-                                .addComponent(edtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)))
+                                .addComponent(edtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))
+                            .addGroup(pnlEditingUsuarioLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(lblLoginValidation, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlEditingUsuarioLayout.createSequentialGroup()
                                 .addGap(28, 28, 28)
@@ -250,7 +252,7 @@ public class UsuarioView extends SuperView {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(lblCodUsuarioValidation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(edtCodCliente)))
+                                    .addComponent(edtCodCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)))
                             .addGroup(pnlEditingUsuarioLayout.createSequentialGroup()
                                 .addGap(55, 55, 55)
                                 .addComponent(btnEnabledSenha)))))
@@ -337,11 +339,11 @@ public class UsuarioView extends SuperView {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(pnlEditingUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(editConfirmationWithRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(207, 207, 207))
+                .addGap(211, 211, 211))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -549,32 +551,43 @@ public class UsuarioView extends SuperView {
        );
     }
 
-
     //MÉTODOS PARA ADICIONAR VALIDAÇÕES AOS CAMPOS
     public void validateCodUsuario() {
-        //Permitindo apenas números positivos
-        UtilResources.allowOnlyPositiveNumbers(edtCodCliente);
-
-        //Capturando o id digitado
-        Long id = null;
+        //Se o campo não estiver vazio, o código(ID) é validado
         if(!this.edtCodCliente.getText().isEmpty()) {
+            /*Tenta converter o texto do campo para um número inteiro, sendo possível, o código(ID) é validado*/
             try {
-                id = Long.parseLong(this.edtCodCliente.getText());
+                Long id = Long.parseLong(this.edtCodCliente.getText());
+    
+                //Validando o código(ID)
+                if(id <= 0) {
+                    this.lblCodUsuarioValidation.setText("Código inválido !!!");
+                    this.lblCodUsuarioValidation.setForeground(SuperView.ERROR_COLOR);
+                } else if(id >= UtilResources.MAX_ID_VALUE) {
+                    this.lblCodUsuarioValidation.setText("Limite máx. excedido !!!");
+                    this.lblCodUsuarioValidation.setForeground(SuperView.ERROR_COLOR);
+                }
+                /*Se o usuário estiver atualizando um registro e o id do registro selecionado(que está sendo editado) for
+                diferente do id que está sendo digitado ou se o usuário estiver inserindo um novo registro e, atendendo
+                algum dos casos anteriores, se o id já existir, a label de validação ficará vermelha, mostrando o erro*/
+                else if(     ((this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.UPDATE
+                        && !this.usuarioDBCManager.getTSelectedRecord().getValue().getID().equals(id))
+                            || this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.INSERT)
+                                && this.usuarioController.isIdExists(id)) {
+                    
+                    this.lblCodUsuarioValidation.setText("Código já existente !!!");
+                    this.lblCodUsuarioValidation.setForeground(SuperView.ERROR_COLOR);
+               
+                } else {
+                    this.lblCodUsuarioValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
+                }
             } catch(NumberFormatException e) {
-             
+                //Se houver erro na conversão, então o código(ID) é inválido
+                this.lblCodUsuarioValidation.setText("Código inválido !!!");
+                this.lblCodUsuarioValidation.setForeground(SuperView.ERROR_COLOR);
             }
-        }
-        /*Se o usuário estiver atualizando um registro e o id do registro selecionado(que está sendo editado) for
-        diferente do id que está sendo digitado ou se o usuário estiver inserindo um novo registro e, atendendo
-        algum dos casos anteriores, se o id já existir, a label de validação ficará vermelha, mostrando o erro*/
-        if(     ((this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.UPDATE
-                && !this.usuarioDBCManager.getTSelectedRecord().getValue().getID().equals(id))
-                    || this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.INSERT)
-                        && this.usuarioController.isIdExists(id)) {
-            
-            this.lblCodUsuarioValidation.setText("Código já existente !!!");
-            this.lblCodUsuarioValidation.setForeground(SuperView.ERROR_COLOR);
         } else {
+            //Se o campo estiver vazio, então nenhuma validação é feita e a label de validação fica com a cor padrão
             this.lblCodUsuarioValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
         }
     }
