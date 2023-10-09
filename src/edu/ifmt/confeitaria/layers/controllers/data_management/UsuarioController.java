@@ -26,7 +26,7 @@ public class UsuarioController extends SuperController<Usuario> {
         //Injectons
         this.usuarioService = usuarioService;
         
-        this.usuarioView = new UsuarioView(this, new DatabaseAccessComponentManager<Usuario>(),previousView);
+        this.usuarioView = new UsuarioView(this, new DatabaseAccessComponentManager<Usuario >(),previousView);
     }
 
     @Override
@@ -56,14 +56,22 @@ public class UsuarioController extends SuperController<Usuario> {
         return this.usuarioService.insert(usuario);
     }
 
+    @Override
+    public boolean update(Usuario usuario, Usuario usuarioOriginal) {
+        /* Solicita a atualização a Service já retornando o
+        resultado, se a atualização foi bem sucedida ou não*/
+        return this.usuarioService.update(usuario, usuarioOriginal);
+    }
+
     /* ----- Regras de negócio ----- */
     public boolean isIdExists(Long idUsuario){
         //Solicita a Service a verificação já retornando o resultado
         return this.usuarioService.isIdExists(idUsuario);
     }
-
+ 
     public boolean isLoginExists(String login){
         //Solicita a Service a verificação já retornando o resultado
         return this.usuarioService.isLoginExists(login);
     }
+
 }
