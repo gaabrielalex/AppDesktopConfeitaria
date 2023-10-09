@@ -545,7 +545,7 @@ public class UsuarioView extends SuperView {
             this.edtCodCliente.getText().isEmpty() ? null : Long.parseLong(this.edtCodCliente.getText()),
             this.edtNome.getText(),
             this.edtLogin.getText(),
-            this.pswdSenha.getPassword().toString()
+            new String(this.pswdSenha.getPassword())
        );
     }
 
