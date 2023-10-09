@@ -45,4 +45,10 @@ public class ItemPedidoController extends SuperController {
         // TODO Auto-generated method stub
         return false;
     }
+
+    @Override
+    public boolean update(Object object, Object originalObject) {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }
