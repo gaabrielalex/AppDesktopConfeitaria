@@ -5,22 +5,20 @@
 
 package edu.ifmt.confeitaria.layers.views.data_management;
 
-import edu.ifmt.confeitaria.layers.controllers.data_management.UsuarioController;
-import edu.ifmt.confeitaria.layers.models.usuario.Usuario;
-import edu.ifmt.confeitaria.layers.models.usuario.UsuarioDAO;
-import edu.ifmt.confeitaria.layers.models.usuario.UsuarioService;
-import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
-import edu.ifmt.confeitaria.util.abstraction_classes.SuperView;
-import edu.ifmt.confeitaria.util.services.ServiceUtils;
-import edu.ifmt.confeitaria.util.services.ValidationResponses;
-import edu.ifmt.confeitaria.util.views.ViewUtils;
-
 import java.awt.Component;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
+import edu.ifmt.confeitaria.layers.controllers.data_management.UsuarioController;
+import edu.ifmt.confeitaria.layers.models.usuario.Usuario;
+import edu.ifmt.confeitaria.layers.models.usuario.UsuarioService;
+import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
+import edu.ifmt.confeitaria.util.abstraction_classes.SuperView;
+import edu.ifmt.confeitaria.util.services.ValidationResponses;
+import edu.ifmt.confeitaria.util.views.ViewUtils;
 
 /**
  *
