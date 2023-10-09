@@ -96,23 +96,27 @@ public class UsuarioService {
     private boolean validateData(Usuario usuario, Usuario usuarioOriginal) {
         return(usuario != null && usuario.getNome().length() <= 100 
                     && usuario.getSenha().length() <= 30
-                    && this.validateID(usuario.getID(), usuarioOriginal == null ? null : usuarioOriginal.getID())
+                    && ValidationResponses.VALID == this.validateID(usuario.getID(), usuarioOriginal == null ? null : usuarioOriginal.getID())
                     && ValidationResponses.VALID == this.validateLogin(usuario.getLogin(), usuarioOriginal == null ? null : usuarioOriginal.getLogin()));
     }
 
     //Método para validar o ID, privado pois só deve ser usado internamente
-    private boolean validateID(Long ID, Long originalID) {
-        //Verifica se o ID não é nulo e se é maior que 0
-        if(ID != null && ID > 0 && ID <= ServiceUtils.MAX_ID_VALUE) {
-            /*Verifica se o ID é diferente do ID original, se for, verifica se ele já existe no BD*/
-            if(!ID.equals(originalID)) {
-                return !this.isIdExists(ID);
+    public ValidationResponses validateID(Long ID, Long originalID) {
+        if(ID != null) {
+            if(ID < ServiceUtils.MIN_ID_VALUE) {
+                return ValidationResponses.BELOW_MIN_VALUE;
+            } else if (ID > ServiceUtils.MAX_ID_VALUE) {
+                return ValidationResponses.MAX_VALUE_EXCEEDED;
+
+              /*Verifica se o ID é diferente do ID original, se 
+              for, verifica se ele já existe no banco de dados*/   
+            } else if(!ID.equals(originalID) && this.isIdExists(ID)) {
+                return ValidationResponses.ALREADY_EXISTS;
+            } else {
+                return ValidationResponses.VALID;
             }
-            return true;
-        } else if(ID == null) {
-            return true;
         } else {
-            return false;
+            return ValidationResponses.VALID;
         }
     }
 

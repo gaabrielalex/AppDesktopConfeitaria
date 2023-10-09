@@ -65,9 +65,9 @@ public class UsuarioController extends SuperController<Usuario> {
     }
 
     /* ----- Regras de negócio ----- */
-    public boolean isIdExists(Long idUsuario){
+    public boolean isIdExists(Long ID){
         //Solicita a Service a verificação já retornando o resultado
-        return this.usuarioService.isIdExists(idUsuario);
+        return this.usuarioService.isIdExists(ID);
     }
  
     public boolean isLoginExists(String login){
@@ -75,8 +75,13 @@ public class UsuarioController extends SuperController<Usuario> {
         return this.usuarioService.isLoginExists(login);
     }
 
+    public ValidationResponses validateID(Long ID, Long originalID) {
+        //Solicita a Service a validação já retornando o resultado
+        return this.usuarioService.validateID(ID, originalID);
+    }
+
     public ValidationResponses validateLogin(String login, String originalLogin) {
-        //Solicta a Service a validação já retornando o resultado
+        //Solicita a Service a validação já retornando o resultado
         return this.usuarioService.validateLogin(login, originalLogin);
     }
 }

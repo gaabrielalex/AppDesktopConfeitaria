@@ -1,11 +1,14 @@
 package edu.ifmt.confeitaria.util.views;
 
+import java.awt.Color;
+
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 public class ViewUtils {
+    public static final Color ERROR_COLOR = new Color(255, 0, 0);
     public static String SPECIAL_CHARACTERS= " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
     public static String NUMBERS = "0123456789";
 

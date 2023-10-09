@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 /**
  *
@@ -58,13 +59,13 @@ public class UsuarioView extends SuperView {
         lblLogin = new javax.swing.JLabel();
         lblNome = new javax.swing.JLabel();
         pswdSenha = new javax.swing.JPasswordField();
-        lblCodCliente = new javax.swing.JLabel();
+        lblCodUsuario = new javax.swing.JLabel();
         recordEditing = new javax.swing.JPanel();
         btnInsert = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         edtNome = new javax.swing.JFormattedTextField();
-        edtCodCliente = new javax.swing.JFormattedTextField();
+        edtCodUsuario = new javax.swing.JFormattedTextField();
         lblCodUsuarioValidation = new javax.swing.JLabel();
         lblLoginValidation = new javax.swing.JLabel();
         editConfirmationWithRefresh = new javax.swing.JPanel();
@@ -174,7 +175,7 @@ public class UsuarioView extends SuperView {
         lblNome.setText("Nome:");
         lblNome.setName("lblNomeFiltro"); // NOI18N
 
-        lblCodCliente.setText("Código:");
+        lblCodUsuario.setText("Código:");
 
         recordEditing.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
@@ -216,7 +217,7 @@ public class UsuarioView extends SuperView {
 
         edtNome.setColumns(5);
 
-        edtCodCliente.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        edtCodUsuario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
         lblCodUsuarioValidation.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         lblCodUsuarioValidation.setForeground(new java.awt.Color(204, 51, 0));
@@ -254,11 +255,11 @@ public class UsuarioView extends SuperView {
                         .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlEditingUsuarioLayout.createSequentialGroup()
                                 .addGap(28, 28, 28)
-                                .addComponent(lblCodCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblCodUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(lblCodUsuarioValidation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(edtCodCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)))
+                                    .addComponent(edtCodUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)))
                             .addGroup(pnlEditingUsuarioLayout.createSequentialGroup()
                                 .addGap(55, 55, 55)
                                 .addComponent(btnEnabledSenha)))))
@@ -275,9 +276,9 @@ public class UsuarioView extends SuperView {
                 .addComponent(pnlFiltroUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCodCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCodUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(edtCodCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edtCodUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblNome))
                 .addGap(0, 0, 0)
                 .addComponent(lblCodUsuarioValidation, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -417,13 +418,13 @@ public class UsuarioView extends SuperView {
     private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JPanel editConfirmationWithRefresh;
-    private javax.swing.JFormattedTextField edtCodCliente;
+    private javax.swing.JFormattedTextField edtCodUsuario;
     private javax.swing.JTextField edtLogin;
     private javax.swing.JTextField edtLoginFiltro;
     private javax.swing.JFormattedTextField edtNome;
     private javax.swing.JTextField edtNomeFiltro;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblCodCliente;
+    private javax.swing.JLabel lblCodUsuario;
     private javax.swing.JLabel lblCodUsuarioValidation;
     private javax.swing.JLabel lblLogin;
     private javax.swing.JLabel lblLoginFiltro;
@@ -464,7 +465,7 @@ public class UsuarioView extends SuperView {
             
             //Triggering methods
                 //Configurando o DatabaseAccessComponentManager
-                List<Component> fields = Arrays.asList(this.edtCodCliente, this.edtNome, this.edtLogin, this.pswdSenha);;
+                List<Component> fields = Arrays.asList(this.edtCodUsuario, this.edtNome, this.edtLogin, this.pswdSenha);;
                 this.usuarioDBCManager.setFields(fields);
                 this.usuarioDBCManager.setModelToTableRow(this::modelToTableRow);
                 this.usuarioDBCManager.setModelToFields(this::modelToFields);
@@ -476,7 +477,7 @@ public class UsuarioView extends SuperView {
                 this.setPasswordsVisibility();
                 
                 //Adicionando as validações dos campos
-                ViewUtils.addTextChangeListeners(this.edtCodCliente, this::validateCodUsuario);
+                ViewUtils.addTextChangeListeners(this.edtCodUsuario, this::validateCodUsuario);
                 ViewUtils.addTextChangeListeners(this.edtLogin, this::validateLogin);
     }
     //Getters e Setters 
@@ -538,9 +539,9 @@ public class UsuarioView extends SuperView {
     /*Método para realizar mapeamento do model(Objeto Usuario) para os campos da interface*/
     public void modelToFields(Usuario usuario) {
         if(usuario.getID() == null) {
-            this.edtCodCliente.setText("");
+            this.edtCodUsuario.setText("");
         } else { 
-            this.edtCodCliente.setText(usuario.getID().toString());
+            this.edtCodUsuario.setText(usuario.getID().toString());
         }
         this.edtNome.setText(usuario.getNome());
         this.edtLogin.setText(usuario.getLogin());
@@ -550,7 +551,7 @@ public class UsuarioView extends SuperView {
     //Método para realizar mapeamento dos campos da interface para um objeto Usuario
     public Usuario fieldsToModel() {
        return new Usuario(
-            this.edtCodCliente.getText().isEmpty() ? null : Long.parseLong(this.edtCodCliente.getText()),
+            this.edtCodUsuario.getText().isEmpty() ? null : Long.parseLong(this.edtCodUsuario.getText()),
             this.edtNome.getText(),
             this.edtLogin.getText(),
             new String(this.pswdSenha.getPassword())
@@ -559,46 +560,44 @@ public class UsuarioView extends SuperView {
 
     //MÉTODOS PARA ADICIONAR VALIDAÇÕES AOS CAMPOS
     public void validateCodUsuario() {
-        //Se o campo não estiver vazio, o código(ID) é validado
-        if(!this.edtCodCliente.getText().isEmpty()) {
+        //Se o campo não estiver vazio e o usuário estiver inserindo um novo registro ou atualizando um registro existente, o código(ID) é validado
+        if(!this.edtCodUsuario.getText().isEmpty() && (this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.INSERT
+                || this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.UPDATE)) {
             /*Tenta converter o texto do campo para um número inteiro, sendo possível, o código(ID) é validado*/
             try {
-                Long id = Long.parseLong(this.edtCodCliente.getText());
-    
-                //Validando o código(ID)
-                if(id <= 0) {
-                    this.lblCodUsuarioValidation.setText("Código inválido !!!");
-                    this.lblCodUsuarioValidation.setForeground(SuperView.ERROR_COLOR);
-                } else if(id > ServiceUtils.MAX_ID_VALUE) {
-                    this.lblCodUsuarioValidation.setText("Limite máx. excedido !!!");
-                    this.lblCodUsuarioValidation.setForeground(SuperView.ERROR_COLOR);
-                }
-                /*Se o usuário estiver atualizando um registro e o id do registro selecionado(que está sendo editado) for
-                diferente do id que está sendo digitado ou se o usuário estiver inserindo um novo registro e, atendendo
-                algum dos casos anteriores, se o id já existir, a label de validação ficará vermelha, mostrando o erro*/
-                else if(     ((this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.UPDATE
-                        && !this.usuarioDBCManager.getTSelectedRecord().getValue().getID().equals(id))
-                            || this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.INSERT)
-                                && this.usuarioController.isIdExists(id)) {
-                    
-                    this.lblCodUsuarioValidation.setText("Código já existente !!!");
-                    this.lblCodUsuarioValidation.setForeground(SuperView.ERROR_COLOR);
-               
-                } else {
-                    this.lblCodUsuarioValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
+                Long id = Long.parseLong(this.edtCodUsuario.getText());
+                Long originaiD = this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.UPDATE 
+                        ? this.usuarioDBCManager.getTSelectedRecord().getValue().getID() : null;
+
+                ValidationResponses response = this.usuarioController.validateID(id, originaiD);
+                
+                switch(response) {
+                    case BELOW_MIN_VALUE:
+                        this.setLabelErrorText(this.lblCodUsuarioValidation, "Código inválido !!!");
+                        break;
+                    case MAX_VALUE_EXCEEDED:
+                        this.setLabelErrorText(this.lblCodUsuarioValidation, "Limite máx. excedido !!!");
+                        break;
+                    case ALREADY_EXISTS:
+                        this.setLabelErrorText(this.lblCodUsuarioValidation, "Código já existente !!!");
+                        break;
+                    case VALID:
+                        this.lblCodUsuarioValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
+                        break;
+                    default:
+                        break;
                 }
             } catch(NumberFormatException e) {
                 //Se houver erro na conversão, então o código(ID) é inválido
-                this.lblCodUsuarioValidation.setText("Código inválido !!!");
-                this.lblCodUsuarioValidation.setForeground(SuperView.ERROR_COLOR);
+                this.setLabelErrorText(this.lblCodUsuarioValidation, "Código inválido !!!");
             }
         } else {
-            //Se o campo estiver vazio, então nenhuma validação é feita e a label de validação fica com a cor padrão
             this.lblCodUsuarioValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
         }
     }
-    
+
     public void validateLogin() {
+        //Se o usuário estiver inserindo um novo registro ou atualizando um registro existente, o login é validado
         if(this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.INSERT 
                 || this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.UPDATE) {
             
@@ -607,18 +606,27 @@ public class UsuarioView extends SuperView {
                 ? this.usuarioDBCManager.getTSelectedRecord().getValue().getLogin() : null;
 
             ValidationResponses response = this.usuarioController.validateLogin(login, orinalLogin);
-    
-            if(response == ValidationResponses.MAX_LENGTH_EXCEEDED) {
-                this.lblLoginValidation.setText("Limite máx. de " + UsuarioService.LOGIN_MAX_LENGTH + " caracteres !!!");
-                this.lblLoginValidation.setForeground(SuperView.ERROR_COLOR);
-            } else if(response == ValidationResponses.ALREADY_EXISTS) {
-                this.lblLoginValidation.setText("Login já existente !!!");
-                this.lblLoginValidation.setForeground(SuperView.ERROR_COLOR);
-            } else if(response == ValidationResponses.VALID) {
-                this.lblLoginValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
+                    
+            switch(response) {
+                case MAX_LENGTH_EXCEEDED:
+                    this.setLabelErrorText(this.lblLoginValidation, "Limite máx. de " + UsuarioService.LOGIN_MAX_LENGTH + " caracteres !!!");
+                    break;
+                case ALREADY_EXISTS:
+                    this.setLabelErrorText(this.lblLoginValidation, "Login já existente !!!");
+                    break;
+                case VALID:
+                    this.lblLoginValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
+                    break;
+                default:
+                    break;
             }
         } else {
             this.lblLoginValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
         }
+    }
+
+    public void setLabelErrorText(JLabel label, String text) {
+        label.setText(text);
+        label.setForeground(ViewUtils.ERROR_COLOR);
     }
 }
