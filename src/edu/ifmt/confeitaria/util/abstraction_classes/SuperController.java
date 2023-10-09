@@ -16,5 +16,6 @@ public abstract class SuperController<T> {
   public abstract List<T> select();
   public abstract List<T> remakeLastSelect();
   public abstract boolean insert(T object);
+  public abstract boolean update(T object, T originalObject);
 }
     

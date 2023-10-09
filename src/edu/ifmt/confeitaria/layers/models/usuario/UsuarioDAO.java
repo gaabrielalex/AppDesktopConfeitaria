@@ -156,17 +156,16 @@ public class UsuarioDAO {
 
     public boolean insert(Usuario usuario) {
         PreparedStatement statement = null;
-
         try {
-            //Verifica se o ID do usuário foi fornecido ou se é válido
-            if(usuario.getIdUsuario() == null || usuario.getIdUsuario() == 0) {
+            //Verifica se o ID do usuário foi fornecido
+            if(usuario.getID() == null) {
                 //Se não foi, realiza a inserção sem o ID
                 this.insertWithoutId(usuario, statement);
             } else {
                 //Se foi, realiza a inserção com o ID
                 this.insertWithId(usuario, statement);
             }
-
+            
             //Se a inserção foi realizada com sucesso, retorna true
             return true;
         } catch (SQLException e) {
@@ -206,7 +205,7 @@ public class UsuarioDAO {
         
         //Cria o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
         statement = DBConnection.getConnection().prepareStatement(sql);
-        statement.setLong(1, usuario.getIdUsuario());
+        statement.setLong(1, usuario.getID());
         statement.setString(2, usuario.getNome());
         statement.setString(3, usuario.getLogin());
         statement.setString(4, usuario.getSenha());
@@ -232,7 +231,7 @@ public class UsuarioDAO {
             
             //Cria o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
             statement = DBConnection.getConnection().prepareStatement(sql);
-            statement.setLong(1, usuario.getIdUsuario());
+            statement.setLong(1, usuario.getID());
             statement.setString(2, usuario.getNome());
             statement.setString(3, usuario.getLogin());
             statement.setString(4, usuario.getSenha());

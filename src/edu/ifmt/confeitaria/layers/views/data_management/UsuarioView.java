@@ -520,7 +520,7 @@ public class UsuarioView extends SuperView {
     para um objeto que possa ser inserido na tabela*/
     public Object[] modelToTableRow(Usuario usuario){
         return new Object[]{
-            usuario.getIdUsuario(), 
+            usuario.getID(), 
             usuario.getNome(),
             usuario.getLogin(),
             usuario.getSenha()
@@ -529,10 +529,10 @@ public class UsuarioView extends SuperView {
 
     /*Método para realizar mapeamento do model(Objeto Usuario) para os campos da interface*/
     public void modelToFields(Usuario usuario) {
-        if(usuario.getIdUsuario() == null) {
+        if(usuario.getID() == null) {
             this.edtCodCliente.setText("");
         } else { 
-            this.edtCodCliente.setText(usuario.getIdUsuario().toString());
+            this.edtCodCliente.setText(usuario.getID().toString());
         }
         this.edtNome.setText(usuario.getNome());
         this.edtLogin.setText(usuario.getLogin());
@@ -568,7 +568,7 @@ public class UsuarioView extends SuperView {
         diferente do id que está sendo digitado ou se o usuário estiver inserindo um novo registro e, atendendo
         algum dos casos anteriores, se o id já existir, a label de validação ficará vermelha, mostrando o erro*/
         if(     ((this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.UPDATE
-                && !this.usuarioDBCManager.getTSelectedRecord().getValue().getIdUsuario().equals(id))
+                && !this.usuarioDBCManager.getTSelectedRecord().getValue().getID().equals(id))
                     || this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.INSERT)
                         && this.usuarioController.isIdExists(id)) {
             
