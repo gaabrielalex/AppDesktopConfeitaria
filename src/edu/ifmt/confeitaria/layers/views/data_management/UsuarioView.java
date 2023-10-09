@@ -564,7 +564,7 @@ public class UsuarioView extends SuperView {
                 if(id <= 0) {
                     this.lblCodUsuarioValidation.setText("Código inválido !!!");
                     this.lblCodUsuarioValidation.setForeground(SuperView.ERROR_COLOR);
-                } else if(id >= ServiceUtils.MAX_ID_VALUE) {
+                } else if(id > ServiceUtils.MAX_ID_VALUE) {
                     this.lblCodUsuarioValidation.setText("Limite máx. excedido !!!");
                     this.lblCodUsuarioValidation.setForeground(SuperView.ERROR_COLOR);
                 }
