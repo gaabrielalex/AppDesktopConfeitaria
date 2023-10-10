@@ -4,13 +4,11 @@
  */
 package edu.ifmt.confeitaria.layers.controllers.data_management;
 
+import javax.swing.JFrame;
+
 import edu.ifmt.confeitaria.layers.views.data_management.ProdutoView;
 import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperController;
-
-import java.util.List;
-
-import javax.swing.JFrame;
 
 /**
  *
@@ -18,9 +16,19 @@ import javax.swing.JFrame;
  */
 public class ProdutoController extends SuperController {
     private final ProdutoView produtoView;
+    private DatabaseAccessComponentManager produtoDBCManager;
     
-    public ProdutoController(JFrame previousView) {
-        this.produtoView = new ProdutoView(this, new DatabaseAccessComponentManager(), previousView);
+    public ProdutoController(JFrame previousView, DatabaseAccessComponentManager produtoDBCManager) {
+        //Injeção de dependências
+        this.produtoDBCManager = produtoDBCManager;
+
+        //Instancia a View e define esta instância como seu controlador
+        this.produtoView = new ProdutoView(this, previousView);
+
+        //Configurando o DatabaseAccessComponentManager
+        this.produtoDBCManager.configureComponents(null, this, null, produtoView.getBtnInsert(),
+        produtoView.getBtnUpdate(), produtoView.getBtnDelete(), produtoView.getBtnPost(),
+        produtoView.getBtnCancel(), produtoView.getBtnRefresh(), produtoView.getTblProduto());
     }
 
     @Override
@@ -39,26 +47,20 @@ public class ProdutoController extends SuperController {
     }
 
     @Override
-    public List<?> select() {
+    public Object[] modelToTableRow(Object object) {
+        // TODO Auto-generated method stub
+       return null;
+    }
+
+    @Override
+    public void modelToFields(Object object) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public Object fieldsToModel() {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public List<?> remakeLastSelect() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public boolean insert(Object modelObject) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public boolean update(Object object, Object originalObject) {
-        // TODO Auto-generated method stub
-        return false;
-    }
 }
