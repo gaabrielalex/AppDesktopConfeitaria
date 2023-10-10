@@ -5,11 +5,10 @@
 
 package edu.ifmt.confeitaria.layers.views.data_management;
 
-import edu.ifmt.confeitaria.layers.controllers.data_management.ProdutoController;
-import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
-import edu.ifmt.confeitaria.util.abstraction_classes.SuperView;
-
 import javax.swing.JFrame;
+
+import edu.ifmt.confeitaria.layers.controllers.data_management.ProdutoController;
+import edu.ifmt.confeitaria.util.abstraction_classes.SuperView;
 
 /**
  *
@@ -394,32 +393,42 @@ public class ProdutoView extends SuperView {
     private javax.swing.JTable tblProduto;
     // End of variables declaration//GEN-END:variables
 
-    //CÓDIGOS PRÓPRIOS DA CLASSE
-    //Atributos
-    private ProdutoController produtoController;
-    private DatabaseAccessComponentManager produtoDBCManager;
-    
-    //Constructors
-    public ProdutoView(ProdutoController produtoController, DatabaseAccessComponentManager produtoDBCManager, JFrame previousView) {
-        //Default codes
-        this.initComponents();
-        super.setDefaultViewSettings("Cadastro de Produtos", previousView);
-        
-        //HANDLING CODES
-            //Injectons
-            this.produtoController = produtoController; 
-            this.produtoDBCManager = produtoDBCManager;   
-            
-            //Default attribute values
-            
-            //Triggering methods
-                //Configurando o DatabaseAccessComponentManager
-                this.produtoDBCManager.configureComponents(null, this.produtoController ,this.btnInsert, this.btnUpdate,
-                    this.btnDelete, this.btnPost, this.btnCancel, this.btnRefresh, this.tblProduto);
+    public javax.swing.JButton getBtnCancel() {
+        return btnCancel;
+    }
+
+    public javax.swing.JButton getBtnDelete() {
+        return btnDelete;
+    }
+
+    public javax.swing.JButton getBtnInsert() {
+        return btnInsert;
+    }
+
+    public javax.swing.JButton getBtnPost() {
+        return btnPost;
+    }
+
+    public javax.swing.JButton getBtnRefresh() {
+        return btnRefresh;
+    }
+
+    public javax.swing.JButton getBtnUpdate() {
+        return btnUpdate;
+    }
+
+    public javax.swing.JTable getTblProduto() {
+        return tblProduto;
     }
     
-    //Getters e Setters
+    //CÓDIGOS PRÓPRIOS DA CLASSE
+    private ProdutoController produtoController;
     
-    //Métodos
+    public ProdutoView(ProdutoController produtoController, JFrame previousView) {
+        //Códigos padrões de inicialização da interface
+        this.initComponents();
+        super.setDefaultViewSettings("Cadastro de Produtos", previousView);
+        this.produtoController = produtoController; 
+    }
     
 }
