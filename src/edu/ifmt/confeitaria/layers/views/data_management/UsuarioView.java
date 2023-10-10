@@ -10,8 +10,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-
 import edu.ifmt.confeitaria.layers.controllers.data_management.UsuarioController;
 import edu.ifmt.confeitaria.layers.models.usuario.Usuario;
 import edu.ifmt.confeitaria.layers.models.usuario.UsuarioService;
