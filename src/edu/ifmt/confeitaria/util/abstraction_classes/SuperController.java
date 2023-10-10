@@ -11,11 +11,13 @@ import java.util.List;
  * @author Gabriel
  */
 public abstract class SuperController<T> {
-  
   public abstract void displayView();
   public abstract List<T> select();
   public abstract List<T> remakeLastSelect();
   public abstract boolean insert(T object);
   public abstract boolean update(T object, T originalObject);
+  public abstract Object[] modelToTableRow(T object);
+  public abstract void modelToFields(T object);
+  public abstract T fieldsToModel();
 }
     

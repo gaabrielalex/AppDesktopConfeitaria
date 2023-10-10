@@ -6,10 +6,6 @@ import java.awt.event.ItemEvent;
 import java.beans.PropertyChangeEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Supplier;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
@@ -226,7 +222,7 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
 
     private void post() {
         //Captura os dados dos campos já em formato de objeto
-        T tObject = this.fieldsToModel.get();
+        T tObject = this.controller.fieldsToModel();
 
         /*Estrutura condicional para determinar a ação a ser tomada de acordo com a operação atual*/
         if(this.currentOperation == Operation.INSERT) {
@@ -354,7 +350,7 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
             //Adicionando os dados na tabela
             for(T tObject : tList) {
                 try {
-                    this.tableModel.addRow(this.modelToTableRow.apply(tObject));
+                    this.tableModel.addRow(this.controller.modelToTableRow(tObject));
                 } catch (Throwable e) {
                     e.printStackTrace();
                 }
@@ -371,7 +367,7 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
         para serem gerenciados pelo manager (que configurará os campos adequadamente para que possam
         exibir os dados do registro selecionado fora de uma operação de atualização sem causar erros)*/
         if((this.currentOperation == Operation.UPDATE || this.fields != null && this.fields.size() > 0)){
-            this.modelToFields.accept(tSelectedRecord);
+            this.controller.modelToFields(tSelectedRecord);
         } else if(this.currentOperation == Operation.NONE && (this.fields == null || this.fields.size() == 0)) {
             /*Caso a operação atual for NONE e se os campos que exibem os dados não foram setados para serem gerenciados
             pelo manager, esse método garantirá que os campos não exibam nenhum dado, pois isso poderia causar erros.
@@ -382,7 +378,7 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
                 this.activateUpdateWhenFieldsChange = false;
 
                 T tObject = (T) this.modelClass.getConstructor().newInstance();
-                this.modelToFields.accept(tObject);
+                this.controller.modelToFields(tObject);
 
                 //Ligando a funcionalidade novamente
                 this.activateUpdateWhenFieldsChange = true;
