@@ -52,8 +52,8 @@ public class UsuarioController extends SuperController<Usuario> {
         this.usuarioView.setVisible(true);
     }
 
-    public List<Usuario> select(String nome, String login) {
-        return this.usuarioService.select(nome, login);
+    public void select(String nome, String login) {
+        this.usuarioDBCManager.setTemporaryTDataList(this.usuarioService.select(nome, login));
     }
 
     @Override
