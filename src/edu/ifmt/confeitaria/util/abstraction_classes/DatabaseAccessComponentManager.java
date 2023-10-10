@@ -31,6 +31,7 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
     //ATRIBUTOS
     private Class<T> modelClass;
     private SuperController<T> controller;
+    private SuperService<T> service;
     private BehaviorSubject<List<T>> temporaryTDataList;
     private BehaviorSubject<T> tSelectedRecord;
     private BehaviorSubject<Integer> selectedRecordIndex;
@@ -99,10 +100,13 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
     }
 
     //MÉTODOS
-    public void configureComponents(Class<T> modelClass ,SuperController<T> controller ,JButton btnInsert, JButton btnUpdate, JButton btnDelete, JButton btnPost, JButton btnCancel, JButton btnRefresh, JTable table) {
+    public void configureComponents(Class<T> modelClass, SuperController<T> controller, SuperService<T> service,
+                                    JButton btnInsert, JButton btnUpdate, JButton btnDelete, JButton btnPost,
+                                    JButton btnCancel, JButton btnRefresh, JTable table) {
         //Setando os atributos
         this.modelClass = modelClass;
         this.controller = controller;
+        this.service = service;
         
         //Setando os componentes
         this.btnInsert = btnInsert;
@@ -165,7 +169,7 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
 
         /*Atualiza a lista de dados temporária por meio do método
         select do controller, realizando uma consulta sem filtros*/
-        this.updateTemporaryTDataList(this.controller.select());
+        this.updateTemporaryTDataList(this.service.select());
         
         //Atualiza as configurações padrões da tabela
         this.setDefaultTableSettings();
@@ -227,7 +231,7 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
         /*Estrutura condicional para determinar a ação a ser tomada de acordo com a operação atual*/
         if(this.currentOperation == Operation.INSERT) {
             // Solita a inserção do objeto no BD por meio da controller, armazenando a resposta de sucesso ou não da operação
-            boolean response = this.controller.insert(tObject);
+            boolean response = this.service.insert(tObject);
 
             if(response) {
                 this.resetManagerDefaultSettings();
@@ -243,7 +247,7 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
             }
         } else if(this.currentOperation == Operation.UPDATE) {
             // Solita a atualização do objeto no BD por meio da controller, armazenando a resposta de sucesso ou não da operação
-            boolean response = this.controller.update(tObject, this.tSelectedRecord.getValue());
+            boolean response = this.service.update(tObject, this.tSelectedRecord.getValue());
 
              if(response) {
                 this.resetManagerDefaultSettings();
@@ -291,7 +295,7 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
 
     private void refresh() {  
         this.resetManagerDefaultSettings();
-        this.updateTemporaryTDataList(this.controller.remakeLastSelect());
+        this.updateTemporaryTDataList(this.service.remakeLastSelect());
     } 
 
     private void informRecordIndexFromSelectedTableRow(ListSelectionEvent e) {
