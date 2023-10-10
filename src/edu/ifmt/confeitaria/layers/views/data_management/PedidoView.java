@@ -1017,58 +1017,138 @@ public class PedidoView extends SuperView {
     private javax.swing.JTable tblPedido;
     // End of variables declaration//GEN-END:variables
     
-    public JTable getTblPedido() {
+    public javax.swing.JButton getBtnCancelItemPedido() {
+        return btnCancelItemPedido;
+    }
+
+    public javax.swing.JButton getBtnCancelPedido() {
+        return btnCancelPedido;
+    }
+
+    public javax.swing.JButton getBtnDeleteItemPedido() {
+        return btnDeleteItemPedido;
+    }
+
+    public javax.swing.JButton getBtnDeletePedido() {
+        return btnDeletePedido;
+    }
+
+    public javax.swing.JButton getBtnInsertItemPedido() {
+        return btnInsertItemPedido;
+    }
+
+    public javax.swing.JButton getBtnInsertPedido() {
+        return btnInsertPedido;
+    }
+
+    public javax.swing.JButton getBtnPostItemPedido() {
+        return btnPostItemPedido;
+    }
+
+    public javax.swing.JButton getBtnPostPedido() {
+        return btnPostPedido;
+    }
+
+    public javax.swing.JButton getBtnRefreshItemPedido() {
+        return btnRefreshItemPedido;
+    }
+
+    public javax.swing.JButton getBtnRefreshPedido() {
+        return btnRefreshPedido;
+    }
+
+    public javax.swing.JButton getBtnUpdateItemPedido() {
+        return btnUpdateItemPedido;
+    }
+
+    public javax.swing.JButton getBtnUpdatePedido() {
+        return btnUpdatePedido;
+    }
+
+    public javax.swing.JTable getTblItemPedido() {
+        return tblItemPedido;
+    }
+
+    public javax.swing.JTable getTblPedido() {
         return tblPedido;
     }
-    
-    public void setTblPedido(JTable tblPedido) {
-        this.tblPedido = tblPedido;
-    }    
-    
+
+    public javax.swing.JComboBox<String> getCmbSttsPedido() {
+        return cmbSttsPedido;
+    }
+
+    public com.toedter.calendar.JDateChooser getDtChooserDtPedido() {
+        return dtChooserDtPedido;
+    }
+
+    public javax.swing.JTextField getEdtCodCliente() {
+        return edtCodCliente;
+    }
+
+    public javax.swing.JTextField getEdtCodPedido() {
+        return edtCodPedido;
+    }
+
+    public javax.swing.JTextField getEdtDesconto() {
+        return edtDesconto;
+    }
+
+    public javax.swing.JTextField getEdtDestinatario() {
+        return edtDestinatario;
+    }
+
+    public javax.swing.JTextField getEdtDestinatarioFiltro() {
+        return edtDestinatarioFiltro;
+    }
+
+    public javax.swing.JTextField getEdtObs() {
+        return edtObs;
+    }
+
+    public javax.swing.JTextField getEdtVlrTotalPedido() {
+        return edtVlrTotalPedido;
+    }
+
+    public javax.swing.JTextField getEdtCliente() {
+        return edtCliente;
+    }
+
+    public com.toedter.calendar.JDateChooser getDtChooserDtEntrega() {
+        return dtChooserDtEntrega;
+    }
+
+    public javax.swing.JComboBox<String> getCmbMtdPagto() {
+        return cmbMtdPagto;
+    }
+
+    public javax.swing.JComboBox<String> getCmbSttsPagto() {
+        return cmbSttsPagto;
+    }
+
+    public javax.swing.JCheckBox getCkBRetirada() {
+        return ckBRetirada;
+    }
+
     //CÓDIGOS PRÓPRIOS DA CLASSE
-    //Atributos
      /* A PedidoController é a classe que controla tanto as ações
     relacionada a sua entidade 'Pedido' quanto a ações gerais da view/*/
     private PedidoController pedidoController;
     private ItemPedidoController itemPedidoController;
-    private DatabaseAccessComponentManager pedidoDBCManager;
-    private DatabaseAccessComponentManager itemPedidoDBCManager;
-    
-    //Constructors
-    public PedidoView(PedidoController pedidoController, ItemPedidoController itemPedidoController, 
-        DatabaseAccessComponentManager pedidoDBCManager, DatabaseAccessComponentManager itemPedidoDBCManager, JFrame previousView) {
-        //DEFAULT CODES
+ 
+    public PedidoView(PedidoController pedidoController, ItemPedidoController itemPedidoController, JFrame previousView) {
+        //Códigos padrões de inicialização da interface
         this.initComponents();
         super.setDefaultViewSettings("Cadastro de Pedidos", previousView);
-        
-        //HANDLING CODES
-            //Injectons
-            this.pedidoController = pedidoController; 
-            this.itemPedidoController = itemPedidoController; 
-            this.pedidoDBCManager = pedidoDBCManager;
-            this.itemPedidoDBCManager = itemPedidoDBCManager;  
+        this.pedidoController = pedidoController; 
+        this.itemPedidoController = itemPedidoController; 
             
-            //Default attribute values
-            
-            //Triggering methods
-                /*Por padrão os campos da tabela referentes ao cliente vem reduzidos */
-                this.resizeCustomerFields(false);
-
-                //Configurando o DatabaseAccessComponentManager do pedido
-                List<Component> fields = Arrays.asList(this.edtCodPedido, this.edtCliente, this.edtCodCliente, this.dtChooserDtEntrega,
-                    this.dtChooserDtPedido, this.edtVlrTotalPedido, this.edtDesconto, this.cmbMtdPagto, this.edtDestinatario, this.ckBRetirada, this.cmbSttsPagto,this.cmbSttsPedido, this.edtObs); 
-                this.pedidoDBCManager.setFields(fields);
-                this.pedidoDBCManager.configureComponents(null, this.pedidoController ,this.btnInsertPedido, this.btnUpdatePedido, 
-                    this.btnDeletePedido, this.btnPostPedido, this.btnCancelPedido, this.btnRefreshPedido, this.tblPedido);
-
-                //Configurando o DatabaseAccessComponentManager do item do pedido
-                this.itemPedidoDBCManager.configureComponents(null, this.itemPedidoController ,this.btnInsertItemPedido, this.btnUpdateItemPedido,
-                    this.btnDeleteItemPedido, this.btnPostItemPedido, this.btnCancelItemPedido, this.btnRefreshItemPedido, this.tblItemPedido);
+        /*Por padrão os campos da tabela referentes ao cliente vem reduzidos */
+        this.resizeCustomerFields(false);
     }
-    
-    //Getters e Setters
-    
-    //Métodos
+
+    public void setItemPedidoController(ItemPedidoController itemPedidoController) {
+        this.itemPedidoController = itemPedidoController;
+    }
 
     /*Método que regula o tamanho dos campos da tabela de pesquisa referentes ao clientes com o propósito de não mostrar
     todas as informações do cliente na tabela de pesquisa, mas sim apenas o nome. Caso o usuário queira ver todas as
@@ -1079,9 +1159,9 @@ public class PedidoView extends SuperView {
         int newColumnWidth = 10;
 
         //Capturando cada coluna que será redimensionada
-        javax.swing.table.TableColumn clTelefones = this.getTblPedido().getColumnModel().getColumn(2);
-        javax.swing.table.TableColumn clEndereco = this.getTblPedido().getColumnModel().getColumn(3);
-        javax.swing.table.TableColumn clLinkEndereco = this.getTblPedido().getColumnModel().getColumn(4);
+        javax.swing.table.TableColumn clTelefones = this.tblPedido.getColumnModel().getColumn(2);
+        javax.swing.table.TableColumn clEndereco = this.tblPedido.getColumnModel().getColumn(3);
+        javax.swing.table.TableColumn clLinkEndereco = this.tblPedido.getColumnModel().getColumn(4);
    
         //Verificando se o usuário quer expandir ou reduzir os campos
         if (expand) {
