@@ -5,18 +5,10 @@
 
 package edu.ifmt.confeitaria.layers.views.data_management;
 
-import java.awt.Component;
-import java.util.Arrays;
-import java.util.List;
-
 import javax.swing.JFrame;
+
 import edu.ifmt.confeitaria.layers.controllers.data_management.UsuarioController;
-import edu.ifmt.confeitaria.layers.models.usuario.Usuario;
-import edu.ifmt.confeitaria.layers.models.usuario.UsuarioService;
-import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperView;
-import edu.ifmt.confeitaria.util.services.ValidationResponses;
-import edu.ifmt.confeitaria.util.views.ViewUtils;
 
 /**
  *
@@ -366,7 +358,7 @@ public class UsuarioView extends SuperView {
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         //Atulizando a lista de dados. O manager irá atualizar os componentes necessários 
-        this.usuarioDBCManager.setTemporaryTDataList(this.usuarioController.select(this.edtNomeFiltro.getText(), this.edtLoginFiltro.getText()));
+        this.usuarioController.select(this.edtNomeFiltro.getText(), this.edtLoginFiltro.getText());
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     /**
@@ -434,49 +426,80 @@ public class UsuarioView extends SuperView {
     private javax.swing.JPanel recordEditing;
     private javax.swing.JTable tblUsuario;
     // End of variables declaration//GEN-END:variables
-   
+
+    public javax.swing.JButton getBtnCancel() {
+        return btnCancel;
+    }
+
+    public javax.swing.JButton getBtnDelete() {
+        return btnDelete;
+    }
+
+    public javax.swing.JButton getBtnInsert() {
+        return btnInsert;
+    }
+
+    public javax.swing.JButton getBtnPost() {
+        return btnPost;
+    }
+
+    public javax.swing.JButton getBtnRefresh() {
+        return btnRefresh;
+    }
+
+    public javax.swing.JButton getBtnUpdate() {
+        return btnUpdate;
+    }
+
+    public javax.swing.JFormattedTextField getEdtCodUsuario() {
+        return edtCodUsuario;
+    }
+
+    public javax.swing.JTextField getEdtLogin() {
+        return edtLogin;
+    }
+
+    public javax.swing.JFormattedTextField getEdtNome() {
+        return edtNome;
+    }
+
+    public javax.swing.JLabel getLblCodUsuarioValidation() {
+        return lblCodUsuarioValidation;
+    }
+
+    public javax.swing.JLabel getLblLoginValidation() {
+        return lblLoginValidation;
+    }
+
+    public javax.swing.JPasswordField getPswdSenha() {
+        return pswdSenha;
+    }
+
+    public javax.swing.JTable getTblUsuario() {
+        return tblUsuario;
+    }
+
     //CÓDIGOS PRÓPRIOS DA CLASSE
-    //Atributos
     private UsuarioController usuarioController;
-    private DatabaseAccessComponentManager<Usuario> usuarioDBCManager;
     private int defaultColumnMaxWidth;
     private int defaultColumnPreferredWidth;
 
-    //Constructors
-    public UsuarioView(UsuarioController usuarioController, DatabaseAccessComponentManager<Usuario> usuarioDBCManager, JFrame previousView) { 
-        //Default codes
+    public UsuarioView(UsuarioController usuarioController, JFrame previousView) { 
+        //Código padrão
         this.initComponents();
         super.setDefaultViewSettings("Cadastro de Usuários", previousView);
+        this.usuarioController = usuarioController;
+            
+        //Valores padrões de atributos e componentes
+        this.defaultColumnMaxWidth = 0;
+        this.defaultColumnPreferredWidth = 0;
+        this.lblCodUsuarioValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
+        this.lblLoginValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
         
-        //HANDLING CODES
-            //Injectons
-            this.usuarioController = usuarioController;
-            this.usuarioDBCManager = usuarioDBCManager; 
-            
-            //Default attribute values
-            this.defaultColumnMaxWidth = 0;
-            this.defaultColumnPreferredWidth = 0;
-            this.lblCodUsuarioValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
-            this.lblLoginValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
-            
-            //Triggering methods
-                //Configurando o DatabaseAccessComponentManager
-                List<Component> fields = Arrays.asList(this.edtCodUsuario, this.edtNome, this.edtLogin, this.pswdSenha);;
-                this.usuarioDBCManager.setFields(fields);
-                this.usuarioDBCManager.setModelToTableRow(this::modelToTableRow);
-                this.usuarioDBCManager.setModelToFields(this::modelToFields);
-                this.usuarioDBCManager.setFieldsToModel(this::fieldsToModel);
-                this.usuarioDBCManager.configureComponents(Usuario.class, this.usuarioController, this.btnInsert,
-                this.btnUpdate, this.btnDelete, this.btnPost, this.btnCancel, this.btnRefresh, this.tblUsuario); 
-
-                //Por padrão, a senha não é visível ao exibir a interface
-                this.setPasswordsVisibility();
-                
-                //Adicionando as validações dos campos
-                ViewUtils.addTextChangeListeners(this.edtCodUsuario, this::validateCodUsuario);
-                ViewUtils.addTextChangeListeners(this.edtLogin, this::validateLogin);
+        //Por padrão, a senha não é visível ao exibir a interface
+        this.setPasswordsVisibility();
     }
-    //Getters e Setters 
+
     public int getDefaultColumnMaxWidth() {
         return defaultColumnMaxWidth;
     }
@@ -499,7 +522,6 @@ public class UsuarioView extends SuperView {
         }
     }
 
-    //Métodos
     //Método para mostrar/esconder os campos relacionados a senha
     public void setPasswordsVisibility() {
         javax.swing.table.TableColumn column = this.tblUsuario.getColumnModel().getColumn(3);
@@ -520,104 +542,5 @@ public class UsuarioView extends SuperView {
             this.pswdSenha.setEchoChar('\u0000');
         }
     }
-
-    /*Método para realizar mapeamento do model(Objeto Usuario)
-    para um objeto que possa ser inserido na tabela*/
-    public Object[] modelToTableRow(Usuario usuario){
-        return new Object[]{
-            usuario.getID(), 
-            usuario.getNome(),
-            usuario.getLogin(),
-            usuario.getSenha()
-        };
-    }
-
-    /*Método para realizar mapeamento do model(Objeto Usuario) para os campos da interface*/
-    public void modelToFields(Usuario usuario) {
-        if(usuario.getID() == null) {
-            this.edtCodUsuario.setText("");
-        } else { 
-            this.edtCodUsuario.setText(usuario.getID().toString());
-        }
-        this.edtNome.setText(usuario.getNome());
-        this.edtLogin.setText(usuario.getLogin());
-        this.pswdSenha.setText(usuario.getSenha());
-    }
-
-    //Método para realizar mapeamento dos campos da interface para um objeto Usuario
-    public Usuario fieldsToModel() {
-       return new Usuario(
-            this.edtCodUsuario.getText().isEmpty() ? null : Long.parseLong(this.edtCodUsuario.getText()),
-            this.edtNome.getText(),
-            this.edtLogin.getText(),
-            new String(this.pswdSenha.getPassword())
-       );
-    }
-
-    //MÉTODOS PARA ADICIONAR VALIDAÇÕES AOS CAMPOS
-    public void validateCodUsuario() {
-        //Se o campo não estiver vazio e o usuário estiver inserindo um novo registro ou atualizando um registro existente, o código(ID) é validado
-        if(!this.edtCodUsuario.getText().isEmpty() && (this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.INSERT
-                || this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.UPDATE)) {
-            /*Tenta converter o texto do campo para um número inteiro, sendo possível, o código(ID) é validado*/
-            try {
-                Long id = Long.parseLong(this.edtCodUsuario.getText());
-                Long originaiD = this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.UPDATE 
-                        ? this.usuarioDBCManager.getTSelectedRecord().getValue().getID() : null;
-
-                ValidationResponses response = this.usuarioController.validateID(id, originaiD);
-                
-                switch(response) {
-                    case BELOW_MIN_VALUE:
-                        ViewUtils.setLabelErrorText(this.lblCodUsuarioValidation, "Código inválido !!!");
-                        break;
-                    case MAX_VALUE_EXCEEDED:
-                        ViewUtils.setLabelErrorText(this.lblCodUsuarioValidation, "Limite máx. excedido !!!");
-                        break;
-                    case ALREADY_EXISTS:
-                        ViewUtils.setLabelErrorText(this.lblCodUsuarioValidation, "Código já existente !!!");
-                        break;
-                    case VALID:
-                        this.lblCodUsuarioValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
-                        break;
-                    default:
-                        break;
-                }
-            } catch(NumberFormatException e) {
-                //Se houver erro na conversão, então o código(ID) é inválido
-                ViewUtils.setLabelErrorText(this.lblCodUsuarioValidation, "Código inválido !!!");
-            }
-        } else {
-            this.lblCodUsuarioValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
-        }
-    }
-
-    public void validateLogin() {
-        //Se o usuário estiver inserindo um novo registro ou atualizando um registro existente, o login é validado
-        if(this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.INSERT 
-                || this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.UPDATE) {
-            
-            String login = this.edtLogin.getText();
-            String orinalLogin = this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.UPDATE
-                ? this.usuarioDBCManager.getTSelectedRecord().getValue().getLogin() : null;
-
-            ValidationResponses response = this.usuarioController.validateLogin(login, orinalLogin);
-                    
-            switch(response) {
-                case MAX_LENGTH_EXCEEDED:
-                    ViewUtils.setLabelErrorText(this.lblLoginValidation, "Limite máx. de " + UsuarioService.LOGIN_MAX_LENGTH + " caracteres !!!");
-                    break;
-                case ALREADY_EXISTS:
-                    ViewUtils.setLabelErrorText(this.lblLoginValidation, "Login já existente !!!");
-                    break;
-                case VALID:
-                    this.lblLoginValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
-                    break;
-                default:
-                    break;
-            }
-        } else {
-            this.lblLoginValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
-        }
-    }
+    
 }
