@@ -6,7 +6,6 @@
 package edu.ifmt.confeitaria.layers.views.data_management;
 
 import edu.ifmt.confeitaria.layers.controllers.data_management.ClienteController;
-import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperView;
 
 import javax.swing.JFrame;
@@ -32,7 +31,6 @@ public class ClienteView extends SuperView {
     // @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
         pnlEditingCliente = new javax.swing.JPanel();
         pnlFiltroCliente = new javax.swing.JPanel();
         lblNomeFiltro = new javax.swing.JLabel();
@@ -403,33 +401,43 @@ public class ClienteView extends SuperView {
     private javax.swing.JPanel recordEditing;
     private javax.swing.JTable tblCliente;
     // End of variables declaration//GEN-END:variables
+    
+    public javax.swing.JButton getBtnCancel() {
+        return btnCancel;
+    }
+
+    public javax.swing.JButton getBtnDelete() {
+        return btnDelete;
+    }
+
+    public javax.swing.JButton getBtnInsert() {
+        return btnInsert;
+    }
+
+    public javax.swing.JButton getBtnPost() {
+        return btnPost;
+    }
+
+    public javax.swing.JButton getBtnRefresh() {
+        return btnRefresh;
+    }
+
+    public javax.swing.JButton getBtnUpdate() {
+        return btnUpdate;
+    }
+
+    public javax.swing.JTable getTblCliente() {
+        return tblCliente;
+    }
 
     //CÓDIGOS PRÓPRIOS DA CLASSE
-    //Atributos
     private ClienteController clienteController;
-    private DatabaseAccessComponentManager clienteDBCManager;
-    
-    //Constructors
-    public ClienteView(ClienteController clienteController, DatabaseAccessComponentManager clienteDBCManager, JFrame previousView) {
-        //Default codes
+
+    public ClienteView(ClienteController clienteController, JFrame previousView) {
+        //Códigos padrões de inicialização da interface
         this.initComponents();
         super.setDefaultViewSettings("Cadastro de Clientes", previousView);
-        
-        //HANDLING CODES
-            //Injectons
-            this.clienteController = clienteController; 
-            this.clienteDBCManager = clienteDBCManager;   
-            
-            //Default attribute values
-            
-            //Triggering methods
-                //Configurando o DatabaseAccessComponentManager
-                this.clienteDBCManager.configureComponents( null, this.clienteController, this.btnInsert,
-                 this.btnUpdate, this.btnDelete, this.btnPost, this.btnCancel, this.btnRefresh, this.tblCliente);
+        this.clienteController = clienteController;     
     }
-    
-    //Getters e Setters
-   
-    //Métodos
-    
+
 }
