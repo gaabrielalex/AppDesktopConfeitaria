@@ -485,7 +485,7 @@ public class UsuarioView extends SuperView {
     private int defaultColumnPreferredWidth;
 
     public UsuarioView(UsuarioController usuarioController, JFrame previousView) { 
-        //Código padrão
+        //Códigos padrões de inicialização da interface
         this.initComponents();
         super.setDefaultViewSettings("Cadastro de Usuários", previousView);
         this.usuarioController = usuarioController;
