@@ -36,17 +36,16 @@ public class CustomDialogs {
     }
 
     public static void registrationError() {
-        //Exibe um dialog de erro de cadastro
         CustomDialogs.standardErrorDataManipulation("Erro ao cadastrar registro!");
     }
 
     public static void updateError() {
-        //Exibe um dialog de erro de atualização
         CustomDialogs.standardErrorDataManipulation("Erro ao atualizar registro!");
     }
 
-    public static void standardErrorDataManipulation(String message) {
-        //Exibe um dialog de erro de banco de dados
+    /*Método auxiliar para exibir um dialog de erro de manipulação 
+    de dados. Privado pois só é utilizado por métodos desta classe*/
+    private static void standardErrorDataManipulation(String message) {
         JOptionPane.showMessageDialog(
             null,
             message +
@@ -56,5 +55,13 @@ public class CustomDialogs {
         );
     }
 
-    
+    public static void logoutError() {
+        JOptionPane.showMessageDialog(
+            null,
+            "Erro ao deslogar usuário!",
+            "Erro",
+            JOptionPane.ERROR_MESSAGE
+        );
+    }
+
 }
