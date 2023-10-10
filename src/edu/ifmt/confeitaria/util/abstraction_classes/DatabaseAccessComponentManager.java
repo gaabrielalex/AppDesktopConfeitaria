@@ -106,7 +106,27 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
         //Setando os atributos
         this.modelClass = modelClass;
         this.controller = controller;
-        this.service = service;
+        this.service = (service == null) ? new SuperService<T>() {
+                @Override
+                public List<T> select() {
+                    return null;
+                }
+
+                @Override
+                public List<T> remakeLastSelect() {
+                    return null;
+                }
+
+                @Override
+                public boolean insert(T tObject) {
+                    return false;
+                }
+
+                @Override
+                public boolean update(T tObject, T tObjectOriginal) {
+                    return false;
+                }
+            } : service;
         
         //Setando os componentes
         this.btnInsert = btnInsert;
