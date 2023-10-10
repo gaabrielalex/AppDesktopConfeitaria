@@ -2,6 +2,7 @@ package edu.ifmt.confeitaria.util.views;
 
 import java.awt.Color;
 
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
@@ -50,5 +51,10 @@ public class ViewUtils {
                 action.run();
             }
         });
+    }
+
+    public static void setLabelErrorText(JLabel label, String text) {
+        label.setText(text);
+        label.setForeground(ViewUtils.ERROR_COLOR);
     }
 }

@@ -571,13 +571,13 @@ public class UsuarioView extends SuperView {
                 
                 switch(response) {
                     case BELOW_MIN_VALUE:
-                        this.setLabelErrorText(this.lblCodUsuarioValidation, "Código inválido !!!");
+                        ViewUtils.setLabelErrorText(this.lblCodUsuarioValidation, "Código inválido !!!");
                         break;
                     case MAX_VALUE_EXCEEDED:
-                        this.setLabelErrorText(this.lblCodUsuarioValidation, "Limite máx. excedido !!!");
+                        ViewUtils.setLabelErrorText(this.lblCodUsuarioValidation, "Limite máx. excedido !!!");
                         break;
                     case ALREADY_EXISTS:
-                        this.setLabelErrorText(this.lblCodUsuarioValidation, "Código já existente !!!");
+                        ViewUtils.setLabelErrorText(this.lblCodUsuarioValidation, "Código já existente !!!");
                         break;
                     case VALID:
                         this.lblCodUsuarioValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
@@ -587,7 +587,7 @@ public class UsuarioView extends SuperView {
                 }
             } catch(NumberFormatException e) {
                 //Se houver erro na conversão, então o código(ID) é inválido
-                this.setLabelErrorText(this.lblCodUsuarioValidation, "Código inválido !!!");
+                ViewUtils.setLabelErrorText(this.lblCodUsuarioValidation, "Código inválido !!!");
             }
         } else {
             this.lblCodUsuarioValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
@@ -607,10 +607,10 @@ public class UsuarioView extends SuperView {
                     
             switch(response) {
                 case MAX_LENGTH_EXCEEDED:
-                    this.setLabelErrorText(this.lblLoginValidation, "Limite máx. de " + UsuarioService.LOGIN_MAX_LENGTH + " caracteres !!!");
+                    ViewUtils.setLabelErrorText(this.lblLoginValidation, "Limite máx. de " + UsuarioService.LOGIN_MAX_LENGTH + " caracteres !!!");
                     break;
                 case ALREADY_EXISTS:
-                    this.setLabelErrorText(this.lblLoginValidation, "Login já existente !!!");
+                    ViewUtils.setLabelErrorText(this.lblLoginValidation, "Login já existente !!!");
                     break;
                 case VALID:
                     this.lblLoginValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
@@ -621,10 +621,5 @@ public class UsuarioView extends SuperView {
         } else {
             this.lblLoginValidation.setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
         }
-    }
-
-    public void setLabelErrorText(JLabel label, String text) {
-        label.setText(text);
-        label.setForeground(ViewUtils.ERROR_COLOR);
     }
 }
