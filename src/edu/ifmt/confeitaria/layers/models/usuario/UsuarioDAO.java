@@ -23,7 +23,7 @@ public class UsuarioDAO {
     public List<Usuario> selectById(Long idUsuario) {
         if(idUsuario == null) return null;
 
-        //Cria o Statement e o ResultSet
+        //Cria o PreparedStatement e o ResultSet
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
@@ -33,7 +33,7 @@ public class UsuarioDAO {
                             "WHERE id_usuario = ?";
 
         try{
-            //Cria o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
+            //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
             statement = DBConnection.getConnection().prepareStatement(sql);
             statement.setLong(1, idUsuario);
 
@@ -53,7 +53,7 @@ public class UsuarioDAO {
     public List<Usuario> selectByLogin(String login) {
        if(login == null) return null;
 
-        //Cria o Statement e o ResultSet
+        //Cria o PreparedStatement e o ResultSet
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
@@ -63,7 +63,7 @@ public class UsuarioDAO {
                             "WHERE login = ?";
 
         try{
-            //Cria o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
+            //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
             statement = DBConnection.getConnection().prepareStatement(sql);
             statement.setString(1, login);
 
@@ -79,8 +79,36 @@ public class UsuarioDAO {
             DBConnection.closeConnection(statement, resultSet);
         }
     }
-    
 
+    public List<Usuario> selectByLoginAndPassword(String login, String senha) {
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        //Cria a query
+        String sql =    "SELECT * " +
+                        "FROM usuario " +
+                            "WHERE login = ?"+
+                                "AND senha = ?";
+
+        try{
+            //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
+            statement = DBConnection.getConnection().prepareStatement(sql);
+            statement.setString(1, login);
+            statement.setString(2, senha);
+
+            //Obtém o ResultSet exexutando a query
+            resultSet = statement.executeQuery();
+            
+            return this.resultSetToList(resultSet); 
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            //Fecha a conexão com o banco de dados e os recursos criados a partir dela
+            DBConnection.closeConnection(statement, resultSet);
+        }
+    }
+    
     public List<Usuario> select(String nome, String login) {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -106,7 +134,7 @@ public class UsuarioDAO {
         int paramIndexCount = 1;
 
         try{
-            //Cria o PreparedStatement com o SQL
+            //Define o PreparedStatement com o SQL
             statement = DBConnection.getConnection().prepareStatement(sql);
 
             //Configura os parâmetros necessários
@@ -138,7 +166,7 @@ public class UsuarioDAO {
         ResultSet resultSet = null;
 
         try{
-            //Cria o PreparedStatement com o SQL da última consulta
+            //Define o PreparedStatement com o SQL da última consulta
             statement = DBConnection.getConnection().prepareStatement(this.lastSQLSelect);
 
             //Obtém o ResultSet exexutando a query
@@ -183,7 +211,7 @@ public class UsuarioDAO {
         String sql =    "INSERT INTO usuario(nome, login, senha) " +
                         "VALUES(?, ?, ?)";
          
-        //Cria o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
+        //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
         statement = DBConnection.getConnection().prepareStatement(sql);
         statement.setString(1, usuario.getNome());
         statement.setString(2, usuario.getLogin());
@@ -203,7 +231,7 @@ public class UsuarioDAO {
         String sql =    "INSERT INTO usuario(id_usuario, nome, login, senha) " +
                         "VALUES(?, ?, ?, ?)";
         
-        //Cria o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
+        //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
         statement = DBConnection.getConnection().prepareStatement(sql);
         statement.setLong(1, usuario.getID());
         statement.setString(2, usuario.getNome());
@@ -219,17 +247,15 @@ public class UsuarioDAO {
 
     public boolean update(Usuario usuario, Long originalID) {
         if(originalID == null) return false;
-
-        //Cria o PreparedStatement
         PreparedStatement statement = null;
 
-        try {
-            //Cria a query
+        //Cria a query
             String sql =    "UPDATE usuario " +
                             "SET id_usuario = ?, nome = ?, login = ?, senha = ? " +
                                 "WHERE id_usuario = ?";
-            
-            //Cria o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
+
+        try {
+            //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
             statement = DBConnection.getConnection().prepareStatement(sql);
             statement.setLong(1, usuario.getID());
             statement.setString(2, usuario.getNome());
