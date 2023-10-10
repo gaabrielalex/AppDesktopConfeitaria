@@ -482,7 +482,7 @@ public class UsuarioView extends SuperView {
     //CÓDIGOS PRÓPRIOS DA CLASSE
     private UsuarioController usuarioController;
     private int defaultColumnMaxWidth;
-    private int defaultColumnPreferredWidth;
+    private int defaultColumnPreferredWidth; 
 
     public UsuarioView(UsuarioController usuarioController, JFrame previousView) { 
         //Códigos padrões de inicialização da interface
