@@ -28,7 +28,7 @@ public class UsuarioController extends SuperController<Usuario> {
     private final UsuarioService usuarioService;
     private DatabaseAccessComponentManager<Usuario> usuarioDBCManager;
     
-    public UsuarioController (JFrame previousView, UsuarioService usuarioService, DatabaseAccessComponentManager<Usuario> usuarioDBCManager) {
+    public UsuarioController(JFrame previousView, UsuarioService usuarioService, DatabaseAccessComponentManager<Usuario> usuarioDBCManager) {
         //Injeção de dependências
         this.usuarioService = usuarioService;
         this.usuarioDBCManager = usuarioDBCManager;
