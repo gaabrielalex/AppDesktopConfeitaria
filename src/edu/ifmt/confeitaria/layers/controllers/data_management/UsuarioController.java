@@ -40,8 +40,8 @@ public class UsuarioController extends SuperController<Usuario> {
         List<Component> fields = Arrays.asList(usuarioView.getEdtCodUsuario(), usuarioView.getEdtNome(), usuarioView.getEdtLogin(), usuarioView.getPswdSenha());;
         this.usuarioDBCManager.setFields(fields);
         this.usuarioDBCManager.configureComponents(Usuario.class, this, this.usuarioService, usuarioView.getBtnInsert(),
-        usuarioView.getBtnUpdate(),usuarioView.getBtnInsert(), usuarioView.getBtnPost(),
-        usuarioView.getBtnCancel(), usuarioView.getBtnRefresh(), usuarioView.getTblUsuario());
+            usuarioView.getBtnUpdate(),usuarioView.getBtnInsert(), usuarioView.getBtnPost(),
+            usuarioView.getBtnCancel(), usuarioView.getBtnRefresh(), usuarioView.getTblUsuario());
 
         //Adicionando as validações aos campos
         ViewUtils.addTextChangeListeners(this.usuarioView.getEdtCodUsuario(), this::validateCodUsuarioField);

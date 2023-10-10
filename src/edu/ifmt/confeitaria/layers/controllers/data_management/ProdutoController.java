@@ -27,8 +27,8 @@ public class ProdutoController extends SuperController {
 
         //Configurando o DatabaseAccessComponentManager
         this.produtoDBCManager.configureComponents(null, this, null, produtoView.getBtnInsert(),
-        produtoView.getBtnUpdate(), produtoView.getBtnDelete(), produtoView.getBtnPost(),
-        produtoView.getBtnCancel(), produtoView.getBtnRefresh(), produtoView.getTblProduto());
+            produtoView.getBtnUpdate(), produtoView.getBtnDelete(), produtoView.getBtnPost(),
+            produtoView.getBtnCancel(), produtoView.getBtnRefresh(), produtoView.getTblProduto());
     }
 
     @Override

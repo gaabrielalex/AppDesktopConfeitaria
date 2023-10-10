@@ -27,8 +27,8 @@ public class ClienteController extends SuperController {
 
         //Configurando o DatabaseAccessComponentManager
         this.clienteDBCManager.configureComponents(null, this, null, clienteView.getBtnInsert(),
-        clienteView.getBtnUpdate(), clienteView.getBtnDelete(), clienteView.getBtnPost(),
-        clienteView.getBtnCancel(), clienteView.getBtnRefresh(), clienteView.getTblCliente());
+            clienteView.getBtnUpdate(), clienteView.getBtnDelete(), clienteView.getBtnPost(),
+            clienteView.getBtnCancel(), clienteView.getBtnRefresh(), clienteView.getTblCliente());
     }
     
     @Override

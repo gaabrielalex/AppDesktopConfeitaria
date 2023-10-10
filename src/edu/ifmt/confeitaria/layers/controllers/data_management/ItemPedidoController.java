@@ -27,8 +27,8 @@ public class ItemPedidoController extends SuperController {
 
         //Configurando o DatabaseAccessComponentManager
         this.itemPedidoDBCManager.configureComponents(null, this, null, pedidoView.getBtnInsertItemPedido(),
-        pedidoView.getBtnUpdateItemPedido(), pedidoView.getBtnDeleteItemPedido(), pedidoView.getBtnPostItemPedido(),
-        pedidoView.getBtnCancelItemPedido(), pedidoView.getBtnRefreshItemPedido(), pedidoView.getTblItemPedido());
+            pedidoView.getBtnUpdateItemPedido(), pedidoView.getBtnDeleteItemPedido(), pedidoView.getBtnPostItemPedido(),
+            pedidoView.getBtnCancelItemPedido(), pedidoView.getBtnRefreshItemPedido(), pedidoView.getTblItemPedido());
     }
 
     /* O método displey view não faz nada, pois a view em que a entidade do sistema
