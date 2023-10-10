@@ -53,11 +53,6 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
     //Componente setado separadamente(fora do método configureComponents)
     private List<Component> fields;
 
-    //Atributos funcionais
-    private Function<T, Object[]> modelToTableRow;
-    private Consumer<T> modelToFields;
-    private Supplier<T> fieldsToModel;
-
     //CONSTRUCTORS
 
     //GETTERS, SETTERS E OBSERVABLES
@@ -99,18 +94,6 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
         this.fields = fields;
     }
 
-    public void setModelToTableRow(Function<T, Object[]> modelToTableRow) {
-        this.modelToTableRow = modelToTableRow;
-    }
-
-    public void setModelToFields(Consumer<T> modelToFields) {
-        this.modelToFields = modelToFields;
-    } 
-
-    public void setFieldsToModel(Supplier<T> fieldsToModel) {
-        this.fieldsToModel = fieldsToModel;
-    }
-
     public BehaviorSubject<T> getTSelectedRecord() {
         return tSelectedRecord;
     }
@@ -142,12 +125,6 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
 
         //Setando os valores iniciais dos atributos
         this.activateUpdateWhenFieldsChange = true;
-
-        /*Setando os atributos funcionais com funções 'vazias'
-        para evitar NullPointerException caso não sejam setados*/
-        if(this.modelToTableRow == null) this.modelToTableRow = x -> null;
-        if(this.modelToFields == null) this.modelToFields = x -> {};
-        if(this.fieldsToModel == null) this.fieldsToModel = () -> null;
 
         //Adicionando os eventos aos componentes
         this.btnInsert.addActionListener((ActionEvent e) -> {
