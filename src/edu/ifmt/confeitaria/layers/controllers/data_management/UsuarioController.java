@@ -53,7 +53,7 @@ public class UsuarioController extends SuperController<Usuario> {
         this.usuarioView.setVisible(true);
     }
 
-    public void select(String nome, String login) {
+    public void partialSearch(String nome, String login) {
         this.usuarioDBCManager.setTemporaryTDataList(this.usuarioService.partialSearch(nome, login));
     }
 
