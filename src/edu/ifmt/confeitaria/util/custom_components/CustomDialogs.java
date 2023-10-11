@@ -55,13 +55,4 @@ public class CustomDialogs {
         );
     }
 
-    public static void logoutError() {
-        JOptionPane.showMessageDialog(
-            null,
-            "Erro ao deslogar usuário!",
-            "Erro",
-            JOptionPane.ERROR_MESSAGE
-        );
-    }
-
 }
