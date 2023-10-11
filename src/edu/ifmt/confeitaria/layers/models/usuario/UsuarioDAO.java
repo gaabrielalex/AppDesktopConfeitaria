@@ -9,7 +9,7 @@ import java.util.List;
 import edu.ifmt.confeitaria.util.database.DBConnection;
 
 public class UsuarioDAO {
-    private String lastSQLSelect;
+    private String lastSqlPartialSearch;
 
     /* ------ Operações básicas de banco de dados ------ */
     public List<Usuario> selectById(Long idUsuario) {
@@ -100,8 +100,12 @@ public class UsuarioDAO {
             DBConnection.closeConnection(statement, resultSet);
         }
     }
+
+    public List<Usuario> selectAll() {
+        return this.partialSearch(null, null);
+    }
     
-    public List<Usuario> select(String nome, String login) {
+    public List<Usuario> partialSearch(String nome, String login) {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
@@ -138,7 +142,7 @@ public class UsuarioDAO {
                 statement.setString(paramIndexCount, login);
             }
             //Armazena o SQL para haver refefência da última consulta realizada pelo DAO
-            this.lastSQLSelect = statement.toString();
+            this.lastSqlPartialSearch = statement.toString();
 
             //Obtém o ResultSet exexutando a query
             resultSet = statement.executeQuery();
@@ -153,13 +157,13 @@ public class UsuarioDAO {
         }
     }
 
-    public List<Usuario> remakeLastSelect() {
+    public List<Usuario> remakeLastPartialSearch() {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
         try{
             //Define o PreparedStatement com o SQL da última consulta
-            statement = DBConnection.getConnection().prepareStatement(this.lastSQLSelect);
+            statement = DBConnection.getConnection().prepareStatement(this.lastSqlPartialSearch);
 
             //Obtém o ResultSet exexutando a query
             resultSet = statement.executeQuery();

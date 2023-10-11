@@ -54,7 +54,7 @@ public class UsuarioController extends SuperController<Usuario> {
     }
 
     public void select(String nome, String login) {
-        this.usuarioDBCManager.setTemporaryTDataList(this.usuarioService.select(nome, login));
+        this.usuarioDBCManager.setTemporaryTDataList(this.usuarioService.partialSearch(nome, login));
     }
 
     @Override
