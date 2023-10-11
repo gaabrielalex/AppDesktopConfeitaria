@@ -4,16 +4,17 @@
  */
 package edu.ifmt.confeitaria.layers.views.main;
 
+import javax.swing.Box;
+
 import edu.ifmt.confeitaria.layers.controllers.data_management.ClienteController;
 import edu.ifmt.confeitaria.layers.controllers.data_management.PedidoController;
 import edu.ifmt.confeitaria.layers.controllers.data_management.ProdutoController;
 import edu.ifmt.confeitaria.layers.controllers.data_management.UsuarioController;
 import edu.ifmt.confeitaria.layers.controllers.main.MainController;
-import edu.ifmt.confeitaria.layers.models.usuario.UsuarioDAO;
+import edu.ifmt.confeitaria.layers.models.usuario.Usuario;
 import edu.ifmt.confeitaria.layers.models.usuario.UsuarioService;
+import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperView;
-
-import javax.swing.Box;
 
 /**
  *
@@ -97,6 +98,11 @@ public class MainView extends SuperView {
         menuBar.add(mnRelatorios);
 
         mnSair.setText("Sair");
+        mnSair.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mnSairMouseClicked(evt);
+            }
+        });
         menuBar.add(mnSair);
 
         mnApresentacaoUsuario.setText("Bem-Vindo, Usuário??????????????!");
@@ -128,20 +134,24 @@ public class MainView extends SuperView {
     }// </editor-fold>//GEN-END:initComponents
 
     private void mnItemUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnItemUsuarioActionPerformed
-        this.mainController.requestDisplayMenuItemView(new UsuarioController(this, new UsuarioService(new UsuarioDAO())));
+        this.mainController.requestDisplayMenuItemView(new UsuarioController(this, UsuarioService.getInstance(), new DatabaseAccessComponentManager<Usuario>()));
     }//GEN-LAST:event_mnItemUsuarioActionPerformed
 
     private void mnItemClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnItemClienteActionPerformed
-        this.mainController.requestDisplayMenuItemView(new ClienteController(this));
+        this.mainController.requestDisplayMenuItemView(new ClienteController(this, new DatabaseAccessComponentManager()));
     }//GEN-LAST:event_mnItemClienteActionPerformed
 
     private void mnItemProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnItemProdutoActionPerformed
-        this.mainController.requestDisplayMenuItemView(new ProdutoController(this));
+        this.mainController.requestDisplayMenuItemView(new ProdutoController(this, new DatabaseAccessComponentManager()));
     }//GEN-LAST:event_mnItemProdutoActionPerformed
 
     private void mnItemPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnItemPedidoActionPerformed
-        this.mainController.requestDisplayMenuItemView(new PedidoController(this));
+        this.mainController.requestDisplayMenuItemView(new PedidoController(this, new DatabaseAccessComponentManager()));
     }//GEN-LAST:event_mnItemPedidoActionPerformed
+
+    private void mnSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnSairMouseClicked
+        this.mainController.requestUserSignOut();
+    }//GEN-LAST:event_mnSairMouseClicked
     
     /**
      * @param args the command line arguments
@@ -193,24 +203,24 @@ public class MainView extends SuperView {
     // End of variables declaration//GEN-END:variables
  
     //CÓDIGOS PRÓPRIOS DA CLASSE
-    //Atributos
     private MainController mainController; 
     
-    //Constructors
-    //Constutor público para ser chamado pelo main da aplicação fazendo as devidas injeções de dependência
-    public MainView(MainController mainController) {       
-        //Default codes
+    public MainView(MainController mainController) {
+        //Códigos padrões de inicialização da interface
         this.initComponents();
         super.setDefaultViewSettings("Confeitaria: Gerenciamento de Pedidos", null);
-        
-        //Handling Code
         this.mainController = mainController; 
+
+        //Adiciona um espaço vazio na barra de menu para que o nome do usuário fique alinhado à direita
         menuBar.add(Box.createHorizontalGlue());
         menuBar.add(this.mnApresentacaoUsuario);
+ 
+        //Seta o nome do usuário na barra de menu 
+        UsuarioService.getInstance().getLoggedUser().subscribe(this::setUserName);
     }
-    
-    //Getters e Setters
-    
-    //Métodos
+
+    private void setUserName(Usuario usuario) {
+        this.mnApresentacaoUsuario.setText("Bem-Vindo, " + usuario.getNome() + "!");
+    }
 
 }
