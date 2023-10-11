@@ -32,23 +32,23 @@ public class UsuarioService extends SuperService<Usuario> {
 
     /* ----- Métodos principais de manipulação de dados ----- */
     @Override
-    public List<Usuario> select(){
-        return this.select(null, null);
+    public List<Usuario> selectAll(){
+        return this.usuarioDAO.selectAll();
     }
     
-    public List<Usuario> select(String nome, String login) {
+    public List<Usuario> partialSearch(String nome, String login) {
         //Remove os espaços em branco do início e do fim das strings
         if(nome != null) nome = nome.stripLeading().stripTrailing();
         if(login != null) login = login.stripLeading().stripTrailing();
         
         //Solicita os dados ao DAO
-        return this.usuarioDAO.select(nome, login);
+        return this.usuarioDAO.partialSearch(nome, login);
     }
     
     @Override
-    public List<Usuario> remakeLastSelect(){
+    public List<Usuario> remakeLastPartialSearch(){
         //Solicita os dados ao DAO
-        return this.usuarioDAO.remakeLastSelect();
+        return this.usuarioDAO.remakeLastPartialSearch();
     }
     
     @Override
