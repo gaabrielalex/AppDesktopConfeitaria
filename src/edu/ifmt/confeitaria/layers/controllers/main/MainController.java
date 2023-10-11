@@ -4,6 +4,7 @@
  */
 package edu.ifmt.confeitaria.layers.controllers.main;
 
+import edu.ifmt.confeitaria.layers.models.usuario.UsuarioService;
 import edu.ifmt.confeitaria.layers.views.main.MainView;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperController;
 
@@ -25,6 +26,10 @@ public class MainController {
     public void requestDisplayMenuItemView(SuperController<?> viewController) {  
         /*Solicita ao controller para que ele exiba a sua view */
         viewController.displayView();
+    }
+
+    public void requestUserSignOut() {
+        UsuarioService.getInstance().signOut();
     }
     
 }
