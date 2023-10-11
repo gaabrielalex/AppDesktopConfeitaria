@@ -138,6 +138,7 @@ public class UsuarioService extends SuperService<Usuario> {
 
     /* ----- Validações ----- */
     public static final int NOME_MAX_LENGTH = 100;
+    public static final int NOME_MIN_LENGTH = 8;
     public static final int LOGIN_MAX_LENGTH = 30;
     public static final int LOGIN_MIN_LENGTH = 5;
     public static final int SENHA_MAX_LENGTH = 30;
@@ -178,7 +179,11 @@ public class UsuarioService extends SuperService<Usuario> {
     }
 
     public ValidationResponses validateNome(String nome) {
-        if(nome.length() > UsuarioService.NOME_MAX_LENGTH) {
+        if(nome == null || nome.isEmpty()) {
+            return ValidationResponses.REQUIRED_FIELD;
+        } else if(nome.length() < UsuarioService.NOME_MIN_LENGTH) {
+            return ValidationResponses.MIN_LENGTH_NOT_REACHED;
+        } else if(nome.length() > UsuarioService.NOME_MAX_LENGTH) {
             return ValidationResponses.MAX_LENGTH_EXCEEDED;
         } else {
             return ValidationResponses.VALID;

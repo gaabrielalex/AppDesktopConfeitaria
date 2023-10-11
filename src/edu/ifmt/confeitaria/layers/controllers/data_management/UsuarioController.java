@@ -106,6 +106,12 @@ public class UsuarioController extends SuperController<Usuario> {
             ValidationResponses response = this.usuarioService.validateNome(nome);
                     
             switch(response) {
+                case REQUIRED_FIELD:
+                    ViewUtils.setLabelErrorText(this.usuarioView.getLblNomeValidation(), "Campo obrigatório !!!");
+                    break;
+                case MIN_LENGTH_NOT_REACHED:
+                    ViewUtils.setLabelErrorText(this.usuarioView.getLblNomeValidation(), "Limite mín. de " + UsuarioService.NOME_MIN_LENGTH + " caracteres !!!");
+                    break;
                 case MAX_LENGTH_EXCEEDED:
                     ViewUtils.setLabelErrorText(this.usuarioView.getLblNomeValidation(), "Limite máx. de " + UsuarioService.NOME_MAX_LENGTH + " caracteres !!!");
                     break;
