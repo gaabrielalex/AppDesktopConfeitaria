@@ -139,8 +139,10 @@ public class UsuarioService extends SuperService<Usuario> {
     /* ----- Validações ----- */
     public static final int NOME_MAX_LENGTH = 100;
     public static final int LOGIN_MAX_LENGTH = 30;
+    public static final int LOGIN_MIN_LENGTH = 5;
     public static final int SENHA_MAX_LENGTH = 30;
-    
+    public static final int SENHA_MIN_LENGTH = 8;
+
     public boolean validateDataInsert(Usuario usuario) {
         return this.validateAllData(usuario, null);
     }
@@ -158,56 +160,57 @@ public class UsuarioService extends SuperService<Usuario> {
                 && ValidationResponses.VALID == this.validateLogin(usuario.getLogin(), usuarioOriginal == null ? null : usuarioOriginal.getLogin()));
     }
 
-    //Método para validar o ID, privado pois só deve ser usado internamente
     public ValidationResponses validateID(Long ID, Long originalID) {
-        if(ID != null) {
-            if(ID < ServiceUtils.MIN_ID_VALUE) {
-                return ValidationResponses.BELOW_MIN_VALUE;
-            } else if (ID > ServiceUtils.MAX_ID_VALUE) {
-                return ValidationResponses.MAX_VALUE_EXCEEDED;
-
-              /*Verifica se o ID é diferente do ID original, se 
-              for, verifica se ele já existe no banco de dados*/   
-            } else if(!ID.equals(originalID) && this.isIdExists(ID)) {
-                return ValidationResponses.ALREADY_EXISTS;
-            } else {
-                return ValidationResponses.VALID;
-            }
+        if(ID == null) {
+            return ValidationResponses.VALID;
+        } else if(ID < ServiceUtils.MIN_ID_VALUE) {
+            return ValidationResponses.BELOW_MIN_VALUE;
+        } else if (ID > ServiceUtils.MAX_ID_VALUE) {
+            return ValidationResponses.MAX_VALUE_EXCEEDED;
+        }    
+        /*Verifica se o ID é diferente do ID original, se 
+        for, verifica se ele já existe no banco de dados*/   
+        else if(!ID.equals(originalID) && this.isIdExists(ID)) {
+            return ValidationResponses.ALREADY_EXISTS;
         } else {
             return ValidationResponses.VALID;
         }
     }
 
     public ValidationResponses validateNome(String nome) {
-        //Verifica se o nome tem menos de 100 caracteres
-        if(nome.length() <= UsuarioService.NOME_MAX_LENGTH) {
-            return ValidationResponses.VALID;
-        } else {
+        if(nome.length() > UsuarioService.NOME_MAX_LENGTH) {
             return ValidationResponses.MAX_LENGTH_EXCEEDED;
+        } else {
+            return ValidationResponses.VALID;
         }
     }
 
     public ValidationResponses validateLogin(String login, String originalLogin) {
-        //Verifica se o login tem menos de 30 caracteres
-        if(login.length() <= UsuarioService.LOGIN_MAX_LENGTH) {
-            /*Se sim, verifica se o login é diferente do login original, 
-            sendo diferente, verifica se ele já existe no banco de dados*/
-            if(!login.equals(originalLogin) && this.isLoginExists(login)) {
-                return ValidationResponses.ALREADY_EXISTS;
-            } else {
-                return ValidationResponses.VALID;
-            }
-        } else {
+        if(login == null || login.isEmpty()) {
+            return ValidationResponses.REQUIRED_FIELD;
+        } else if(login.length() < UsuarioService.LOGIN_MIN_LENGTH) {
+            return ValidationResponses.MIN_LENGTH_NOT_REACHED;
+        } else if(login.length() > UsuarioService.LOGIN_MAX_LENGTH) {
             return ValidationResponses.MAX_LENGTH_EXCEEDED;
+        }
+        /*Se sim, verifica se o login é diferente do login original, 
+        sendo diferente, verifica se ele já existe no banco de dados*/
+        else if(!login.equals(originalLogin) && this.isLoginExists(login)) {
+            return ValidationResponses.ALREADY_EXISTS;   
+        } else {
+            return ValidationResponses.VALID;
         }
     }
 
     public ValidationResponses validateSenha(String senha) {
-        //Verifica se a senha tem menos de 30 caracteres
-        if(senha.length() <= UsuarioService.SENHA_MAX_LENGTH) {
-            return ValidationResponses.VALID;
-        } else {
+        if(senha == null || senha.isEmpty()) {
+            return ValidationResponses.REQUIRED_FIELD;
+        } else if(senha.length() < UsuarioService.SENHA_MIN_LENGTH) {
+            return ValidationResponses.MIN_LENGTH_NOT_REACHED;
+        } else if(senha.length() > UsuarioService.SENHA_MAX_LENGTH) {
             return ValidationResponses.MAX_LENGTH_EXCEEDED;
+        } else {
+            return ValidationResponses.VALID;
         }
     }
 }
