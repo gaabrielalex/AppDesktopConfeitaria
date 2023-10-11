@@ -254,13 +254,7 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
             boolean response = this.service.insert(tObject);
 
             if(response) {
-                this.resetManagerDefaultSettings();
-
-                //Atualiza a lista de dados temporária para as mudanças serem refletidas nos componentes visuais
-                this.temporaryTDataList.getValue().set(this.selectedRecordIndex.getValue(), tObject);
-
-                /*Força a atualização da lista pois o observable não notifica alterações quando apenas itens da lista são alterados*/
-                this.updateTemporaryTDataList(this.temporaryTDataList.getValue());
+                this.refresh();
             } else {
                 //Exibe um dialog de erro de cadastro
                 CustomDialogs.registrationError();
@@ -270,13 +264,7 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
             boolean response = this.service.update(tObject, this.tSelectedRecord.getValue());
 
              if(response) {
-                this.resetManagerDefaultSettings();
-
-                //Atualiza a lista de dados temporária para as mudanças serem refletidas nos componentes visuais
-                this.temporaryTDataList.getValue().set(this.selectedRecordIndex.getValue(), tObject);
-
-                /*Força a atualização da lista pois o observable não notifica alterações quando apenas itens da lista são alterados*/
-                this.updateTemporaryTDataList(this.temporaryTDataList.getValue());
+                this.refresh();
             } else {
                 //Exibe um dialog de erro de atualização 
                 CustomDialogs.updateError();
