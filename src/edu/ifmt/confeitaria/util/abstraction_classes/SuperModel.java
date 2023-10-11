@@ -1,4 +1,4 @@
-package edu.ifmt.confeitaria.util.abstraction_classes;
+ package edu.ifmt.confeitaria.util.abstraction_classes;
 
 public class SuperModel {
     private Long ID;
