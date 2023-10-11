@@ -45,7 +45,15 @@ public class UsuarioController extends SuperController<Usuario> {
 
         //Adicionando as validações aos campos
         ViewUtils.addTextChangeListeners(this.usuarioView.getEdtCodUsuario(), this::validateCodUsuarioField);
+        ViewUtils.addTextChangeListeners(this.usuarioView.getEdtNome(), this::validateNomeField);
         ViewUtils.addTextChangeListeners(this.usuarioView.getEdtLogin(), this::validateLoginField);
+        ViewUtils.addTextChangeListeners(this.usuarioView.getPswdSenha(), this::validateSenhaField);
+
+        //Cor inicial dos labels de validação
+        this.usuarioView.getLblCodUsuarioValidation().setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
+        this.usuarioView.getLblNomeValidation().setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
+        this.usuarioView.getLblLoginValidation().setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
+        this.usuarioView.getLblSenhaValidation().setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
     }
 
     @Override
@@ -89,6 +97,29 @@ public class UsuarioController extends SuperController<Usuario> {
         );
     }
 
+    public void validateNomeField() {
+        //Se o usuário estiver inserindo um novo registro ou atualizando um registro existente, o nome é validado
+        if(this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.INSERT 
+                || this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.UPDATE) {
+            
+            String nome = this.usuarioView.getEdtNome().getText();
+            ValidationResponses response = this.usuarioService.validateNome(nome);
+                    
+            switch(response) {
+                case MAX_LENGTH_EXCEEDED:
+                    ViewUtils.setLabelErrorText(this.usuarioView.getLblNomeValidation(), "Limite máx. de " + UsuarioService.NOME_MAX_LENGTH + " caracteres !!!");
+                    break;
+                case VALID:
+                    this.usuarioView.getLblNomeValidation().setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
+                    break;
+                default:
+                    break;
+            }
+        } else {
+           this.usuarioView.getLblNomeValidation().setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
+        }
+    }
+
     public void validateCodUsuarioField() {
         //Se o campo não estiver vazio e o usuário estiver inserindo um novo registro ou atualizando um registro existente, o código(ID) é validado
         if(!this.usuarioView.getEdtCodUsuario().getText().isEmpty() && (this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.INSERT
@@ -96,10 +127,10 @@ public class UsuarioController extends SuperController<Usuario> {
             /*Tenta converter o texto do campo para um número inteiro, sendo possível, o código(ID) é validado*/
             try {
                 Long id = Long.parseLong(this.usuarioView.getEdtCodUsuario().getText());
-                Long originaiD = this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.UPDATE 
+                Long originalID = this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.UPDATE 
                         ? this.usuarioDBCManager.getTSelectedRecord().getValue().getID() : null;
 
-                ValidationResponses response = this.usuarioService.validateID(id, originaiD);
+                ValidationResponses response = this.usuarioService.validateID(id, originalID);
                 
                 switch(response) {
                     case BELOW_MIN_VALUE:
@@ -132,12 +163,18 @@ public class UsuarioController extends SuperController<Usuario> {
                 || this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.UPDATE) {
             
             String login = this.usuarioView.getEdtLogin().getText();
-            String orinalLogin = this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.UPDATE
+            String originalLogin = this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.UPDATE
                 ? this.usuarioDBCManager.getTSelectedRecord().getValue().getLogin() : null;
 
-            ValidationResponses response = this.usuarioService.validateLogin(login, orinalLogin);
+            ValidationResponses response = this.usuarioService.validateLogin(login, originalLogin);
                     
             switch(response) {
+                case REQUIRED_FIELD:
+                    ViewUtils.setLabelErrorText(this.usuarioView.getLblLoginValidation(), "Campo obrigatório !!!");
+                    break;
+                case MIN_LENGTH_NOT_REACHED:
+                    ViewUtils.setLabelErrorText(this.usuarioView.getLblLoginValidation(), "Limite mín. de " + UsuarioService.LOGIN_MIN_LENGTH + " caracteres !!!");
+                    break;
                 case MAX_LENGTH_EXCEEDED:
                     ViewUtils.setLabelErrorText(this.usuarioView.getLblLoginValidation(), "Limite máx. de " + UsuarioService.LOGIN_MAX_LENGTH + " caracteres !!!");
                     break;
@@ -154,5 +191,34 @@ public class UsuarioController extends SuperController<Usuario> {
            this.usuarioView.getLblLoginValidation().setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
         }
     }
+
+    public void validateSenhaField() {
+        //Se o usuário estiver inserindo um novo registro ou atualizando um registro existente, a senha é validada
+        if(this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.INSERT 
+                || this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.UPDATE) {
+            
+            String senha = new String(this.usuarioView.getPswdSenha().getPassword());
+            ValidationResponses response = this.usuarioService.validateSenha(senha);
+                    
+            switch(response) {
+                case REQUIRED_FIELD:
+                    ViewUtils.setLabelErrorText(this.usuarioView.getLblSenhaValidation(), "Campo obrigatório !!!");
+                    break;
+                case MIN_LENGTH_NOT_REACHED:
+                    ViewUtils.setLabelErrorText(this.usuarioView.getLblSenhaValidation(), "Limite mín. de " + UsuarioService.SENHA_MIN_LENGTH + " caracteres !!!");
+                    break;
+                case MAX_LENGTH_EXCEEDED:
+                    ViewUtils.setLabelErrorText(this.usuarioView.getLblSenhaValidation(), "Limite máx. de " + UsuarioService.SENHA_MAX_LENGTH + " caracteres !!!");
+                    break;
+                case VALID:
+                    this.usuarioView.getLblSenhaValidation().setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
+                    break;
+                default:
+                    break;
+            }
+        } else {
+           this.usuarioView.getLblSenhaValidation().setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
+        }
+    } 
 
 }

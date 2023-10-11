@@ -79,6 +79,7 @@
                                           <Component id="edtLogin" max="32767" attributes="0"/>
                                           <Component id="edtNome" pref="210" max="32767" attributes="0"/>
                                       </Group>
+                                      <Component id="lblSenhaValidation" alignment="1" min="-2" pref="204" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
@@ -86,20 +87,25 @@
                                   <Component id="lblLoginValidation" min="-2" pref="204" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Group type="103" groupAlignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                          <Component id="btnEnabledSenha" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="301" max="-2" attributes="0"/>
                                   <Component id="lblCodUsuario" min="-2" pref="50" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="lblCodUsuarioValidation" max="32767" attributes="0"/>
-                                      <Component id="edtCodUsuario" pref="120" max="32767" attributes="0"/>
-                                  </Group>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
-                                  <Component id="btnEnabledSenha" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
+                                  <Component id="lblNomeValidation" max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
                               </Group>
+                          </Group>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="lblCodUsuarioValidation" max="32767" attributes="0"/>
+                              <Component id="edtCodUsuario" pref="120" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -125,7 +131,10 @@
                       <Component id="lblNome" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                  <Component id="lblCodUsuarioValidation" min="-2" pref="12" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="lblCodUsuarioValidation" alignment="3" min="-2" pref="12" max="-2" attributes="0"/>
+                      <Component id="lblNomeValidation" alignment="0" min="-2" pref="12" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="edtLogin" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -139,7 +148,9 @@
                       <Component id="lblSenha" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="pswdSenha" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                  <Component id="lblSenhaValidation" min="-2" pref="12" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                   <Component id="recordEditing" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
@@ -416,6 +427,28 @@
           </AccessibilityProperties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblLoginValidation">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="10" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="33" red="cc" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Login j&#xe1; existente !!!"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblNomeValidation">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="10" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="33" red="cc" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Login j&#xe1; existente !!!"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblSenhaValidation">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="10" style="1"/>
