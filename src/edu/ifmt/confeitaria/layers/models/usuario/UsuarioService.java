@@ -8,11 +8,6 @@ import edu.ifmt.confeitaria.util.services.ValidationResponses;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
 public class UsuarioService extends SuperService<Usuario> {
-    //Constantes
-    public static final int NOME_MAX_LENGTH = 100;
-    public static final int LOGIN_MAX_LENGTH = 30;
-    public static final int SENHA_MAX_LENGTH = 30;
-    //Atributos
     private static UsuarioService instance;
     private final UsuarioDAO usuarioDAO;
     private BehaviorSubject<Usuario> loggedUser;
@@ -22,12 +17,12 @@ public class UsuarioService extends SuperService<Usuario> {
         this.loggedUser.onNext(new Usuario());
         this.usuarioDAO = usuarioDAO;
     }
-
+    
     public static UsuarioService getInstance() {
         if(UsuarioService.instance == null) {
             UsuarioService.instance = new UsuarioService(new UsuarioDAO());
         }
-
+        
         return UsuarioService.instance;
     }
 
@@ -40,22 +35,22 @@ public class UsuarioService extends SuperService<Usuario> {
     public List<Usuario> select(){
         return this.select(null, null);
     }
-
+    
     public List<Usuario> select(String nome, String login) {
         //Remove os espaços em branco do início e do fim das strings
         if(nome != null) nome = nome.stripLeading().stripTrailing();
         if(login != null) login = login.stripLeading().stripTrailing();
-
+        
         //Solicita os dados ao DAO
         return this.usuarioDAO.select(nome, login);
     }
-
+    
     @Override
     public List<Usuario> remakeLastSelect(){
         //Solicita os dados ao DAO
         return this.usuarioDAO.remakeLastSelect();
     }
-
+    
     @Override
     public boolean insert(Usuario usuario) {
         //Valida os dados do usuário
@@ -68,7 +63,7 @@ public class UsuarioService extends SuperService<Usuario> {
         }
         
     }
-
+    
     @Override
     public boolean update(Usuario usuario, Usuario usuarioOriginal) {
         //Valida os dados do usuário
@@ -86,7 +81,7 @@ public class UsuarioService extends SuperService<Usuario> {
         //Solicita ao DAO a lista de usuários com o login especificado
         List<Usuario> usuarios = this.usuarioDAO.selectByLoginAndPassword(login, senha);
         Usuario currentUser;
-
+        
         //Verifica se a lista não é nula e se não está vazia
         if(usuarios != null && !usuarios.isEmpty()) {  
             //Define o usuário atual como o primeiro usuário da lista
@@ -107,44 +102,49 @@ public class UsuarioService extends SuperService<Usuario> {
             return false;
         }
     }
-
+    
     public void signOut() {
         //Define o usuário logado como nulo
         this.loggedUser.onNext(new Usuario());
     }
-
+    
     public boolean isIdExists(Long ID){
         //Solicta ao DAO a lista de usuários com o id especificado
         List<Usuario> usuarios = this.usuarioDAO.selectById(ID);
-
+        
         if(usuarios != null) {
             //Verifica se a lista está vazia
             boolean response = usuarios.size() > 0;
             return response;
-
+            
         } else {
             return false;
         }
     }
-
+    
     public boolean isLoginExists(String login){
         //Solicta ao DAO a lista de usuários com o login especificado
         List<Usuario> usuarios = this.usuarioDAO.selectByLogin(login);
-
+        
         if(usuarios != null) {
             //Verifica se a lista está vazia
             boolean response = usuarios.size() > 0;
             return response;
-
+            
         } else {
             return false;
         }
     }
 
+    /* ----- Validações ----- */
+    public static final int NOME_MAX_LENGTH = 100;
+    public static final int LOGIN_MAX_LENGTH = 30;
+    public static final int SENHA_MAX_LENGTH = 30;
+    
     public boolean validateDataInsert(Usuario usuario) {
         return this.validateAllData(usuario, null);
     }
-
+    
     public boolean validateDataUpdate(Usuario usuario, Usuario usuarioOriginal) {
         return this.validateAllData(usuario, usuarioOriginal);
     }
