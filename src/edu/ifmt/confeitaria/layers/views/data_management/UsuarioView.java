@@ -41,23 +41,24 @@ public class UsuarioView extends SuperView {
         btnPesquisar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUsuario = new javax.swing.JTable();
-        btnEnabledSenha = new javax.swing.JButton();
         lblSenha = new javax.swing.JLabel();
         edtLogin = new javax.swing.JTextField();
         lblLogin = new javax.swing.JLabel();
         lblNome = new javax.swing.JLabel();
         pswdSenha = new javax.swing.JPasswordField();
-        lblCodUsuario = new javax.swing.JLabel();
         recordEditing = new javax.swing.JPanel();
         btnInsert = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         edtNome = new javax.swing.JFormattedTextField();
-        edtCodUsuario = new javax.swing.JFormattedTextField();
-        lblCodUsuarioValidation = new javax.swing.JLabel();
         lblLoginValidation = new javax.swing.JLabel();
         lblNomeValidation = new javax.swing.JLabel();
         lblSenhaValidation = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        lblCodUsuario = new javax.swing.JLabel();
+        btnEnabledSenha = new javax.swing.JButton();
+        lblCodUsuarioValidation = new javax.swing.JLabel();
+        edtCodUsuario = new javax.swing.JFormattedTextField();
         editConfirmationWithRefresh = new javax.swing.JPanel();
         btnPost = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
@@ -150,22 +151,12 @@ public class UsuarioView extends SuperView {
                 .addContainerGap())
         );
 
-        btnEnabledSenha.setText("Habilitar/Desabilitar Senha");
-        btnEnabledSenha.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-        btnEnabledSenha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEnabledSenhaActionPerformed(evt);
-            }
-        });
-
         lblSenha.setText("Senha:");
 
         lblLogin.setText("Login:");
 
         lblNome.setText("Nome:");
         lblNome.setName("lblNomeFiltro"); // NOI18N
-
-        lblCodUsuario.setText("Código:");
 
         recordEditing.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
@@ -207,23 +198,67 @@ public class UsuarioView extends SuperView {
 
         edtNome.setColumns(5);
 
-        edtCodUsuario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        lblLoginValidation.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        lblLoginValidation.setForeground(new java.awt.Color(204, 51, 0));
+        lblLoginValidation.setText("x");
+
+        lblNomeValidation.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        lblNomeValidation.setForeground(new java.awt.Color(204, 51, 0));
+        lblNomeValidation.setText("x");
+
+        lblSenhaValidation.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        lblSenhaValidation.setForeground(new java.awt.Color(204, 51, 0));
+        lblSenhaValidation.setText("x");
+
+        lblCodUsuario.setText("Código:");
+
+        btnEnabledSenha.setText("Habilitar/Desabilitar Senha");
+        btnEnabledSenha.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        btnEnabledSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnabledSenhaActionPerformed(evt);
+            }
+        });
 
         lblCodUsuarioValidation.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         lblCodUsuarioValidation.setForeground(new java.awt.Color(204, 51, 0));
         lblCodUsuarioValidation.setText("Código já existente !!!");
 
-        lblLoginValidation.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
-        lblLoginValidation.setForeground(new java.awt.Color(204, 51, 0));
-        lblLoginValidation.setText("Login já existente !!!");
+        edtCodUsuario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
-        lblNomeValidation.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
-        lblNomeValidation.setForeground(new java.awt.Color(204, 51, 0));
-        lblNomeValidation.setText("Login já existente !!!");
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblCodUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblCodUsuarioValidation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(edtCodUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(btnEnabledSenha)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCodUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edtCodUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0)
+                .addComponent(lblCodUsuarioValidation, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(btnEnabledSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(54, Short.MAX_VALUE))
+        );
 
-        lblSenhaValidation.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
-        lblSenhaValidation.setForeground(new java.awt.Color(204, 51, 0));
-        lblSenhaValidation.setText("Login já existente !!!");
+        lblCodUsuarioValidation.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout pnlEditingUsuarioLayout = new javax.swing.GroupLayout(pnlEditingUsuario);
         pnlEditingUsuario.setLayout(pnlEditingUsuarioLayout);
@@ -232,41 +267,34 @@ public class UsuarioView extends SuperView {
             .addGroup(pnlEditingUsuarioLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlFiltroUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlEditingUsuarioLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblSenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblNome, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-                            .addComponent(lblLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(pnlFiltroUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(12, Short.MAX_VALUE))
+                    .addGroup(pnlEditingUsuarioLayout.createSequentialGroup()
                         .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlEditingUsuarioLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(pswdSenha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(edtLogin)
-                                        .addComponent(edtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))
-                                    .addComponent(lblSenhaValidation, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEditingUsuarioLayout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(lblLoginValidation, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(55, 55, 55)
-                        .addComponent(btnEnabledSenha))
-                    .addGroup(pnlEditingUsuarioLayout.createSequentialGroup()
-                        .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(pnlEditingUsuarioLayout.createSequentialGroup()
-                                .addGap(301, 301, 301)
-                                .addComponent(lblCodUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                            .addGroup(pnlEditingUsuarioLayout.createSequentialGroup()
                                 .addGap(69, 69, 69)
-                                .addComponent(lblNomeValidation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(84, 84, 84)))
-                        .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblCodUsuarioValidation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(edtCodUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))))
-                .addContainerGap(10, Short.MAX_VALUE))
+                                .addComponent(lblNomeValidation, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlEditingUsuarioLayout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lblSenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblNome, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                                    .addComponent(lblLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEditingUsuarioLayout.createSequentialGroup()
+                                        .addGap(12, 12, 12)
+                                        .addComponent(lblLoginValidation, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(pnlEditingUsuarioLayout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(pswdSenha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(lblSenhaValidation, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(edtLogin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                        .addGap(28, 28, 28)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEditingUsuarioLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(recordEditing, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -278,34 +306,30 @@ public class UsuarioView extends SuperView {
                 .addGap(10, 10, 10)
                 .addComponent(pnlFiltroUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCodUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(edtCodUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNome))
-                .addGap(0, 0, 0)
-                .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCodUsuarioValidation, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNomeValidation, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0)
-                .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(edtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblLogin)
-                    .addComponent(btnEnabledSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0)
-                .addComponent(lblLoginValidation, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblSenha)
-                    .addComponent(pswdSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0)
-                .addComponent(lblSenhaValidation, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlEditingUsuarioLayout.createSequentialGroup()
+                        .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNome))
+                        .addGap(0, 0, 0)
+                        .addComponent(lblNomeValidation, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(edtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblLogin))
+                        .addGap(0, 0, 0)
+                        .addComponent(lblLoginValidation, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addGroup(pnlEditingUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblSenha)
+                            .addComponent(pswdSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(2, 2, 2)
+                        .addComponent(lblSenhaValidation, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addComponent(recordEditing, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
-
-        lblCodUsuarioValidation.getAccessibleContext().setAccessibleName("");
 
         btnPost.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/ifmt/confeitaria/assets/images/icons8-accept-30.png"))); // NOI18N
         btnPost.setToolTipText("Salvar");
@@ -363,7 +387,7 @@ public class UsuarioView extends SuperView {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnlEditingUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlEditingUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(editConfirmationWithRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -430,6 +454,7 @@ public class UsuarioView extends SuperView {
     private javax.swing.JTextField edtLoginFiltro;
     private javax.swing.JFormattedTextField edtNome;
     private javax.swing.JTextField edtNomeFiltro;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCodUsuario;
     private javax.swing.JLabel lblCodUsuarioValidation;

@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.text.View;
 
 /**
  *
@@ -107,22 +108,22 @@ public class UsuarioController extends SuperController<Usuario> {
                     
             switch(response) {
                 case REQUIRED_FIELD:
-                    ViewUtils.setLabelErrorText(this.usuarioView.getLblNomeValidation(), "Campo obrigatório !!!");
+                    ViewUtils.setLabelOnErrorValidation(this.usuarioView.getLblNomeValidation(), "Campo obrigatório !!!");
                     break;
                 case MIN_LENGTH_NOT_REACHED:
-                    ViewUtils.setLabelErrorText(this.usuarioView.getLblNomeValidation(), "Limite mín. de " + UsuarioService.NOME_MIN_LENGTH + " caracteres !!!");
+                    ViewUtils.setLabelOnErrorValidation(this.usuarioView.getLblNomeValidation(), "Limite mín. de " + UsuarioService.NOME_MIN_LENGTH + " caracteres !!!");
                     break;
                 case MAX_LENGTH_EXCEEDED:
-                    ViewUtils.setLabelErrorText(this.usuarioView.getLblNomeValidation(), "Limite máx. de " + UsuarioService.NOME_MAX_LENGTH + " caracteres !!!");
+                    ViewUtils.setLabelOnErrorValidation(this.usuarioView.getLblNomeValidation(), "Limite máx. de " + UsuarioService.NOME_MAX_LENGTH + " caracteres !!!");
                     break;
                 case VALID:
-                    this.usuarioView.getLblNomeValidation().setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
+                    ViewUtils.setLabelOnSuccessValidation(this.usuarioView.getLblNomeValidation());
                     break;
                 default:
                     break;
             }
         } else {
-           this.usuarioView.getLblNomeValidation().setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
+            ViewUtils.setLabelOnSuccessValidation(this.usuarioView.getLblNomeValidation());
         }
     }
 
@@ -140,26 +141,26 @@ public class UsuarioController extends SuperController<Usuario> {
                 
                 switch(response) {
                     case BELOW_MIN_VALUE:
-                        ViewUtils.setLabelErrorText(this.usuarioView.getLblCodUsuarioValidation(), "Código inválido !!!");
+                        ViewUtils.setLabelOnErrorValidation(this.usuarioView.getLblCodUsuarioValidation(), "Código inválido !!!");
                         break;
                     case MAX_VALUE_EXCEEDED:
-                        ViewUtils.setLabelErrorText(this.usuarioView.getLblCodUsuarioValidation(), "Limite máx. excedido !!!");
+                        ViewUtils.setLabelOnErrorValidation(this.usuarioView.getLblCodUsuarioValidation(), "Limite máx. excedido !!!");
                         break;
                     case ALREADY_EXISTS:
-                        ViewUtils.setLabelErrorText(this.usuarioView.getLblCodUsuarioValidation(), "Código já existente !!!");
+                        ViewUtils.setLabelOnErrorValidation(this.usuarioView.getLblCodUsuarioValidation(), "Código já existente !!!");
                         break;
                     case VALID:
-                        this.usuarioView.getLblCodUsuarioValidation().setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
+                        ViewUtils.setLabelOnSuccessValidation(this.usuarioView.getLblCodUsuarioValidation());
                         break;
                     default:
                         break;
                 }
             } catch(NumberFormatException e) {
                 //Se houver erro na conversão, então o código(ID) é inválido
-                ViewUtils.setLabelErrorText(this.usuarioView.getLblCodUsuarioValidation(), "Código inválido !!!");
+                ViewUtils.setLabelOnErrorValidation(this.usuarioView.getLblCodUsuarioValidation(), "Código inválido !!!");
             }
         } else {
-            this.usuarioView.getLblCodUsuarioValidation().setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
+            ViewUtils.setLabelOnSuccessValidation(this.usuarioView.getLblCodUsuarioValidation());
         }
     }
 
@@ -176,25 +177,25 @@ public class UsuarioController extends SuperController<Usuario> {
                     
             switch(response) {
                 case REQUIRED_FIELD:
-                    ViewUtils.setLabelErrorText(this.usuarioView.getLblLoginValidation(), "Campo obrigatório !!!");
+                    ViewUtils.setLabelOnErrorValidation(this.usuarioView.getLblLoginValidation(), "Campo obrigatório !!!");
                     break;
                 case MIN_LENGTH_NOT_REACHED:
-                    ViewUtils.setLabelErrorText(this.usuarioView.getLblLoginValidation(), "Limite mín. de " + UsuarioService.LOGIN_MIN_LENGTH + " caracteres !!!");
+                    ViewUtils.setLabelOnErrorValidation(this.usuarioView.getLblLoginValidation(), "Limite mín. de " + UsuarioService.LOGIN_MIN_LENGTH + " caracteres !!!");
                     break;
                 case MAX_LENGTH_EXCEEDED:
-                    ViewUtils.setLabelErrorText(this.usuarioView.getLblLoginValidation(), "Limite máx. de " + UsuarioService.LOGIN_MAX_LENGTH + " caracteres !!!");
+                    ViewUtils.setLabelOnErrorValidation(this.usuarioView.getLblLoginValidation(), "Limite máx. de " + UsuarioService.LOGIN_MAX_LENGTH + " caracteres !!!");
                     break;
                 case ALREADY_EXISTS:
-                    ViewUtils.setLabelErrorText(this.usuarioView.getLblLoginValidation(), "Login já existente !!!");
+                    ViewUtils.setLabelOnErrorValidation(this.usuarioView.getLblLoginValidation(), "Login já existente !!!");
                     break;
                 case VALID:
-                    this.usuarioView.getLblLoginValidation().setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
+                    ViewUtils.setLabelOnSuccessValidation(this.usuarioView.getLblLoginValidation());
                     break;
                 default:
                     break;
             }
         } else {
-           this.usuarioView.getLblLoginValidation().setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
+            ViewUtils.setLabelOnSuccessValidation(this.usuarioView.getLblLoginValidation());
         }
     }
 
@@ -208,22 +209,22 @@ public class UsuarioController extends SuperController<Usuario> {
                     
             switch(response) {
                 case REQUIRED_FIELD:
-                    ViewUtils.setLabelErrorText(this.usuarioView.getLblSenhaValidation(), "Campo obrigatório !!!");
+                    ViewUtils.setLabelOnErrorValidation(this.usuarioView.getLblSenhaValidation(), "Campo obrigatório !!!");
                     break;
                 case MIN_LENGTH_NOT_REACHED:
-                    ViewUtils.setLabelErrorText(this.usuarioView.getLblSenhaValidation(), "Limite mín. de " + UsuarioService.SENHA_MIN_LENGTH + " caracteres !!!");
+                    ViewUtils.setLabelOnErrorValidation(this.usuarioView.getLblSenhaValidation(), "Limite mín. de " + UsuarioService.SENHA_MIN_LENGTH + " caracteres !!!");
                     break;
                 case MAX_LENGTH_EXCEEDED:
-                    ViewUtils.setLabelErrorText(this.usuarioView.getLblSenhaValidation(), "Limite máx. de " + UsuarioService.SENHA_MAX_LENGTH + " caracteres !!!");
+                    ViewUtils.setLabelOnErrorValidation(this.usuarioView.getLblSenhaValidation(), "Limite máx. de " + UsuarioService.SENHA_MAX_LENGTH + " caracteres !!!");
                     break;
                 case VALID:
-                    this.usuarioView.getLblSenhaValidation().setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
+                    ViewUtils.setLabelOnSuccessValidation(this.usuarioView.getLblSenhaValidation());
                     break;
                 default:
                     break;
             }
         } else {
-           this.usuarioView.getLblSenhaValidation().setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
+            ViewUtils.setLabelOnSuccessValidation(this.usuarioView.getLblSenhaValidation());
         }
     } 
 

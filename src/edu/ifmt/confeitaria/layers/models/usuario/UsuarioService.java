@@ -3,7 +3,6 @@ package edu.ifmt.confeitaria.layers.models.usuario;
 import java.util.List;
 
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperService;
-import edu.ifmt.confeitaria.util.services.ServiceUtils;
 import edu.ifmt.confeitaria.util.services.ValidationResponses;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
@@ -164,9 +163,9 @@ public class UsuarioService extends SuperService<Usuario> {
     public ValidationResponses validateID(Long ID, Long originalID) {
         if(ID == null) {
             return ValidationResponses.VALID;
-        } else if(ID < ServiceUtils.MIN_ID_VALUE) {
+        } else if(ID < SuperService.MIN_ID_VALUE) {
             return ValidationResponses.BELOW_MIN_VALUE;
-        } else if (ID > ServiceUtils.MAX_ID_VALUE) {
+        } else if (ID > SuperService.MAX_ID_VALUE) {
             return ValidationResponses.MAX_VALUE_EXCEEDED;
         }    
         /*Verifica se o ID é diferente do ID original, se 
