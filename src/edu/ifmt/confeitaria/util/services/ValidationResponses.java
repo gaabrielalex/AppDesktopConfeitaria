@@ -4,7 +4,7 @@ public enum ValidationResponses {
     VALID("Valid"),
     INVALID("The value is invalid"),
     ALREADY_EXISTS("The value already exists"),
-    REQUIRED("The value is required"),
+    REQUIRED_FIELD("The value is required"),
     MAX_LENGTH_EXCEEDED("The value exceeds the maximum length"),
     MIN_LENGTH_NOT_REACHED("The value does not reach the minimum length"),
     MAX_VALUE_EXCEEDED("The value exceeds the maximum value"),
