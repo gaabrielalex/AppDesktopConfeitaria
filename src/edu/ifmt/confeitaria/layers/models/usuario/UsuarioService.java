@@ -2,20 +2,41 @@ package edu.ifmt.confeitaria.layers.models.usuario;
 
 import java.util.List;
 
+import edu.ifmt.confeitaria.util.abstraction_classes.SuperService;
 import edu.ifmt.confeitaria.util.services.ServiceUtils;
 import edu.ifmt.confeitaria.util.services.ValidationResponses;
+import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
-public class UsuarioService {
+public class UsuarioService extends SuperService<Usuario> {
+    //Constantes
     public static final int NOME_MAX_LENGTH = 100;
     public static final int LOGIN_MAX_LENGTH = 30;
     public static final int SENHA_MAX_LENGTH = 30;
+    //Atributos
+    private static UsuarioService instance;
     private final UsuarioDAO usuarioDAO;
+    private BehaviorSubject<Usuario> loggedUser;
 
-    public UsuarioService(UsuarioDAO usuarioDAO) {
+    private UsuarioService(UsuarioDAO usuarioDAO) {
+        this.loggedUser = BehaviorSubject.create();
+        this.loggedUser.onNext(new Usuario());
         this.usuarioDAO = usuarioDAO;
     }
 
+    public static UsuarioService getInstance() {
+        if(UsuarioService.instance == null) {
+            UsuarioService.instance = new UsuarioService(new UsuarioDAO());
+        }
+
+        return UsuarioService.instance;
+    }
+
+    public BehaviorSubject<Usuario> getLoggedUser() {
+        return loggedUser;
+    }
+
     /* ----- Métodos principais de manipulação de dados ----- */
+    @Override
     public List<Usuario> select(){
         return this.select(null, null);
     }
@@ -29,11 +50,13 @@ public class UsuarioService {
         return this.usuarioDAO.select(nome, login);
     }
 
+    @Override
     public List<Usuario> remakeLastSelect(){
         //Solicita os dados ao DAO
         return this.usuarioDAO.remakeLastSelect();
     }
 
+    @Override
     public boolean insert(Usuario usuario) {
         //Valida os dados do usuário
         if(this.validateDataInsert(usuario)) {
@@ -46,6 +69,7 @@ public class UsuarioService {
         
     }
 
+    @Override
     public boolean update(Usuario usuario, Usuario usuarioOriginal) {
         //Valida os dados do usuário
         if(this.validateDataUpdate(usuario, usuarioOriginal)) {
@@ -58,6 +82,37 @@ public class UsuarioService {
     }
 
     /* ----- Regras de negócio ----- */
+    public boolean signIn(String login, String senha) {
+        //Solicita ao DAO a lista de usuários com o login especificado
+        List<Usuario> usuarios = this.usuarioDAO.selectByLoginAndPassword(login, senha);
+        Usuario currentUser;
+
+        //Verifica se a lista não é nula e se não está vazia
+        if(usuarios != null && !usuarios.isEmpty()) {  
+            //Define o usuário atual como o primeiro usuário da lista
+            currentUser = usuarios.get(0);
+            /*Define o usuário logado como o usuário atual. A 
+            senha não é definida para evitar que ela seja vazada*/
+            this.loggedUser.onNext(new Usuario( currentUser.getID(), 
+                                                currentUser.getNome(),
+                                                currentUser.getLogin(), 
+                                                null));
+            //Aprova o login                                
+            return true;
+        } else {
+            
+            /*Define o usuário logado como nulo para evitar que o usuário
+            anterior seja mantido como logado e, sem seguida, reprova o login*/
+            if(this.loggedUser.getValue().getID() != null) this.loggedUser.onNext(new Usuario());
+            return false;
+        }
+    }
+
+    public void signOut() {
+        //Define o usuário logado como nulo
+        this.loggedUser.onNext(new Usuario());
+    }
+
     public boolean isIdExists(Long ID){
         //Solicta ao DAO a lista de usuários com o id especificado
         List<Usuario> usuarios = this.usuarioDAO.selectById(ID);
@@ -87,15 +142,15 @@ public class UsuarioService {
     }
 
     public boolean validateDataInsert(Usuario usuario) {
-        return this.validateData(usuario, null);
+        return this.validateAllData(usuario, null);
     }
 
     public boolean validateDataUpdate(Usuario usuario, Usuario usuarioOriginal) {
-        return this.validateData(usuario, usuarioOriginal);
+        return this.validateAllData(usuario, usuarioOriginal);
     }
 
     //Método para validar os dados, privado pois só deve ser usado internamente
-    private boolean validateData(Usuario usuario, Usuario usuarioOriginal) {
+    private boolean validateAllData(Usuario usuario, Usuario usuarioOriginal) {
         return(usuario != null 
                 && ValidationResponses.VALID == this.validateNome(usuario.getNome())
                 && ValidationResponses.VALID == this.validateSenha(usuario.getSenha())
