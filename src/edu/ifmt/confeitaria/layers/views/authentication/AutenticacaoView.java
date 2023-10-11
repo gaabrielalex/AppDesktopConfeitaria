@@ -4,6 +4,8 @@
  */
 package edu.ifmt.confeitaria.layers.views.authentication;
 
+import javax.swing.JOptionPane;
+
 import edu.ifmt.confeitaria.layers.controllers.authentication.AutenticacaoController;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperView;
 
@@ -118,7 +120,7 @@ public class AutenticacaoView extends SuperView  {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-        this.autenticaoController.signIn();
+        this.autenticaoController.signIn(this.edtLogin.getText(), new String(this.edtPswdSenha.getPassword()));
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     /**
@@ -169,26 +171,25 @@ public class AutenticacaoView extends SuperView  {
     private javax.swing.JLabel logoImage;
     // End of variables declaration//GEN-END:variables
     
-    
     //CÓDIGOS PRÓPRIOS DA CLASSE
-    //Atributos
     private AutenticacaoController autenticaoController;     
-    
-    //Constructors
-    //Constutor público para ser chamado pelo main da aplicação fazendo as devidas injeções de dependência
+
     public AutenticacaoView(AutenticacaoController autenticaoController) {
-        //Default codes
+        //Códigos padrões de inicialização da interface
         this.initComponents();
         super.setDefaultViewSettings("Autenticação", null);
-        
-        //HANDLING CODES
-            //Injectons
-            this.autenticaoController = autenticaoController;
+        this.autenticaoController = autenticaoController;
     }
     
-    //Getters and Setters
-    
-    //Métodos
+    public void showErrorMessage() {
+        JOptionPane.showMessageDialog(
+            null,
+            "Erro na autenticação\n" +
+            "Login e/ou senha incorretos!",
+            "Erro",
+            JOptionPane.ERROR_MESSAGE
+        );
+    }
     
 }
 
