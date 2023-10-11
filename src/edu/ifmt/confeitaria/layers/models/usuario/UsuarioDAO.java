@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package edu.ifmt.confeitaria.layers.models.usuario;
 
 import java.sql.PreparedStatement;
@@ -12,10 +8,6 @@ import java.util.List;
 
 import edu.ifmt.confeitaria.util.database.DBConnection;
 
-/**
- *
- * @author Gabriel
- */
 public class UsuarioDAO {
     private String lastSQLSelect;
 
