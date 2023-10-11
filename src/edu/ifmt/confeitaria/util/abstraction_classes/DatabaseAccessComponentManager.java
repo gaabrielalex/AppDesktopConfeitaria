@@ -108,12 +108,12 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
         this.controller = controller;
         this.service = (service == null) ? new SuperService<T>() {
                 @Override
-                public List<T> select() {
+                public List<T> selectAll() {
                     return null;
                 }
 
                 @Override
-                public List<T> remakeLastSelect() {
+                public List<T> remakeLastPartialSearch() {
                     return null;
                 }
 
@@ -189,7 +189,7 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
 
         /*Atualiza a lista de dados temporária por meio do método
         select do controller, realizando uma consulta sem filtros*/
-        this.updateTemporaryTDataList(this.service.select());
+        this.updateTemporaryTDataList(this.service.selectAll());
         
         //Atualiza as configurações padrões da tabela
         this.setDefaultTableSettings();
@@ -315,7 +315,7 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
 
     private void refresh() {  
         this.resetManagerDefaultSettings();
-        this.updateTemporaryTDataList(this.service.remakeLastSelect());
+        this.updateTemporaryTDataList(this.service.remakeLastPartialSearch());
     } 
 
     private void informRecordIndexFromSelectedTableRow(ListSelectionEvent e) {
