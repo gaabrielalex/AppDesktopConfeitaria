@@ -39,7 +39,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="pnlEditingUsuario" max="32767" attributes="0"/>
+              <Component id="pnlEditingUsuario" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               <Component id="editConfirmationWithRefresh" min="-2" max="-2" attributes="0"/>
           </Group>
@@ -131,9 +131,9 @@
                       <Component id="lblNome" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblCodUsuarioValidation" alignment="3" min="-2" pref="12" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="lblNomeValidation" alignment="0" min="-2" pref="12" max="-2" attributes="0"/>
+                      <Component id="lblCodUsuarioValidation" min="-2" pref="12" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -434,7 +434,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="33" red="cc" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Login j&#xe1; existente !!!"/>
+            <Property name="text" type="java.lang.String" value="x"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblNomeValidation">
@@ -445,7 +445,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="33" red="cc" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Login j&#xe1; existente !!!"/>
+            <Property name="text" type="java.lang.String" value="x"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblSenhaValidation">
@@ -456,7 +456,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="33" red="cc" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Login j&#xe1; existente !!!"/>
+            <Property name="text" type="java.lang.String" value="x"/>
           </Properties>
         </Component>
       </SubComponents>
