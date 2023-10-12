@@ -217,7 +217,7 @@ public class UsuarioDAO {
         ResultSet resultSet = statement.executeQuery();
         if(resultSet.next()) {
             //Se a inserção foi realizada com sucesso, define o ID do usuário
-            usuario.setID(resultSet.getLong("id_usuario"));;
+            usuario.setID(resultSet.getLong("id_usuario"));
         }
 
         //Fecha a conexão com o banco de dados e os recursos criados a partir dela
