@@ -205,7 +205,7 @@ public class UsuarioDAO {
     private void insertWithoutId(Usuario usuario, PreparedStatement statement) throws SQLException {
         //Cria a query
         String sql =    "INSERT INTO usuario(nome, login, senha) " +
-                        "VALUES(?, ?, ?)";
+                        "VALUES(?, ?, ?) RETURNING id_usuario";
          
         //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
         statement = DBConnection.getConnection().prepareStatement(sql);
@@ -213,8 +213,12 @@ public class UsuarioDAO {
         statement.setString(2, usuario.getLogin());
         statement.setString(3, usuario.getSenha());
         
-        //Executa a query
-        statement.executeUpdate();
+        //Executa a query e obtém o ResultSet(que deverá conter o ID do usuário retornado pela inserção)
+        ResultSet resultSet = statement.executeQuery();
+        if(resultSet.next()) {
+            //Se a inserção foi realizada com sucesso, define o ID do usuário
+            usuario.setID(resultSet.getLong("id_usuario"));;
+        }
 
         //Fecha a conexão com o banco de dados e os recursos criados a partir dela
         DBConnection.closeConnection(statement);
