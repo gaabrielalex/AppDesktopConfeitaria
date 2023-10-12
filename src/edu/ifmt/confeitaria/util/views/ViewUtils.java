@@ -8,8 +8,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import edu.ifmt.confeitaria.util.abstraction_classes.SuperView;
-
 public class ViewUtils {
     public static final Color ERROR_COLOR = new Color(255, 0, 0);
     public static String SPECIAL_CHARACTERS= " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
