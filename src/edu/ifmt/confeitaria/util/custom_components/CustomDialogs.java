@@ -43,6 +43,10 @@ public class CustomDialogs {
         CustomDialogs.standardErrorDataManipulation("Erro ao atualizar registro!");
     }
 
+    public static void deleteError() {
+        CustomDialogs.standardErrorDataManipulation("Erro ao excluir registro!");
+    }
+
     /*Método auxiliar para exibir um dialog de erro de manipulação 
     de dados. Privado pois só é utilizado por métodos desta classe*/
     private static void standardErrorDataManipulation(String message) {
