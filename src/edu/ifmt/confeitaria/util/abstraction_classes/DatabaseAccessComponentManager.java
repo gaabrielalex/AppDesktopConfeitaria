@@ -114,7 +114,7 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
                 }
 
                 @Override
-                public List<T> remakeLastPartialSearch() {
+                public List<T> redoLastPartialSearch() {
                     return null;
                 }
 
@@ -325,7 +325,7 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
 
     private void refresh() {  
         this.resetManagerDefaultSettings();
-        this.updateTemporaryTDataList(this.service.remakeLastPartialSearch());
+        this.updateTemporaryTDataList(this.service.redoLastPartialSearch());
     } 
 
     private void informRecordIndexFromSelectedTableRow(ListSelectionEvent e) {

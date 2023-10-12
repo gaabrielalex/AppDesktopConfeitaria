@@ -157,7 +157,7 @@ public class UsuarioDAO {
         }
     }
 
-    public List<Usuario> remakeLastPartialSearch() {
+    public List<Usuario> redoLastPartialSearch() {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 

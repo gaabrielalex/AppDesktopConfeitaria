@@ -45,9 +45,9 @@ public class UsuarioService extends SuperService<Usuario> {
     }
     
     @Override
-    public List<Usuario> remakeLastPartialSearch(){
+    public List<Usuario> redoLastPartialSearch(){
         //Solicita os dados ao DAO
-        return this.usuarioDAO.remakeLastPartialSearch();
+        return this.usuarioDAO.redoLastPartialSearch();
     }
     
     @Override
