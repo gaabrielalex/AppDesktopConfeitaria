@@ -9,5 +9,6 @@ public abstract class SuperService<T> {
     public abstract List<T> selectAll();
     public abstract List<T> redoLastPartialSearch();
     public abstract boolean insert(T object);
-    public abstract boolean update(T object, T originalObject); 
+    public abstract boolean update(T object, T originalObject);
+    public abstract boolean delete(T object);
 }
