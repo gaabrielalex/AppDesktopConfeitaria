@@ -59,8 +59,7 @@ public class UsuarioService extends SuperService<Usuario> {
             return this.usuarioDAO.insert(usuario);
         } else {
             return false;
-        }
-        
+        }  
     }
     
     @Override
@@ -73,6 +72,12 @@ public class UsuarioService extends SuperService<Usuario> {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public boolean delete(Usuario usuario) {
+        //Solicita ao DAO a exclusão do usuário no banco de dados já retornando o resultado
+        return this.usuarioDAO.delete(usuario.getID());
     }
 
     /* ----- Regras de negócio ----- */
