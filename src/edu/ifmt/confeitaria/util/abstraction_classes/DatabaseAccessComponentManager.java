@@ -37,6 +37,7 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
     private BehaviorSubject<Integer> selectedRecordIndex;
     private Operation currentOperation;
     private boolean activateUpdateWhenFieldsChange;
+    private boolean keepIndexSelectedRecord;
 
     //Componentes
     private JButton btnInsert;
@@ -145,6 +146,7 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
 
         //Setando os valores iniciais dos atributos
         this.activateUpdateWhenFieldsChange = true;
+        this.keepIndexSelectedRecord = false;
 
         //Adicionando os eventos aos componentes
         this.btnInsert.addActionListener((ActionEvent e) -> {
@@ -254,7 +256,16 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
             boolean response = this.service.insert(tObject);
 
             if(response) {
-                this.refresh();
+                this.resetManagerDefaultSettings();
+                /*Solicita para que o indice do registro selecionado seja mantido antes de atualizar a lista de dados 
+                temporária, pois a mesma será atualizada e o índice será o primeiro se isso não for solicitado*/
+                this.keepIndexSelectedRecord = true;
+
+                //Atualiza a lista de dados temporária para as mudanças serem refletidas nos componentes visuais
+                this.temporaryTDataList.getValue().set(this.selectedRecordIndex.getValue(), tObject);
+
+                /*Força a atualização da lista pois o observable não notifica alterações quando apenas itens da lista são alterados*/
+                this.updateTemporaryTDataList(this.temporaryTDataList.getValue());
             } else {
                 //Exibe um dialog de erro de cadastro
                 CustomDialogs.registrationError();
@@ -264,7 +275,16 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
             boolean response = this.service.update(tObject, this.tSelectedRecord.getValue());
 
              if(response) {
-                this.refresh();
+                this.resetManagerDefaultSettings();
+                /*Solicita para que o indice do registro selecionado seja mantido antes de atualizar a lista de dados 
+                temporária, pois a mesma será atualizada e o índice será o primeiro se isso não for solicitado*/
+                this.keepIndexSelectedRecord = true;
+
+                //Atualiza a lista de dados temporária para as mudanças serem refletidas nos componentes visuais
+                this.temporaryTDataList.getValue().set(this.selectedRecordIndex.getValue(), tObject);
+
+                /*Força a atualização da lista pois o observable não notifica alterações quando apenas itens da lista são alterados*/
+                this.updateTemporaryTDataList(this.temporaryTDataList.getValue());
             } else {
                 //Exibe um dialog de erro de atualização 
                 CustomDialogs.updateError();
@@ -275,7 +295,10 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
     private void cancel() {
         /*Estrutura condicional para determinar a ação a ser tomada de acordo com a operação atual*/
         if(this.currentOperation == Operation.INSERT) {
-             this.resetManagerDefaultSettings();
+            this.resetManagerDefaultSettings();
+            /*Solicita para que o indice do registro selecionado seja mantido antes de atualizar a lista de dados 
+            temporária, pois a mesma será atualizada e o índice será o primeiro se isso não for solicitado*/
+            this.keepIndexSelectedRecord = true;
  
             /*Caso o usuário cancele a inserção do registro, o registro em branco que foi adicionado na 
             lista de dados temporária deve ser removido, pois o mesmo não será inserido no banco de dados*/
@@ -286,7 +309,6 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
             this.updateTemporaryTDataList(this.temporaryTDataList.getValue());
         } else if(this.currentOperation == Operation.UPDATE) {
             this.resetManagerDefaultSettings();
-
             //Desativa a funcionalidade antes de atualizar os campos para evitar um loop infinito
             this.activateUpdateWhenFieldsChange = false;
 
@@ -338,14 +360,18 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
 
      /*Método que atualiza a tabela com as suas configurações padrões*/
     private void setDefaultTableSettings() {
+         if(this.keepIndexSelectedRecord) {
+            this.table.setRowSelectionInterval(this.selectedRecordIndex.getValue(), this.selectedRecordIndex.getValue());
+            this.keepIndexSelectedRecord = false;
+        }
         /*Verfica se a operação atual é de inserção, se for, define a linha selecionada da tabela com valor igual ao índice
         do registro selecionado, pois quando o insert é acionado, toda a tabela é atualizada, e isso faz com que não haja
         mais uma linha selecionada, então é ecessário selecionar a linha que estava selecionada antes da atualização*/
-        if(this.currentOperation == Operation.INSERT) {
+        else if(this.currentOperation == Operation.INSERT) {
             this.table.setRowSelectionInterval(this.selectedRecordIndex.getValue(), this.selectedRecordIndex.getValue());
-
+        }
         //Verifica se há registros na tabela, se houver, define a primeira linha da tabela como selecionada(configuração padrão)
-        } else  if(this.table.getRowCount() > 0) {
+        else  if(this.table.getRowCount() > 0) {
             this.table.setRowSelectionInterval(0, 0);
             //Atualiza a barra de rolagem para que a primeira linha da tabela fique visível
             this.table.scrollRectToVisible(this.table.getCellRect(0, 0, true)); 
