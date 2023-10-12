@@ -128,7 +128,6 @@ public class UsuarioDAO {
 
         //Define uma variável para armazenar o índice do parâmetro a ser configurado
         int paramIndexCount = 1;
-
         try{
             //Define o PreparedStatement com o SQL
             statement = DBConnection.getConnection().prepareStatement(sql);
@@ -189,12 +188,10 @@ public class UsuarioDAO {
                 //Se foi, realiza a inserção com o ID
                 this.insertWithId(usuario, statement);
             }
-            
             //Se a inserção foi realizada com sucesso, retorna true
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
-
             //Se a inserção não foi realizada com sucesso, retorna false
             return false;
         } 
@@ -219,7 +216,6 @@ public class UsuarioDAO {
             //Se a inserção foi realizada com sucesso, define o ID do usuário
             usuario.setID(resultSet.getLong("id_usuario"));
         }
-
         //Fecha a conexão com o banco de dados e os recursos criados a partir dela
         DBConnection.closeConnection(statement);
     }
@@ -270,8 +266,35 @@ public class UsuarioDAO {
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
-
             //Se a atualização não foi realizada com sucesso, retorna false
+            return false;
+        } finally {
+            //Fecha a conexão com o banco de dados e os recursos criados a partir dela
+            DBConnection.closeConnection(statement);
+        }
+    }
+
+    public boolean delete(Long idUsuario) {
+        if(idUsuario == null) return false;
+        PreparedStatement statement = null;
+
+        //Cria a query
+        String sql =    "DELETE FROM usuario " +
+                        "WHERE id_usuario = ?";
+        
+        try {
+            //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
+            statement = DBConnection.getConnection().prepareStatement(sql);
+            statement.setLong(1, idUsuario);
+            
+            //Executa a query
+            statement.executeUpdate();
+
+            //Se a exclusão foi realizada com sucesso, retorna true
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            //Se a exclusão não foi realizada com sucesso, retorna false
             return false;
         } finally {
             //Fecha a conexão com o banco de dados e os recursos criados a partir dela
