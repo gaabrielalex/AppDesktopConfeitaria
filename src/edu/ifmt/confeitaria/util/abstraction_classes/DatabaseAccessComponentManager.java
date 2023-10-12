@@ -127,6 +127,11 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
                 public boolean update(T tObject, T tObjectOriginal) {
                     return false;
                 }
+
+                @Override
+                public boolean delete(T tObject) {
+                    return false;
+                }
             } : service;
         
         //Setando os componentes
