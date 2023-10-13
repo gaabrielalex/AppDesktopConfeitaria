@@ -221,7 +221,7 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
         e se a opção "iniciar atualização quando os campos forem alterados" estiver ativada*/
         if(this.currentOperation == Operation.NONE && this.activateUpdateWhenFieldsChange) {    
             this.currentOperation = Operation.UPDATE;
-
+ 
             /*Verifica se os campos foram setados para serem gerenciados pelo manager antes acionar o método de atualização dos mesmos. Obs: Forçar 
             atualização dos campos, como mencionado no comentário abaixo, é necessário para resolver conflitos de configurações desses campos.*/
             if(this.fields == null || this.fields.size() == 0){
@@ -241,13 +241,31 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
         /*Exibe o dialog de confirmação de exclusão de registro por meio do método estático correspondente
         da classe CustomDialogs. O método retorna um boolean que indica se o usuário clicou no botão OK ou
         ou CANCELAR, caso tenha clicado em OK, o valor retornado é true, caso contrário, é false*/               
-        boolean response = CustomDialogs.ConfirmationDeleteRecord();
+        boolean userResponse = CustomDialogs.ConfirmationDeleteRecord(this.tSelectedRecord.getValue().getID());
 
-        /*Estrutura condicional para determinar a ação a ser tomada de acordo com a resposta do usuário*/
-        if(response){
-            System.out.println("OK"); //Mensagem momentânea de teste
-        } else {
-            System.out.println("CANCELAR"); //Mensagem momentânea de teste
+        //Caso a resposta do usuário seja positiva, o registro será excluído
+        if(userResponse){
+            boolean serviceResponse = this.service.delete(this.tSelectedRecord.getValue());
+            if(serviceResponse) {
+                /*Solicita para que o indice do registro selecionado seja mantido antes de atualizar a lista de dados 
+                temporária, pois a mesma será atualizada e o índice será o primeiro se isso não for solicitado*/
+                this.keepIndexSelectedRecord = true;
+                
+                //Atualiza a lista de dados temporária para as mudanças serem refletidas nos componentes visuais
+                this.temporaryTDataList.getValue().remove(this.tSelectedRecord.getValue());
+                
+                /*Em caso do registro excluído ser o último da lista, o índice do registro selecionado deve ser atualizado
+                para o registro que está acima do registro excluído, pois o indice anterior não existe mais*/
+                if(this.selectedRecordIndex.getValue().equals(this.temporaryTDataList.getValue().size())) {
+                    this.selectedRecordIndex.onNext(this.selectedRecordIndex.getValue() - 1);
+                }
+                /*Força a atualização da lista pois o observable não notifica alterações quando apenas itens da lista são alterados*/
+                this.updateTemporaryTDataList(this.temporaryTDataList.getValue());
+                this.resetManagerDefaultSettings();
+            } else {
+                //Exibe um dialog de erro de exclusão
+                CustomDialogs.deleteError();
+            }
         }
     }
 

@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
  */
 public class CustomDialogs {
     
-    public static boolean ConfirmationDeleteRecord() {
+    public static boolean ConfirmationDeleteRecord(Long recordId) {
         //Cria um array de opções para o dialog
         Object[] options = { "Ok", "Cancelar" };
 
@@ -20,7 +20,7 @@ public class CustomDialogs {
         as opções como parâmetro, entre outras configurações*/
         int result = JOptionPane.showOptionDialog(
             null,
-            "Apagar registro do código XXX?",
+            "Apagar o registro de código " + recordId + "?",
             "Confirmação de exclusão",
             JOptionPane.OK_CANCEL_OPTION, 
             JOptionPane.QUESTION_MESSAGE,
@@ -44,7 +44,14 @@ public class CustomDialogs {
     }
 
     public static void deleteError() {
-        CustomDialogs.standardErrorDataManipulation("Erro ao excluir registro!");
+        JOptionPane.showMessageDialog(
+            null,
+            "Erro ao excluir registro!" +
+            "\nVerfique se o registro não está sendo utilizado em outro(s) cadastro(s) e tente novamente.",
+            // "\nCaso o erro persista, contate o administrador do sistema.",
+            "Erro",
+            JOptionPane.ERROR_MESSAGE
+        );
     }
 
     /*Método auxiliar para exibir um dialog de erro de manipulação 
