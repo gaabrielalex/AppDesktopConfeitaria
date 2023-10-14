@@ -37,7 +37,9 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
     private BehaviorSubject<Integer> selectedRecordIndex;
     private Operation currentOperation;
     private boolean activateUpdateWhenFieldsChange;
+    private boolean activateInsertWhenFieldsChange;
     private boolean keepIndexSelectedRecord;
+    private boolean insertOnTextChange;
 
     //Componentes
     private JButton btnInsert;
@@ -55,8 +57,26 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
 
     //GETTERS, SETTERS E OBSERVABLES
     private void updateTemporaryTDataList(List<T> tDataList) {
+        /*Verifica se a lista de dados temporária está vazia, se estiver, 
+        adiciona um registro em branco na lista para evitar bugs*/
         if(tDataList != null){
+            this.btnUpdate.setEnabled(true);
+            this.btnDelete.setEnabled(true);
+            this.insertOnTextChange = false;
+            if(tDataList.isEmpty()) {
+                try {
+                    tDataList.add((T) this.modelClass.getConstructor().newInstance());
+                } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+                        | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+                    e.printStackTrace();
+                }
+            }
             this.temporaryTDataList.onNext(tDataList);
+            if(this.temporaryTDataListIsEmpty()) {
+                this.btnUpdate.setEnabled(false);
+                this.btnDelete.setEnabled(false);
+                this.insertOnTextChange = true;
+            }
         }
     }
 
@@ -66,14 +86,14 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
         índice do registro selecionado, e isso acionaria o método "update" novamente, e assim por diante. Logo, desligamos essa
         funcionabilidade dos fields temporariamente para que não haja esse probelma. Após o índice do registro selecionado ser
         atualizado, o atributo "activateUpdateWhenFieldsChange" é setado como true novamente, para que o método "update" volte
-        a ser acionado quando os fields forem atualizados*/
-        this.activateUpdateWhenFieldsChange = false; 
-
+        a ser acionado quando os fields forem atualizados. O mesmo acontece com o atributo "activateInsertWhenFieldsChange"*/
+        this.activateUpdateWhenFieldsChange = false;
+        this.activateInsertWhenFieldsChange = false;
         if(this.temporaryTDataList.getValue() != null && recordIndex >= 0 && recordIndex < this.temporaryTDataList.getValue().size()) {
             this.selectedRecordIndex.onNext(recordIndex);
         } 
-        
         this.activateUpdateWhenFieldsChange = true;
+        this.activateInsertWhenFieldsChange = true;
     }
 
     /*O método "updateTemporaryTDataList" é privado, pois a atualização da lista de dados não deve ser feita
@@ -149,8 +169,9 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
         this.tSelectedRecord = BehaviorSubject.create();
         this.selectedRecordIndex = BehaviorSubject.create();
 
-        //Setando os valores iniciais dos atributos
+        //Setando os valores iniciais dos atributos necessários
         this.activateUpdateWhenFieldsChange = true;
+        this.activateInsertWhenFieldsChange = true;
         this.keepIndexSelectedRecord = false;
 
         //Adicionando os eventos aos componentes
@@ -204,11 +225,14 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
 
     /*  ---- Métodos que serão acionados pelos eventos dos componentes ---- */
     private void insert() {
-        //As ações são realizadas apenas se não houver nenhuma outra operação em andamento
-        if(this.currentOperation == Operation.NONE) {
+        /*As ações são realizadas apenas se não houver nenhuma outra operação em andamento
+        e se a opção "ativar insert quando os campos forem alterados" estiver ativada*/
+        if(this.currentOperation == Operation.NONE && this.activateInsertWhenFieldsChange) {
             this.currentOperation = Operation.INSERT;
-            this.addNewRecordTemporaryDataList();
 
+            if(!this.temporaryTDataListIsEmpty()) {
+                this.addNewRecordTemporaryDataList();
+            }
             //Operações visuais
             this.table.setEnabled(false);
             this.enableEditingRecordButtons(false);
@@ -218,7 +242,7 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
 
     private void update() {
         /*As ações são realizadas apenas se não houver nenhuma outra operação em andamento
-        e se a opção "iniciar atualização quando os campos forem alterados" estiver ativada*/
+        e se a opção "ativar update quando os campos forem alterados" estiver ativada*/
         if(this.currentOperation == Operation.NONE && this.activateUpdateWhenFieldsChange) {    
             this.currentOperation = Operation.UPDATE;
  
@@ -229,7 +253,6 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
                 responsável por isso, porém, nesse caso, devido a conflitos de configurações, é necessário forçar a atualização*/
                 this.displayDataInFields(this.tSelectedRecord.getValue());
             }
-    
             //Operações visuais
             this.table.setEnabled(false);
             this.enableEditingRecordButtons(false);
@@ -256,12 +279,12 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
                 
                 /*Em caso do registro excluído ser o último da lista, o índice do registro selecionado deve ser atualizado
                 para o registro que está acima do registro excluído, pois o indice anterior não existe mais*/
-                if(this.selectedRecordIndex.getValue().equals(this.temporaryTDataList.getValue().size())) {
+                if(this.selectedRecordIndex.getValue().equals(this.temporaryTDataList.getValue().size()) && this.selectedRecordIndex.getValue() > 0) {
                     this.selectedRecordIndex.onNext(this.selectedRecordIndex.getValue() - 1);
                 }
                 /*Força a atualização da lista pois o observable não notifica alterações quando apenas itens da lista são alterados*/
                 this.updateTemporaryTDataList(this.temporaryTDataList.getValue());
-                this.resetManagerDefaultSettings();
+                if(!this.temporaryTDataListIsEmpty()) this.resetManagerDefaultSettings();
             } else {
                 //Exibe um dialog de erro de exclusão
                 CustomDialogs.deleteError();
@@ -322,6 +345,9 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
             /*Solicita para que o indice do registro selecionado seja mantido antes de atualizar a lista de dados 
             temporária, pois a mesma será atualizada e o índice será o primeiro se isso não for solicitado*/
             this.keepIndexSelectedRecord = true;
+
+            //Desativa a funcionalidade antes de atualizar os campos para evitar um loop infinito
+            this.activateInsertWhenFieldsChange = false;
  
             /*Caso o usuário cancele a inserção do registro, o registro em branco que foi adicionado na 
             lista de dados temporária deve ser removido, pois o mesmo não será inserido no banco de dados*/
@@ -330,6 +356,9 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
             /*Atualiza a lista de dados temporária diretamente, pois o observable 
             não notifica a alteração quando apenas itens da lista são alterados*/
             this.updateTemporaryTDataList(this.temporaryTDataList.getValue());
+            
+            //Ativa a funcionalidade novamente
+            this.activateInsertWhenFieldsChange = true;
         } else if(this.currentOperation == Operation.UPDATE) {
             this.resetManagerDefaultSettings();
             //Desativa a funcionalidade antes de atualizar os campos para evitar um loop infinito
@@ -376,6 +405,7 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
 
     private void resetManagerDefaultSettings() {
         this.currentOperation = Operation.NONE;
+        this.insertOnTextChange = false;
         this.table.setEnabled(true);
         this.enableEditingRecordButtons(true);
         this.enableEditConfirmationButtons(false);
@@ -407,7 +437,7 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
         //Limpando a tabela
         this.tableModel.setNumRows(0);
 
-        if(tList != null) {
+        if(tList != null && tList.size() > 0) {
             //Adicionando os dados na tabela
             for(T tObject : tList) {
                 try {
@@ -434,15 +464,16 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
             pelo manager, esse método garantirá que os campos não exibam nenhum dado, pois isso poderia causar erros.
             Essa ação é realizada passando um objeto vazio para o método que atualiza os campos*/
             try {
-                /*Desligando a funcionalidade de atualização dos campos quando os 
-                mesmos forem atualizados, pois isso causaria um loop infinito*/
+                //Desligando as funcionalidades para evitar um loop infinito
                 this.activateUpdateWhenFieldsChange = false;
+                this.activateInsertWhenFieldsChange = false;
 
                 T tObject = (T) this.modelClass.getConstructor().newInstance();
                 this.controller.modelToFields(tObject);
 
-                //Ligando a funcionalidade novamente
+                //Ligando as funcionalidades novamente
                 this.activateUpdateWhenFieldsChange = true;
+                this.activateInsertWhenFieldsChange = true;
             } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
                     | InvocationTargetException | NoSuchMethodException | SecurityException e) {
                 e.printStackTrace();
@@ -470,27 +501,39 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
     }
 
     private void setDefaultFieldSettings(List<Component> fields) {
-        /*Adiciona os eventos aos campos para que os mesmos possam acionar o método "update" quando os dados
-        dos campos forem alterados.*/
+        /*Adiciona os eventos aos campos para que os mesmos possam acionar
+        o método "update" quando os dados dos campos forem alterados.*/
         fields.forEach( field -> {
             if(field instanceof JDateChooser){
                 ((JDateChooser) field).addPropertyChangeListener((PropertyChangeEvent evt) -> {
                     if(evt.getPropertyName().equals("date")){
-                        update();
+                        this.actionOnFieldChange();
                     }
                 });
             } else if(field instanceof JTextField){
-                ViewUtils.addTextChangeListeners((JTextField) field, this::update);
-                
+                ViewUtils.addTextChangeListeners((JTextField) field, this::actionOnFieldChange);
             } else if(field instanceof JToggleButton){
                 ((JToggleButton) field).addItemListener((ItemEvent evt) -> {
-                    update();
+                    this.actionOnFieldChange();
                 });
             } else if(field instanceof JComboBox){
                 ((JComboBox<?>) field).addItemListener((ItemEvent evt) -> {
-                    update();
+                    this.actionOnFieldChange();
                 });
             }
         });
+    }
+
+    public void actionOnFieldChange() {
+        if(this.insertOnTextChange) {
+            this.insert();
+        } else {
+            this.update();
+        }
+    }
+
+    public boolean temporaryTDataListIsEmpty() {
+        return (this.temporaryTDataList.getValue() != null && this.temporaryTDataList.getValue().size() == 1
+                && this.temporaryTDataList.getValue().get(0).getID() == null) ? true : false;
     }
 }
