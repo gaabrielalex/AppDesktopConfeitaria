@@ -524,7 +524,7 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
         });
     }
 
-    public void actionOnFieldChange() {
+    private void actionOnFieldChange() {
         if(this.insertOnTextChange) {
             this.insert();
         } else {
@@ -532,7 +532,7 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
         }
     }
 
-    public boolean temporaryTDataListIsEmpty() {
+    private boolean temporaryTDataListIsEmpty() {
         return (this.temporaryTDataList.getValue() != null && this.temporaryTDataList.getValue().size() == 1
                 && this.temporaryTDataList.getValue().get(0).getID() == null) ? true : false;
     }
