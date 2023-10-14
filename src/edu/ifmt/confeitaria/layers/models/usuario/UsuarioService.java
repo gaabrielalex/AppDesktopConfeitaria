@@ -55,7 +55,7 @@ public class UsuarioService extends SuperService<Usuario> {
         //Valida os dados do usuário
         if(this.validateDataInsert(usuario)) {
             /*Caso os dados sejam válidos, solicita ao DAO a inserção
-            do usuário no banco de daods já retornando o resultado*/
+            do usuário no banco de dados já retornando o resultado*/
             return this.usuarioDAO.insert(usuario);
         } else {
             return false;
@@ -67,7 +67,7 @@ public class UsuarioService extends SuperService<Usuario> {
         //Valida os dados do usuário
         if(this.validateDataUpdate(usuario, usuarioOriginal)) {
             /*Caso os dados sejam válidos, solicita ao DAO a atualização
-            do usuário no banco de daods já retornando o resultado*/
+            do usuário no banco de dados já retornando o resultado*/
             return this.usuarioDAO.update(usuario, usuarioOriginal.getID());
         } else {
             return false;
