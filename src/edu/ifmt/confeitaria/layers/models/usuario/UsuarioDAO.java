@@ -111,14 +111,14 @@ public class UsuarioDAO {
 
         /*Verifica se os parâmetros foram fornecidos e se não são vazios, ou seja,
         confere se o usuário deseja realizar a pesquisa por nome e/ou login*/
-        boolean selectByName = nome != null && !nome.isEmpty();
+        boolean selectByNome = nome != null && !nome.isEmpty();
         boolean selectByLogin = login != null && !login.isEmpty();
         
         //Cria a query
         String sql =    "SELECT *"+
                         "FROM usuario " +
                             "WHERE 1 = 1" +
-                                (selectByName ?  "AND unaccent(nome) ILIKE unaccent(?)" : "") +  //Se o usuário deseja pesquisar por nome, adiciona a condição à query
+                                (selectByNome ?  "AND unaccent(nome) ILIKE unaccent(?)" : "") +  //Se o usuário deseja pesquisar por nome, adiciona a condição à query
                                 (selectByLogin ? "AND unaccent(login) ILIKE unaccent(?)" : "") + //Se o usuário deseja pesquisar por login, adiciona a condição à query
                         "ORDER BY nome, login";
 
@@ -133,7 +133,7 @@ public class UsuarioDAO {
             statement = DBConnection.getConnection().prepareStatement(sql);
 
             //Configura os parâmetros necessários
-            if(selectByName) {
+            if(selectByNome) {
                 statement.setString(paramIndexCount, nome);
                 paramIndexCount++; //Incrementa o índice do parâmetro para que o próximo seja configurado corretamente
             } 
