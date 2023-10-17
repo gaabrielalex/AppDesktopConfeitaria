@@ -81,15 +81,9 @@
                                       <Component id="cmbTipoChoc" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="lblCodProduto" pref="50" max="32767" attributes="0"/>
-                                      <Component id="lblVlrUnt" max="32767" attributes="0"/>
-                                  </Group>
+                                  <Component id="lblVlrUnt" min="-2" pref="50" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="edtCodProduto" pref="120" max="32767" attributes="0"/>
-                                      <Component id="edtVlrUnt" max="32767" attributes="0"/>
-                                  </Group>
+                                  <Component id="edtVlrUnt" min="-2" pref="120" max="-2" attributes="0"/>
                               </Group>
                               <Component id="edtObs" max="32767" attributes="0"/>
                           </Group>
@@ -112,8 +106,6 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblDescricao" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="edtDescricao" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblCodProduto" alignment="3" min="-2" pref="16" max="-2" attributes="0"/>
-                      <Component id="edtCodProduto" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -296,8 +288,6 @@
         </Component>
         <Component class="javax.swing.JTextField" name="edtObs">
         </Component>
-        <Component class="javax.swing.JTextField" name="edtCodProduto">
-        </Component>
         <Component class="javax.swing.JTextField" name="edtVlrUnt">
         </Component>
         <Component class="javax.swing.JComboBox" name="cmbTipoChoc">
@@ -314,11 +304,6 @@
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblCodProduto">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="C&#xf3;digo:"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblObs">
           <Properties>

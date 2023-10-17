@@ -26,10 +26,8 @@ public class ProdutoView extends SuperView {
         tblProduto = new javax.swing.JTable();
         edtDescricao = new javax.swing.JTextField();
         edtObs = new javax.swing.JTextField();
-        edtCodProduto = new javax.swing.JTextField();
         edtVlrUnt = new javax.swing.JTextField();
         cmbTipoChoc = new javax.swing.JComboBox<>();
-        lblCodProduto = new javax.swing.JLabel();
         lblObs = new javax.swing.JLabel();
         lblDescricao = new javax.swing.JLabel();
         lblVlrUnt = new javax.swing.JLabel();
@@ -134,8 +132,6 @@ public class ProdutoView extends SuperView {
 
         cmbTipoChoc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        lblCodProduto.setText("Código:");
-
         lblObs.setText("Observações:");
 
         lblDescricao.setText("Descrição:");
@@ -206,13 +202,9 @@ public class ProdutoView extends SuperView {
                                     .addComponent(edtDescricao, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cmbTipoChoc, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(30, 30, 30)
-                                .addGroup(pnlEditingProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(lblCodProduto, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                                    .addComponent(lblVlrUnt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(lblVlrUnt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(pnlEditingProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(edtCodProduto, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                                    .addComponent(edtVlrUnt)))
+                                .addComponent(edtVlrUnt, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(edtObs)))
                     .addGroup(pnlEditingProdutoLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
@@ -227,9 +219,7 @@ public class ProdutoView extends SuperView {
                 .addGap(18, 18, 18)
                 .addGroup(pnlEditingProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDescricao)
-                    .addComponent(edtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCodProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(edtCodProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(edtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlEditingProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbTipoChoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -331,13 +321,11 @@ public class ProdutoView extends SuperView {
     private javax.swing.JComboBox<String> cmbTipoChoc;
     private javax.swing.JComboBox<String> cmbTipoChocFiltro;
     private javax.swing.JPanel editConfirmationWithRefresh;
-    private javax.swing.JTextField edtCodProduto;
     private javax.swing.JTextField edtDescricao;
     private javax.swing.JTextField edtDescricaoFiltro;
     private javax.swing.JTextField edtObs;
     private javax.swing.JTextField edtVlrUnt;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel lblCodProduto;
     private javax.swing.JLabel lblDescricao;
     private javax.swing.JLabel lblDescricaoFiltro;
     private javax.swing.JLabel lblObs;
