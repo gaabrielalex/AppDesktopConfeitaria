@@ -180,13 +180,21 @@ public class UsuarioDAO {
     public boolean insert(Usuario usuario) {
         PreparedStatement statement = null;
         try {
-            //Verifica se o ID do usuário foi fornecido
-            if(usuario.getID() == null) {
-                //Se não foi, realiza a inserção sem o ID
-                this.insertWithoutId(usuario, statement);
-            } else {
-                //Se foi, realiza a inserção com o ID
-                this.insertWithId(usuario, statement);
+            //Cria a query
+            String sql =    "INSERT INTO usuario(nome, login, senha) " +
+                            "VALUES(?, ?, ?) RETURNING id_usuario";
+            
+            //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
+            statement = DBConnection.getConnection().prepareStatement(sql);
+            statement.setString(1, usuario.getNome());
+            statement.setString(2, usuario.getLogin());
+            statement.setString(3, usuario.getSenha());
+            
+            //Executa a query e obtém o ResultSet(que deverá conter o ID do usuário retornado pela inserção)
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()) {
+                //Se a inserção foi realizada com sucesso, define o ID do usuário
+                usuario.setID(resultSet.getLong("id_usuario"));
             }
             //Se a inserção foi realizada com sucesso, retorna true
             return true;
@@ -194,51 +202,10 @@ public class UsuarioDAO {
             e.printStackTrace();
             //Se a inserção não foi realizada com sucesso, retorna false
             return false;
-        } 
-    }
-
-    /*Método para inserir um usuário sem o ID. O método é privado pois as solicitações de inserção
-    devem ser feitas através do método insert(Usuario usuario) para que o ID seja verificado por ele*/
-    private void insertWithoutId(Usuario usuario, PreparedStatement statement) throws SQLException {
-        //Cria a query
-        String sql =    "INSERT INTO usuario(nome, login, senha) " +
-                        "VALUES(?, ?, ?) RETURNING id_usuario";
-         
-        //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
-        statement = DBConnection.getConnection().prepareStatement(sql);
-        statement.setString(1, usuario.getNome());
-        statement.setString(2, usuario.getLogin());
-        statement.setString(3, usuario.getSenha());
-        
-        //Executa a query e obtém o ResultSet(que deverá conter o ID do usuário retornado pela inserção)
-        ResultSet resultSet = statement.executeQuery();
-        if(resultSet.next()) {
-            //Se a inserção foi realizada com sucesso, define o ID do usuário
-            usuario.setID(resultSet.getLong("id_usuario"));
+        } finally {
+            //Fecha a conexão com o banco de dados e os recursos criados a partir dela
+            DBConnection.closeConnection(statement);
         }
-        //Fecha a conexão com o banco de dados e os recursos criados a partir dela
-        DBConnection.closeConnection(statement);
-    }
-
-    /*Método para inserir um usuário com o ID. O método é privado pois as solicitações de inserção
-    devem ser feitas através do método insert(Usuario usuario) para que o ID seja verificado por ele*/
-    private void insertWithId(Usuario usuario, PreparedStatement statement) throws SQLException {
-        //Cria a query
-        String sql =    "INSERT INTO usuario(id_usuario, nome, login, senha) " +
-                        "VALUES(?, ?, ?, ?)";
-        
-        //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
-        statement = DBConnection.getConnection().prepareStatement(sql);
-        statement.setLong(1, usuario.getID());
-        statement.setString(2, usuario.getNome());
-        statement.setString(3, usuario.getLogin());
-        statement.setString(4, usuario.getSenha());
-        
-        //Executa a query
-        statement.executeUpdate();
-
-        //Fecha a conexão com o banco de dados e os recursos criados a partir dela
-        DBConnection.closeConnection(statement);
     }
 
     public boolean update(Usuario usuario, Long originalID) {
