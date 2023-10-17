@@ -37,7 +37,7 @@ public class UsuarioController extends SuperController<Usuario> {
         this.usuarioView = new UsuarioView(this, previousView);
 
         //Configurando o DatabaseAccessComponentManager
-        List<Component> fields = Arrays.asList(usuarioView.getEdtCodUsuario(), usuarioView.getEdtNome(), usuarioView.getEdtLogin(), usuarioView.getPswdSenha());;
+        List<Component> fields = Arrays.asList(usuarioView.getEdtNome(), usuarioView.getEdtLogin(), usuarioView.getPswdSenha());;
         this.usuarioDBCManager.setFields(fields);
         this.usuarioDBCManager.configureComponents(Usuario.class, this, this.usuarioService, usuarioView.getBtnInsert(),
             usuarioView.getBtnUpdate(),usuarioView.getBtnDelete(), usuarioView.getBtnPost(),
@@ -49,7 +49,6 @@ public class UsuarioController extends SuperController<Usuario> {
         ViewUtils.addTextChangeListeners(this.usuarioView.getPswdSenha(), this::validateSenhaField);
 
         //Cor inicial dos labels de validação
-        this.usuarioView.getLblCodUsuarioValidation().setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
         this.usuarioView.getLblNomeValidation().setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
         this.usuarioView.getLblLoginValidation().setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
         this.usuarioView.getLblSenhaValidation().setForeground(SuperView.DEFAULT_BACKGROUND_COLOR);
@@ -76,11 +75,6 @@ public class UsuarioController extends SuperController<Usuario> {
 
     @Override
     public void modelToFields(Usuario usuario) {
-        if(usuario.getID() == null) {
-            this.usuarioView.getEdtCodUsuario().setText("");
-        } else { 
-            this.usuarioView.getEdtCodUsuario().setText(usuario.getID().toString());
-        }
         this.usuarioView.getEdtNome().setText(usuario.getNome());
         this.usuarioView.getEdtLogin().setText(usuario.getLogin());
         this.usuarioView.getPswdSenha().setText(usuario.getSenha());
@@ -89,7 +83,7 @@ public class UsuarioController extends SuperController<Usuario> {
     @Override
     public Usuario fieldsToModel() {
         return new Usuario(
-            this.usuarioView.getEdtCodUsuario().getText().isEmpty() ? null : Long.parseLong(this.usuarioView.getEdtCodUsuario().getText()),
+            null,
             this.usuarioView.getEdtNome().getText(),
             this.usuarioView.getEdtLogin().getText(),
             new String(this.usuarioView.getPswdSenha().getPassword())
