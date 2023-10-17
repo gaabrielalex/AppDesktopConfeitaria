@@ -28,7 +28,6 @@ public class AutenticacaoController {
         if(AutenticacaoController.instance == null) {
             AutenticacaoController.instance = new AutenticacaoController(UsuarioService.getInstance());
         }
-
         return AutenticacaoController.instance;
     }
 
