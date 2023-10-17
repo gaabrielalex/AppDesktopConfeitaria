@@ -423,20 +423,12 @@ public class UsuarioView extends SuperView {
         return btnUpdate;
     }
 
-    public javax.swing.JFormattedTextField getEdtCodUsuario() {
-        return edtCodUsuario;
-    }
-
     public javax.swing.JTextField getEdtLogin() {
         return edtLogin;
     }
 
     public javax.swing.JFormattedTextField getEdtNome() {
         return edtNome;
-    }
-
-    public javax.swing.JLabel getLblCodUsuarioValidation() {
-        return lblCodUsuarioValidation;
     }
 
     public javax.swing.JLabel getLblLoginValidation() {
