@@ -71,16 +71,10 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="edtEndereco" max="32767" attributes="0"/>
+                              <Component id="edtEndereco" pref="406" max="32767" attributes="0"/>
                               <Component id="edtTelefones" max="32767" attributes="0"/>
                               <Component id="edtLinkEnd" max="32767" attributes="0"/>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="edtNome" min="-2" pref="200" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                                  <Component id="lblCodCliente" min="-2" pref="44" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="edtCodCliente" min="-2" pref="120" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="edtNome" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="lblCPF" min="-2" pref="35" max="-2" attributes="0"/>
@@ -112,8 +106,6 @@
                       <Component id="edtNome" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lblCPF" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="edtCPF" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblCodCliente" alignment="3" min="-2" pref="16" max="-2" attributes="0"/>
-                      <Component id="edtCodCliente" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -303,13 +295,6 @@
         <Component class="javax.swing.JLabel" name="lblCPF">
           <Properties>
             <Property name="text" type="java.lang.String" value="CPF:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="edtCodCliente">
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblCodCliente">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="C&#xf3;digo:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="edtEndereco">

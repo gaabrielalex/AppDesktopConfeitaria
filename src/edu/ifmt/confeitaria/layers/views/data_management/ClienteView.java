@@ -14,6 +14,7 @@ public class ClienteView extends SuperView {
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
         pnlEditingCliente = new javax.swing.JPanel();
         pnlFiltroCliente = new javax.swing.JPanel();
         lblNomeFiltro = new javax.swing.JLabel();
@@ -28,8 +29,6 @@ public class ClienteView extends SuperView {
         edtCPF = new javax.swing.JTextField();
         edtLinkEnd = new javax.swing.JTextField();
         lblCPF = new javax.swing.JLabel();
-        edtCodCliente = new javax.swing.JTextField();
-        lblCodCliente = new javax.swing.JLabel();
         edtEndereco = new javax.swing.JTextField();
         lblLinkEnd = new javax.swing.JLabel();
         edtTelefones = new javax.swing.JTextField();
@@ -139,8 +138,6 @@ public class ClienteView extends SuperView {
 
         lblCPF.setText("CPF:");
 
-        lblCodCliente.setText("Código:");
-
         lblLinkEnd.setText("Link End.:");
 
         lblNome.setText("Nome:");
@@ -201,15 +198,10 @@ public class ClienteView extends SuperView {
                             .addComponent(lblNome, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlEditingClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(edtEndereco)
+                            .addComponent(edtEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
                             .addComponent(edtTelefones)
                             .addComponent(edtLinkEnd)
-                            .addGroup(pnlEditingClienteLayout.createSequentialGroup()
-                                .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addComponent(lblCodCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(edtCodCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(edtNome, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGap(30, 30, 30)
                         .addComponent(lblCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -233,9 +225,7 @@ public class ClienteView extends SuperView {
                     .addComponent(lblNome)
                     .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblCPF)
-                    .addComponent(edtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCodCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(edtCodCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(edtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlEditingClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTelefones)
@@ -338,7 +328,6 @@ public class ClienteView extends SuperView {
     private javax.swing.JPanel editConfirmationWithRefresh;
     private javax.swing.JTextField edtCPF;
     private javax.swing.JTextField edtCPFFiltro;
-    private javax.swing.JTextField edtCodCliente;
     private javax.swing.JTextField edtEndereco;
     private javax.swing.JTextField edtLinkEnd;
     private javax.swing.JTextField edtNome;
@@ -347,7 +336,6 @@ public class ClienteView extends SuperView {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblCPF;
     private javax.swing.JLabel lblCPFFiltro;
-    private javax.swing.JLabel lblCodCliente;
     private javax.swing.JLabel lblEndereco;
     private javax.swing.JLabel lblLinkEnd;
     private javax.swing.JLabel lblNome;

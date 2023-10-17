@@ -175,12 +175,9 @@
                           <Group type="102" attributes="0">
                               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="lblDtPedido" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="lblVlrTotalPedido" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="lblCliente" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="lblCodPedido" alignment="1" min="-2" pref="69" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="lblDtPedido" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblVlrTotalPedido" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblCliente" alignment="0" max="32767" attributes="0"/>
                                   <Component id="lblSttsPedido" alignment="0" max="32767" attributes="0"/>
                                   <Component id="lblObs" alignment="0" max="32767" attributes="0"/>
                                   <Component id="lblDestinatario" max="32767" attributes="0"/>
@@ -189,7 +186,37 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="edtObs" max="32767" attributes="0"/>
-                                      <EmptySpace min="-2" pref="212" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="230" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="cmbSttsPedido" min="-2" pref="150" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                                          <Component id="lblSttsPagto" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="312" pref="386" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="1" attributes="0">
+                                              <Component id="edtCliente" alignment="1" min="-2" pref="222" max="-2" attributes="0"/>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="dtChooserDtPedido" min="-2" pref="150" max="-2" attributes="0"/>
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                  <Component id="lblDtEntrega" min="-2" pref="54" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="1" attributes="0">
+                                              <Group type="102" attributes="0">
+                                                  <Component id="lblCodCliente" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="edtCodCliente" min="-2" pref="77" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Component id="dtChooserDtEntrega" min="-2" pref="150" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnPesquisarCliente" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="0" pref="92" max="32767" attributes="0"/>
+                                      </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
@@ -213,44 +240,9 @@
                                       <Component id="lblMtdPagto" min="-2" pref="58" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="cmbMtdPagto" min="-2" pref="130" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" alignment="1" attributes="0">
-                                                  <Component id="cmbSttsPedido" min="-2" pref="150" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                                                  <Component id="lblSttsPagto" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="294" max="-2" attributes="0"/>
-                                              </Group>
-                                              <Component id="edtCodPedido" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Group type="103" groupAlignment="1" attributes="0">
-                                                  <Component id="edtCliente" alignment="1" min="-2" pref="222" max="-2" attributes="0"/>
-                                                  <Group type="102" alignment="0" attributes="0">
-                                                      <Component id="dtChooserDtPedido" min="-2" pref="150" max="-2" attributes="0"/>
-                                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                      <Component id="lblDtEntrega" min="-2" pref="54" max="-2" attributes="0"/>
-                                                  </Group>
-                                              </Group>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="1" attributes="0">
-                                                  <Group type="102" attributes="0">
-                                                      <Component id="lblCodCliente" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="edtCodCliente" min="-2" pref="77" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <Component id="dtChooserDtEntrega" min="-2" pref="150" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="btnPesquisarCliente" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="pnlFiltroPedido" max="32767" attributes="0"/>
@@ -265,12 +257,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="pnlFiltroPedido" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblCodPedido" alignment="3" min="-2" pref="16" max="-2" attributes="0"/>
-                          <Component id="edtCodPedido" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
@@ -280,7 +267,7 @@
                                   <Component id="btnPesquisarCliente" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="edtCodCliente" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                       <Component id="lblDtPedido" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -291,7 +278,7 @@
                           </Group>
                           <Component id="dtChooserDtEntrega" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="edtDesconto" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblDesconto" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -318,7 +305,7 @@
                           <Component id="lblObs" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="edtObs" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="7" max="32767" attributes="0"/>
+                      <EmptySpace pref="15" max="32767" attributes="0"/>
                       <Component id="recordEditingPedido" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   </Group>
@@ -817,11 +804,6 @@
                 <Property name="name" type="java.lang.String" value="lblNomeFiltro" noResource="true"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblCodPedido">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="C&#xf3;digo:"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JButton" name="btnPesquisarCliente">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Pesquisar Cliente"/>
@@ -849,8 +831,6 @@
               <Properties>
                 <Property name="dateFormatString" type="java.lang.String" value="dd/MM/y  H:m"/>
               </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="edtCodPedido">
             </Component>
             <Component class="javax.swing.JLabel" name="lblSttsPedido">
               <Properties>

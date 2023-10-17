@@ -33,7 +33,7 @@ public class PedidoController extends SuperController {
         this.pedidoView.setItemPedidoController(new ItemPedidoController(this.pedidoView, new DatabaseAccessComponentManager()));
 
         //Configurando o DatabaseAccessComponentManager
-        List<Component> fields = Arrays.asList(pedidoView.getEdtCodPedido(), pedidoView.getEdtCliente(), pedidoView.getEdtCliente(), 
+        List<Component> fields = Arrays.asList(pedidoView.getEdtCliente(), pedidoView.getEdtCliente(), 
             pedidoView.getDtChooserDtEntrega(), pedidoView.getDtChooserDtPedido(), pedidoView.getEdtVlrTotalPedido(), pedidoView.getEdtDesconto(),
             pedidoView.getCmbMtdPagto(), pedidoView.getEdtDestinatario(), pedidoView.getCkBRetirada(), pedidoView.getCmbSttsPagto(), pedidoView.getCmbSttsPedido(), pedidoView.getEdtObs()); 
         this.pedidoDBCManager.setFields(fields);
