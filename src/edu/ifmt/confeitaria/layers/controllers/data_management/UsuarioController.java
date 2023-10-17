@@ -44,7 +44,6 @@ public class UsuarioController extends SuperController<Usuario> {
             usuarioView.getBtnCancel(), usuarioView.getBtnRefresh(), usuarioView.getTblUsuario());
 
         //Adicionando as validações aos campos
-        ViewUtils.addTextChangeListeners(this.usuarioView.getEdtCodUsuario(), this::validateCodUsuarioField);
         ViewUtils.addTextChangeListeners(this.usuarioView.getEdtNome(), this::validateNomeField);
         ViewUtils.addTextChangeListeners(this.usuarioView.getEdtLogin(), this::validateLoginField);
         ViewUtils.addTextChangeListeners(this.usuarioView.getPswdSenha(), this::validateSenhaField);
@@ -123,43 +122,6 @@ public class UsuarioController extends SuperController<Usuario> {
             }
         } else {
             ViewUtils.setLabelOnSuccessValidation(this.usuarioView.getLblNomeValidation());
-        }
-    }
-
-    public void validateCodUsuarioField() {
-        //Se o campo não estiver vazio e o usuário estiver inserindo um novo registro ou atualizando um registro existente, o código(ID) é validado
-        if(!this.usuarioView.getEdtCodUsuario().getText().isEmpty() && (this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.INSERT
-                || this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.UPDATE)) {
-            /*Tenta converter o texto do campo para um número inteiro, sendo possível, o código(ID) é validado*/
-            try {
-                Long id = Long.parseLong(this.usuarioView.getEdtCodUsuario().getText());
-                Long originalID = this.usuarioDBCManager.getCurrentOperation() == DatabaseAccessComponentManager.Operation.UPDATE 
-                        ? this.usuarioDBCManager.getTSelectedRecord().getValue().getID() : null;
-
-                ValidationResponses response = this.usuarioService.validateID(id, originalID);
-                
-                switch(response) {
-                    case BELOW_MIN_VALUE:
-                        ViewUtils.setLabelOnErrorValidation(this.usuarioView.getLblCodUsuarioValidation(), "Código inválido !!!");
-                        break;
-                    case MAX_VALUE_EXCEEDED:
-                        ViewUtils.setLabelOnErrorValidation(this.usuarioView.getLblCodUsuarioValidation(), "Limite máx. excedido !!!");
-                        break;
-                    case ALREADY_EXISTS:
-                        ViewUtils.setLabelOnErrorValidation(this.usuarioView.getLblCodUsuarioValidation(), "Código já existente !!!");
-                        break;
-                    case VALID:
-                        ViewUtils.setLabelOnSuccessValidation(this.usuarioView.getLblCodUsuarioValidation());
-                        break;
-                    default:
-                        break;
-                }
-            } catch(NumberFormatException e) {
-                //Se houver erro na conversão, então o código(ID) é inválido
-                ViewUtils.setLabelOnErrorValidation(this.usuarioView.getLblCodUsuarioValidation(), "Código inválido !!!");
-            }
-        } else {
-            ViewUtils.setLabelOnSuccessValidation(this.usuarioView.getLblCodUsuarioValidation());
         }
     }
 

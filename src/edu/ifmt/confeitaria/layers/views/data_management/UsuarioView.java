@@ -38,10 +38,7 @@ public class UsuarioView extends SuperView {
         lblNomeValidation = new javax.swing.JLabel();
         lblSenhaValidation = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        lblCodUsuario = new javax.swing.JLabel();
         btnEnabledSenha = new javax.swing.JButton();
-        lblCodUsuarioValidation = new javax.swing.JLabel();
-        edtCodUsuario = new javax.swing.JFormattedTextField();
         editConfirmationWithRefresh = new javax.swing.JPanel();
         btnPost = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
@@ -193,8 +190,6 @@ public class UsuarioView extends SuperView {
         lblSenhaValidation.setForeground(new java.awt.Color(204, 51, 0));
         lblSenhaValidation.setText("x");
 
-        lblCodUsuario.setText("Código:");
-
         btnEnabledSenha.setText("Habilitar/Desabilitar Senha");
         btnEnabledSenha.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         btnEnabledSenha.addActionListener(new java.awt.event.ActionListener() {
@@ -203,45 +198,22 @@ public class UsuarioView extends SuperView {
             }
         });
 
-        lblCodUsuarioValidation.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
-        lblCodUsuarioValidation.setForeground(new java.awt.Color(204, 51, 0));
-        lblCodUsuarioValidation.setText("Código já existente !!!");
-
-        edtCodUsuario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblCodUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblCodUsuarioValidation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(edtCodUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(btnEnabledSenha)))
+                .addGap(33, 33, 33)
+                .addComponent(btnEnabledSenha)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCodUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(edtCodUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0)
-                .addComponent(lblCodUsuarioValidation, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addGap(33, 33, 33)
                 .addComponent(btnEnabledSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
-
-        lblCodUsuarioValidation.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout pnlEditingUsuarioLayout = new javax.swing.GroupLayout(pnlEditingUsuario);
         pnlEditingUsuario.setLayout(pnlEditingUsuarioLayout);
@@ -276,7 +248,7 @@ public class UsuarioView extends SuperView {
                                                 .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(lblSenhaValidation, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addComponent(edtLogin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                        .addGap(28, 28, 28)
+                        .addGap(30, 30, 30)
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEditingUsuarioLayout.createSequentialGroup()
                 .addContainerGap()
@@ -406,15 +378,12 @@ public class UsuarioView extends SuperView {
     private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JPanel editConfirmationWithRefresh;
-    private javax.swing.JFormattedTextField edtCodUsuario;
     private javax.swing.JTextField edtLogin;
     private javax.swing.JTextField edtLoginFiltro;
     private javax.swing.JFormattedTextField edtNome;
     private javax.swing.JTextField edtNomeFiltro;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblCodUsuario;
-    private javax.swing.JLabel lblCodUsuarioValidation;
     private javax.swing.JLabel lblLogin;
     private javax.swing.JLabel lblLoginFiltro;
     private javax.swing.JLabel lblLoginValidation;
