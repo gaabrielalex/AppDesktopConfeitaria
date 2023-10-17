@@ -20,7 +20,7 @@ public class CustomDialogs {
         as opções como parâmetro, entre outras configurações*/
         int result = JOptionPane.showOptionDialog(
             null,
-            "Deseja realmente apagar o registro de código" + recordId + "?",
+            "Deseja realmente apagar o registro de código " + recordId + "?",
             "Confirmação de exclusão",
             JOptionPane.OK_CANCEL_OPTION, 
             JOptionPane.QUESTION_MESSAGE,
