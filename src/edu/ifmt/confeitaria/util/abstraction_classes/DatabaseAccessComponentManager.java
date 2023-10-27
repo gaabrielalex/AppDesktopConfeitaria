@@ -317,6 +317,9 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
                 CustomDialogs.registrationError();
             }
         } else if(this.currentOperation == Operation.UPDATE) {
+            if(tObject.getID() == null) {
+                tObject.setID(this.tSelectedRecord.getValue().getID());
+            }
             // Solita a atualização do objeto no BD por meio da controller, armazenando a resposta de sucesso ou não da operação
             boolean response = this.service.update(tObject, this.tSelectedRecord.getValue());
 
