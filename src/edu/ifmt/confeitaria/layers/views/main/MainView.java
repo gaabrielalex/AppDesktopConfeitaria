@@ -7,8 +7,12 @@ import edu.ifmt.confeitaria.layers.controllers.data_management.PedidoController;
 import edu.ifmt.confeitaria.layers.controllers.data_management.ProdutoController;
 import edu.ifmt.confeitaria.layers.controllers.data_management.UsuarioController;
 import edu.ifmt.confeitaria.layers.controllers.main.MainController;
+import edu.ifmt.confeitaria.layers.models.cliente.Cliente;
 import edu.ifmt.confeitaria.layers.models.cliente.ClienteDAO;
 import edu.ifmt.confeitaria.layers.models.cliente.ClienteService;
+import edu.ifmt.confeitaria.layers.models.produto.Produto;
+import edu.ifmt.confeitaria.layers.models.produto.ProdutoDAO;
+import edu.ifmt.confeitaria.layers.models.produto.ProdutoService;
 import edu.ifmt.confeitaria.layers.models.usuario.Usuario;
 import edu.ifmt.confeitaria.layers.models.usuario.UsuarioService;
 import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
@@ -124,11 +128,11 @@ public class MainView extends SuperView {
     }//GEN-LAST:event_mnItemUsuarioActionPerformed
 
     private void mnItemClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnItemClienteActionPerformed
-        this.mainController.requestDisplayMenuItemView(new ClienteController(this, new ClienteService(new ClienteDAO()), new DatabaseAccessComponentManager()));
+        this.mainController.requestDisplayMenuItemView(new ClienteController(this, new ClienteService(new ClienteDAO()), new DatabaseAccessComponentManager<Cliente>()));
     }//GEN-LAST:event_mnItemClienteActionPerformed
 
     private void mnItemProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnItemProdutoActionPerformed
-        this.mainController.requestDisplayMenuItemView(new ProdutoController(this, new DatabaseAccessComponentManager()));
+        this.mainController.requestDisplayMenuItemView(new ProdutoController(this, new ProdutoService(new ProdutoDAO()), new DatabaseAccessComponentManager<Produto>()));
     }//GEN-LAST:event_mnItemProdutoActionPerformed
 
     private void mnItemPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnItemPedidoActionPerformed

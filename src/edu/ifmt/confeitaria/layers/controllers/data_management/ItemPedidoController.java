@@ -2,6 +2,9 @@ package edu.ifmt.confeitaria.layers.controllers.data_management;
 
 import javax.swing.JFrame;
 
+import edu.ifmt.confeitaria.layers.models.produto.Produto;
+import edu.ifmt.confeitaria.layers.models.produto.ProdutoDAO;
+import edu.ifmt.confeitaria.layers.models.produto.ProdutoService;
 import edu.ifmt.confeitaria.layers.views.data_management.PedidoView;
 import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperController;
@@ -29,7 +32,7 @@ public class ItemPedidoController extends SuperController {
     public void displayView() {}
     
     public void requestDisplayProdutoViewForLookUp(JFrame current) {
-        new ProdutoController(current, new DatabaseAccessComponentManager()).displayViewForLookUp();
+        new ProdutoController(current, new ProdutoService(new ProdutoDAO()), new DatabaseAccessComponentManager<Produto>()).displayViewForLookUp();
     }
 
     @Override
