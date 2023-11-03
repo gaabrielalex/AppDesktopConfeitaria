@@ -80,8 +80,14 @@ public class ClienteController extends SuperController<Cliente> {
 
     @Override
     public Cliente fieldsToModel() {
-        // TODO Auto-generated method stub
-        return null;
+        return new Cliente(
+            null,
+            this.clienteView.getEdtNome().getText(),
+            this.clienteView.getEdtCPF().getText(),
+            this.clienteView.getEdtTelefones().getText(),
+            this.clienteView.getEdtEndereco().getText(),
+            this.clienteView.getEdtLinkEnd().getText()
+        );
     }
 
 }
