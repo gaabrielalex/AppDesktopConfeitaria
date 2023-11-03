@@ -314,7 +314,8 @@ public class ClienteView extends SuperView {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-        // TODO add your handling code here:
+        //Atulizando a lista de dados. O manager atualizará os componentes necessários 
+        this.clienteController.partialSearch(this.edtNomeFiltro.getText(), this.edtCPFFiltro.getText());
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     public static void main(String args[]) {
@@ -413,5 +414,4 @@ public class ClienteView extends SuperView {
         super.setDefaultViewSettings("Cadastro de Clientes", previousView);
         this.clienteController = clienteController;     
     }
-
 }
