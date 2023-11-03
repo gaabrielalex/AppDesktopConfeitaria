@@ -43,60 +43,60 @@ public class ClienteDAO {
         }
     }
 
-    // public List<Cliente> selectAll() {
-    //     return this.partialSearch(null, null);
-    // }
+    public List<Cliente> selectAll() {
+        return this.partialSearch(null, null);
+    }
     
-    // public List<Cliente> partialSearch(String nome, String login) {
-    //     PreparedStatement statement = null;
-    //     ResultSet resultSet = null;
+    public List<Cliente> partialSearch(String nome, String cpf) {
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
 
-    //     /*Verifica se os parâmetros foram fornecidos e se não são vazios, ou seja,
-    //     confere se o usuário deseja realizar a pesquisa por nome e/ou login*/
-    //     boolean selectByNome = nome != null && !nome.isEmpty();
-    //     boolean selectByLogin = login != null && !login.isEmpty();
+        /*Verifica se os parâmetros foram fornecidos e se não são vazios, ou seja,
+        confere se o usuário deseja realizar a pesquisa por nome e/ou login*/
+        boolean selectByNome = nome != null && !nome.isEmpty();
+        boolean selectByCPF = cpf != null && !cpf.isEmpty();
         
-    //     //Cria a query
-    //     String sql =    "SELECT *"+
-    //                     "FROM usuario " +
-    //                         "WHERE 1 = 1" +
-    //                             (selectByNome ?  "AND unaccent(nome) ILIKE unaccent(?)" : "") +  //Se o usuário deseja pesquisar por nome, adiciona a condição à query
-    //                             (selectByLogin ? "AND unaccent(login) ILIKE unaccent(?)" : "") + //Se o usuário deseja pesquisar por login, adiciona a condição à query
-    //                     "ORDER BY nome, login";
+        //Cria a query
+        String sql =    "SELECT *"+
+                        "FROM cliente " +
+                            "WHERE 1 = 1" +
+                                (selectByNome ?  "AND unaccent(nome) ILIKE unaccent(?)" : "") +  //Se o usuário deseja pesquisar por nome, adiciona a condição à query
+                                (selectByCPF ? "AND unaccent(cpf) ILIKE unaccent(?)" : "") + //Se o usuário deseja pesquisar por login, adiciona a condição à query
+                        "ORDER BY nome, cpf";
 
-    //     /*Define o padrão de pesquisa em relação aos parâmetros fornecidos pelo usuário*/
-    //     nome= "%" + nome + "%";
-    //     login = "%" + login + "%";
+        /*Define o padrão de pesquisa em relação aos parâmetros fornecidos pelo usuário*/
+        nome= "%" + nome + "%";
+        cpf = "%" + cpf + "%";
 
-    //     //Define uma variável para armazenar o índice do parâmetro a ser configurado
-    //     int paramIndexCount = 1;
-    //     try{
-    //         //Define o PreparedStatement com o SQL
-    //         statement = DBConnection.getConnection().prepareStatement(sql);
+        //Define uma variável para armazenar o índice do parâmetro a ser configurado
+        int paramIndexCount = 1;
+        try{
+            //Define o PreparedStatement com o SQL
+            statement = DBConnection.getConnection().prepareStatement(sql);
 
-    //         //Configura os parâmetros necessários
-    //         if(selectByNome) {
-    //             statement.setString(paramIndexCount, nome);
-    //             paramIndexCount++; //Incrementa o índice do parâmetro para que o próximo seja configurado corretamente
-    //         } 
-    //         if(selectByLogin) {
-    //             statement.setString(paramIndexCount, login);
-    //         }
-    //         //Armazena o SQL para haver refefência da última consulta realizada pelo DAO
-    //         this.lastSqlPartialSearch = statement.toString();
+            //Configura os parâmetros necessários
+            if(selectByNome) {
+                statement.setString(paramIndexCount, nome);
+                paramIndexCount++; //Incrementa o índice do parâmetro para que o próximo seja configurado corretamente
+            } 
+            if(selectByCPF) {
+                statement.setString(paramIndexCount, cpf);
+            }
+            //Armazena o SQL para haver refefência da última consulta realizada pelo DAO
+            this.lastSqlPartialSearch = statement.toString();
 
-    //         //Obtém o ResultSet exexutando a query
-    //         resultSet = statement.executeQuery();
+            //Obtém o ResultSet exexutando a query
+            resultSet = statement.executeQuery();
 
-    //         return this.resultSetToList(resultSet);
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //         return null;
-    //     } finally {
-    //         //Fecha a conexão com o banco de dados e os recursos criados a partir dela
-    //         DBConnection.closeConnection(statement, resultSet);
-    //     }
-    // }
+            return this.resultSetToList(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            //Fecha a conexão com o banco de dados e os recursos criados a partir dela
+            DBConnection.closeConnection(statement, resultSet);
+        }
+    }
 
     // public List<Cliente> redoLastPartialSearch() {
     //     PreparedStatement statement = null;
