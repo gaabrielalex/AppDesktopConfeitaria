@@ -346,6 +346,10 @@ public class ProdutoView extends SuperView {
     private javax.swing.JTable tblProduto;
     // End of variables declaration//GEN-END:variables
 
+    public javax.swing.JComboBox<String> getCmbTipoChocFiltro() {
+        return cmbTipoChocFiltro;
+    }
+    
     public javax.swing.JComboBox<String> getCmbTipoChoc() {
         return cmbTipoChoc;
     }
