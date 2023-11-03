@@ -337,6 +337,22 @@ public class ProdutoView extends SuperView {
     private javax.swing.JTable tblProduto;
     // End of variables declaration//GEN-END:variables
 
+    public javax.swing.JComboBox<String> getCmbTipoChoc() {
+        return cmbTipoChoc;
+    }
+
+    public javax.swing.JTextField getEdtDescricao() {
+        return edtDescricao;
+    }
+
+    public javax.swing.JTextField getEdtObs() {
+        return edtObs;
+    }
+
+    public javax.swing.JTextField getEdtVlrUnt() {
+        return edtVlrUnt;
+    }
+    
     public javax.swing.JButton getBtnCancel() {
         return btnCancel;
     }
