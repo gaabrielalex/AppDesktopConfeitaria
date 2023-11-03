@@ -7,20 +7,20 @@ public class Cliente extends SuperModel {
     private String CPF;
     private String telefones;
     private String endereco;
-    private String link_endereco;
+    private String linkEndereco;
 
     /* Construtor vazio para configurações do DatabaseAcessComponentManager */
     public Cliente() {
         super(null);
     }
 
-    public Cliente(Long ID, String nome, String CPF, String telefones, String endereco, String link_endereco) {
+    public Cliente(Long ID, String nome, String CPF, String telefones, String endereco, String linkEndereco) {
         super(ID);
         this.nome = nome;
         this.CPF = CPF;
         this.telefones = telefones;
         this.endereco = endereco;
-        this.link_endereco = link_endereco;
+        this.linkEndereco = linkEndereco;
     }
 
     public String getNome() {
@@ -55,11 +55,11 @@ public class Cliente extends SuperModel {
         this.endereco = endereco;
     }
 
-    public String getLink_endereco() {
-        return link_endereco;
+    public String getLinkEndereco() {
+        return linkEndereco;
     }
 
-    public void setLink_endereco(String link_endereco) {
-        this.link_endereco = link_endereco;
+    public void setLinkEndereco(String link_endereco) {
+        this.linkEndereco = link_endereco;
     }
 }
