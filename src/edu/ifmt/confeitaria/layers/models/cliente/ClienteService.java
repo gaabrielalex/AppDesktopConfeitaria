@@ -44,9 +44,9 @@ public class ClienteService extends SuperService<Cliente> {
         return this.clienteDAO.update(cliente, clienteOriginal.getID());
     }
 
-    // @Override
-    // public boolean delete(Usuario usuario) {
-    //     //Solita ao DAO a exclusão do cliente no BD já retornando o resultado
-    //     return this.clienteDAO.delete(usuario.getID());
-    // }
+    @Override
+    public boolean delete(Cliente cliente) {
+        //Solita ao DAO a exclusão do cliente no BD já retornando o resultado
+        return this.clienteDAO.delete(cliente.getID());
+    }
 }
