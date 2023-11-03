@@ -16,11 +16,11 @@ public class ClienteService extends SuperService<Cliente> {
         this.clienteDAO = clienteDAO;
     }
 
-    // /* ----- Métodos principais de manipulação de dados ----- */
-    // @Override
-    // public List<Cliente> selectAll(){
-    //     return this.clienteDAO.selectAll();
-    // }
+    /* ----- Métodos principais de manipulação de dados ----- */
+    @Override
+    public List<Cliente> selectAll(){
+        return this.clienteDAO.selectAll();
+    }
     
     // public List<Cliente> partialSearch(String nome, String login) {
     //     //Remove os espaços em branco do início e do fim das strings
