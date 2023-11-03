@@ -51,7 +51,7 @@ public class ClienteDAO {
         ResultSet resultSet = null;
 
         /*Verifica se os parâmetros foram fornecidos e se não são vazios, ou seja,
-        confere se o usuário deseja realizar a pesquisa por nome e/ou login*/
+        confere se o usuário deseja realizar a pesquisa por nome e/ou por CPF*/
         boolean selectByNome = nome != null && !nome.isEmpty();
         boolean selectByCPF = cpf != null && !cpf.isEmpty();
         
@@ -60,7 +60,7 @@ public class ClienteDAO {
                         "FROM cliente " +
                             "WHERE 1 = 1" +
                                 (selectByNome ?  "AND unaccent(nome) ILIKE unaccent(?)" : "") +  //Se o usuário deseja pesquisar por nome, adiciona a condição à query
-                                (selectByCPF ? "AND unaccent(cpf) ILIKE unaccent(?)" : "") + //Se o usuário deseja pesquisar por login, adiciona a condição à query
+                                (selectByCPF ? "AND unaccent(cpf) ILIKE unaccent(?)" : "") + //Se o usuário deseja pesquisar pelo CPF, adiciona a condição à query
                         "ORDER BY nome, cpf";
 
         /*Define o padrão de pesquisa em relação aos parâmetros fornecidos pelo usuário*/
@@ -133,10 +133,10 @@ public class ClienteDAO {
             statement.setString(4, cliente.getEndereco());
             statement.setString(5, cliente.getLinkEndereco());
             
-            //Executa a query e obtém o ResultSet(que deverá conter o ID do usuário retornado pela inserção)
+            //Executa a query e obtém o ResultSet(que deverá conter o ID do cliente retornado pela inserção)
             ResultSet resultSet = statement.executeQuery();
             if(resultSet.next()) {
-                //Se a inserção foi realizada com sucesso, define o ID do usuário
+                //Se a inserção foi realizada com sucesso, define o ID do cliente
                 cliente.setID(resultSet.getLong("id_cliente"));
             }
             //Se a inserção foi realizada com sucesso, retorna true
