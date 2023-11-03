@@ -6,7 +6,7 @@ import edu.ifmt.confeitaria.util.abstraction_classes.SuperModel;
 
 public class Produto extends SuperModel {
     private String descricao;
-    private BigDecimal VlrUnitario;
+    private BigDecimal vlrUnitario;
     private String observacoes;
     private String tipoChocolate;
 
@@ -18,7 +18,7 @@ public class Produto extends SuperModel {
     public Produto(Long ID, String descricao, BigDecimal vlrUnitario, String observacoes, String tipoChocolate) {
         super(ID);
         this.descricao = descricao;
-        VlrUnitario = vlrUnitario;
+        this.vlrUnitario = vlrUnitario;
         this.observacoes = observacoes;
         this.tipoChocolate = tipoChocolate;
     }
@@ -32,11 +32,11 @@ public class Produto extends SuperModel {
     }
 
     public BigDecimal getVlrUnitario() {
-        return VlrUnitario;
+        return vlrUnitario;
     }
 
     public void setVlrUnitario(BigDecimal vlrUnitario) {
-        VlrUnitario = vlrUnitario;
+        this.vlrUnitario = vlrUnitario;
     }
 
     public String getObservacoes() {
