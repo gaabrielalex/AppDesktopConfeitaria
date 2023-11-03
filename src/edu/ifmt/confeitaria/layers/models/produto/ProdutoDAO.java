@@ -58,7 +58,7 @@ public class ProdutoDAO {
         //Cria a query
         String sql =    "SELECT p.*, tc.descricao as tipo_chocolate " +
                         "FROM produto p, tipo_chocolate tc " +
-                            "WHERE 1 = 1" +
+                            "WHERE p.id_tipo_chocolate = tc.id_tipo_chocolate " +
                                 (selectByDescricao ?  "AND unaccent(descricao) ILIKE unaccent(?)" : "") +  // Se o usuário deseja pesquisar pela descrição, adiciona a condição à query
                                 (selectByTipoChocolate ? "AND tc.descricao = ?" : "") + // Se o usuário deseja pesquisar pelo tipo do chocolate, adiciona a condição à query
                         "ORDER BY p.descricao, tc.descricao, p.vlr_unitario";
