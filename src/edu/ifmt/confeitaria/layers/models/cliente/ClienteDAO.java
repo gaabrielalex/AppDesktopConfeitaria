@@ -43,36 +43,6 @@ public class ClienteDAO {
         }
     }
 
-    public List<Cliente> selectByLogin(String login) {
-       if(login == null) return null;
-
-        //Cria o PreparedStatement e o ResultSet
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-
-        //Cria a query
-        String sql =    "SELECT * " +
-                        "FROM usuario " +
-                            "WHERE login = ?";
-
-        try{
-            //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
-            statement = DBConnection.getConnection().prepareStatement(sql);
-            statement.setString(1, login);
-
-            //Obtém o ResultSet exexutando a query
-            resultSet = statement.executeQuery();
-            
-            return this.resultSetToList(resultSet); 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        } finally {
-            //Fecha a conexão com o banco de dados e os recursos criados a partir dela
-            DBConnection.closeConnection(statement, resultSet);
-        }
-    }
-
     // public List<Cliente> selectByLoginAndPassword(String login, String senha) {
     //     PreparedStatement statement = null;
     //     ResultSet resultSet = null;
