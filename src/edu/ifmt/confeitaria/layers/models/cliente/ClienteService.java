@@ -2,12 +2,7 @@ package edu.ifmt.confeitaria.layers.models.cliente;
 
 import java.util.List;
 
-import edu.ifmt.confeitaria.layers.models.usuario.Usuario;
-import edu.ifmt.confeitaria.layers.models.usuario.UsuarioDAO;
-import edu.ifmt.confeitaria.layers.models.usuario.UsuarioService;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperService;
-import edu.ifmt.confeitaria.util.services.ValidationResponses;
-import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
 public class ClienteService extends SuperService<Cliente> {
     private final ClienteDAO clienteDAO;
@@ -31,11 +26,11 @@ public class ClienteService extends SuperService<Cliente> {
         return this.clienteDAO.partialSearch(nome, CPF);
     }
     
-    // @Override
-    // public List<Cliente> redoLastPartialSearch(){
-    //     //Solicita os dados ao DAO
-    //     return this.clienteDAO.redoLastPartialSearch();
-    // }
+    @Override
+    public List<Cliente> redoLastPartialSearch(){
+        //Solicita os dados ao DAO
+        return this.clienteDAO.redoLastPartialSearch();
+    }
     
     // @Override
     // public boolean insert(Usuario usuario) {
