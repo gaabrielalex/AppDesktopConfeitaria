@@ -26,7 +26,7 @@ public class ProdutoService extends SuperService<Produto> {
     }
     
     @Override
-    public List<Produto> redoLastPartialSearch(){
+    public List<Produto> redoLastPartialSearch() {
         //Solicita os dados ao DAO
         return this.produtoDAO.redoLastPartialSearch();
     }
