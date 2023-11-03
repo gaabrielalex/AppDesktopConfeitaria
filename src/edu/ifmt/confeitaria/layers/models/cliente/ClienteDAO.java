@@ -98,26 +98,26 @@ public class ClienteDAO {
         }
     }
 
-    // public List<Cliente> redoLastPartialSearch() {
-    //     PreparedStatement statement = null;
-    //     ResultSet resultSet = null;
+    public List<Cliente> redoLastPartialSearch() {
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
 
-    //     try{
-    //         //Define o PreparedStatement com o SQL da última consulta
-    //         statement = DBConnection.getConnection().prepareStatement(this.lastSqlPartialSearch);
+        try{
+            //Define o PreparedStatement com o SQL da última consulta
+            statement = DBConnection.getConnection().prepareStatement(this.lastSqlPartialSearch);
 
-    //         //Obtém o ResultSet exexutando a query
-    //         resultSet = statement.executeQuery();
+            //Obtém o ResultSet exexutando a query
+            resultSet = statement.executeQuery();
 
-    //         return this.resultSetToList(resultSet);
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //         return null;
-    //     } finally {
-    //         //Fecha a conexão com o banco de dados e os recursos criados a partir dela
-    //         DBConnection.closeConnection(statement, resultSet);
-    //     }
-    // }
+            return this.resultSetToList(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            //Fecha a conexão com o banco de dados e os recursos criados a partir dela
+            DBConnection.closeConnection(statement, resultSet);
+        }
+    }
 
     // public boolean insert(Usuario usuario) {
     //     PreparedStatement statement = null;
