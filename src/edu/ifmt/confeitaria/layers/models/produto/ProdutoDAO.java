@@ -60,7 +60,7 @@ public class ProdutoDAO {
                         "FROM produto p, tipo_chocolate tc " +
                             "WHERE 1 = 1" +
                                 (selectByDescricao ?  "AND unaccent(descricao) ILIKE unaccent(?)" : "") +  // Se o usuário deseja pesquisar pela descrição, adiciona a condição à query
-                                (selectByTipoChocolate ? "AND tipo_chocolate = ?" : "") + // Se o usuário deseja pesquisar pelo tipo do chocolate, adiciona a condição à query
+                                (selectByTipoChocolate ? "AND tc.descricao = ?" : "") + // Se o usuário deseja pesquisar pelo tipo do chocolate, adiciona a condição à query
                         "ORDER BY p.descricao, tc.descricao, p.vlr_unitario";
 
         /*Define o padrão de pesquisa em relação aos parâmetros fornecidos pelo usuário*/
