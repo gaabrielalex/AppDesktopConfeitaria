@@ -72,7 +72,11 @@ public class ClienteController extends SuperController<Cliente> {
 
     @Override
     public void modelToFields(Cliente cliente) {
-        // TODO Auto-generated method stub
+        this.clienteView.getEdtNome().setText(cliente.getNome());
+        this.clienteView.getEdtCPF().setText(cliente.getCPF());
+        this.clienteView.getEdtTelefones().setText(cliente.getTelefones());
+        this.clienteView.getEdtEndereco().setText(cliente.getEndereco());
+        this.clienteView.getEdtLinkEnd().setText(cliente.getLinkEndereco());
     }
 
     @Override
