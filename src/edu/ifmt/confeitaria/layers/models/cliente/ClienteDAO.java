@@ -51,7 +51,7 @@ public class ClienteDAO {
         ResultSet resultSet = null;
 
         /*Verifica se os parâmetros foram fornecidos e se não são vazios, ou seja,
-        confere se o usuário deseja realizar a pesquisa por nome e/ou por CPF*/
+        confere se o usuário deseja realizar a pesquisa por nome e/ou pelo CPF*/
         boolean selectByNome = nome != null && !nome.isEmpty();
         boolean selectByCPF = cpf != null && !cpf.isEmpty();
         
