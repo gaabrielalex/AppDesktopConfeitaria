@@ -118,36 +118,38 @@ public class ClienteDAO {
         }
     }
 
-    // public boolean insert(Usuario usuario) {
-    //     PreparedStatement statement = null;
-    //     try {
-    //         //Cria a query
-    //         String sql =    "INSERT INTO usuario(nome, login, senha) " +
-    //                         "VALUES(?, ?, ?) RETURNING id_usuario";
+    public boolean insert(Cliente cliente) {
+        PreparedStatement statement = null;
+        try {
+            //Cria a query
+            String sql =    "INSERT INTO cliente(nome, cpf, telefones, endereco, link_endereco) " +
+                            "VALUES(?, ?, ?, ?, ?) RETURNING id_cliente";
             
-    //         //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
-    //         statement = DBConnection.getConnection().prepareStatement(sql);
-    //         statement.setString(1, usuario.getNome());
-    //         statement.setString(2, usuario.getLogin());
-    //         statement.setString(3, usuario.getSenha());
+            //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
+            statement = DBConnection.getConnection().prepareStatement(sql);
+            statement.setString(1, cliente.getNome());
+            statement.setString(2, cliente.getCPF());
+            statement.setString(3, cliente.getTelefones());
+            statement.setString(4, cliente.getEndereco());
+            statement.setString(5, cliente.getLinkEndereco());
             
-    //         //Executa a query e obtém o ResultSet(que deverá conter o ID do usuário retornado pela inserção)
-    //         ResultSet resultSet = statement.executeQuery();
-    //         if(resultSet.next()) {
-    //             //Se a inserção foi realizada com sucesso, define o ID do usuário
-    //             usuario.setID(resultSet.getLong("id_usuario"));
-    //         }
-    //         //Se a inserção foi realizada com sucesso, retorna true
-    //         return true;
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //         //Se a inserção não foi realizada com sucesso, retorna false
-    //         return false;
-    //     } finally {
-    //         //Fecha a conexão com o banco de dados e os recursos criados a partir dela
-    //         DBConnection.closeConnection(statement);
-    //     }
-    // }
+            //Executa a query e obtém o ResultSet(que deverá conter o ID do usuário retornado pela inserção)
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()) {
+                //Se a inserção foi realizada com sucesso, define o ID do usuário
+                cliente.setID(resultSet.getLong("id_cliente"));
+            }
+            //Se a inserção foi realizada com sucesso, retorna true
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            //Se a inserção não foi realizada com sucesso, retorna false
+            return false;
+        } finally {
+            //Fecha a conexão com o banco de dados e os recursos criados a partir dela
+            DBConnection.closeConnection(statement);
+        }
+    }
 
     // public boolean update(Usuario usuario, Long originalID) {
     //     if(originalID == null) return false;
