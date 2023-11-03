@@ -1,8 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package edu.ifmt.confeitaria.layers.controllers.data_management;
+
+import java.awt.Component;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.swing.JFrame;
 
 import edu.ifmt.confeitaria.layers.models.usuario.Usuario;
 import edu.ifmt.confeitaria.layers.models.usuario.UsuarioService;
@@ -13,16 +15,6 @@ import edu.ifmt.confeitaria.util.abstraction_classes.SuperView;
 import edu.ifmt.confeitaria.util.services.ValidationResponses;
 import edu.ifmt.confeitaria.util.views.ViewUtils;
 
-import java.awt.Component;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.swing.JFrame;
-
-/**
- *
- * @author Gabriel
- */
 public class UsuarioController extends SuperController<Usuario> {
     private final UsuarioView usuarioView;
     private final UsuarioService usuarioService;

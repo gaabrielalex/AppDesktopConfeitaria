@@ -1,10 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package edu.ifmt.confeitaria.layers.controllers.data_management;
-
-import java.util.List;
 
 import javax.swing.JFrame;
 
@@ -12,10 +6,6 @@ import edu.ifmt.confeitaria.layers.views.data_management.PedidoView;
 import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperController;
 
-/**
- *
- * @author Gabriel
- */
 public class ItemPedidoController extends SuperController {
     private final PedidoView pedidoView;
     private DatabaseAccessComponentManager itemPedidoDBCManager;

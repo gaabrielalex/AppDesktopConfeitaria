@@ -1,17 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package edu.ifmt.confeitaria.layers.controllers.main;
 
 import edu.ifmt.confeitaria.layers.models.usuario.UsuarioService;
 import edu.ifmt.confeitaria.layers.views.main.MainView;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperController;
 
-/**
- *
- * @author Gabriel
- */
 public class MainController {
     private final MainView mainView; 
     

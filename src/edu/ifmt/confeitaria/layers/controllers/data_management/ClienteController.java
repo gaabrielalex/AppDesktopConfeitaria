@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package edu.ifmt.confeitaria.layers.controllers.data_management;
 
 import java.awt.Component;
@@ -16,10 +12,6 @@ import edu.ifmt.confeitaria.layers.views.data_management.ClienteView;
 import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperController;
 
-/**
- *
- * @author Gabriel
- */
 public class ClienteController extends SuperController<Cliente> {
     private final ClienteView clienteView;
     private final ClienteService clienteService;
