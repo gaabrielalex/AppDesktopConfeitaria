@@ -22,14 +22,14 @@ public class ClienteService extends SuperService<Cliente> {
         return this.clienteDAO.selectAll();
     }
     
-    // public List<Cliente> partialSearch(String nome, String login) {
-    //     //Remove os espaços em branco do início e do fim das strings
-    //     if(nome != null) nome = nome.stripLeading().stripTrailing();
-    //     if(login != null) login = login.stripLeading().stripTrailing();
+    public List<Cliente> partialSearch(String nome, String CPF) {
+        //Remove os espaços em branco do início e do fim das strings
+        if(nome != null) nome = nome.stripLeading().stripTrailing();
+        if(CPF != null) CPF = CPF.stripLeading().stripTrailing();
         
-    //     //Solicita os dados ao DAO
-    //     return this.clienteDAO.partialSearch(nome, login);
-    // }
+        //Solicita os dados ao DAO
+        return this.clienteDAO.partialSearch(nome, CPF);
+    }
     
     // @Override
     // public List<Cliente> redoLastPartialSearch(){
