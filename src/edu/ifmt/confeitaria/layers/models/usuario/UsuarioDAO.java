@@ -280,7 +280,6 @@ public class UsuarioDAO {
                                         resultSet.getString("login"),
                                         resultSet.getString("senha")));
         }
-        
         return usuarios;
     }
 }
