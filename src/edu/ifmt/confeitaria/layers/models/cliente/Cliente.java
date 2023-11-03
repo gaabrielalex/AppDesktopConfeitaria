@@ -1,4 +1,4 @@
-package edu.ifmt.confeitaria.layers.models.usuario;
+package edu.ifmt.confeitaria.layers.models.cliente;
 
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperModel;
 
