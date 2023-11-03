@@ -13,7 +13,7 @@ public class ProdutoService extends SuperService<Produto> {
 
     /* ----- Métodos principais de manipulação de dados ----- */
     @Override
-    public List<Produto> selectAll(){
+    public List<Produto> selectAll() {
         return this.produtoDAO.selectAll();
     }
     
