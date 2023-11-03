@@ -32,17 +32,11 @@ public class ClienteService extends SuperService<Cliente> {
         return this.clienteDAO.redoLastPartialSearch();
     }
     
-    // @Override
-    // public boolean insert(Usuario usuario) {
-    //     //Valida os dados do usuário
-    //     if(this.validateDataInsert(usuario)) {
-    //         /*Caso os dados sejam válidos, solicita ao DAO a inserção
-    //         do usuário no banco de dados já retornando o resultado*/
-    //         return this.clienteDAO.insert(usuario);
-    //     } else {
-    //         return false;
-    //     }  
-    // }
+    @Override
+    public boolean insert(Cliente cliente) {
+        //Solita ao DAO a inserção do cliente no BD já retornando o resultado
+        return this.clienteDAO.insert(cliente);
+    }
     
     // @Override
     // public boolean update(Usuario usuario, Usuario usuarioOriginal) {
@@ -58,7 +52,7 @@ public class ClienteService extends SuperService<Cliente> {
 
     // @Override
     // public boolean delete(Usuario usuario) {
-    //     //Solicita ao DAO a exclusão do usuário no banco de dados já retornando o resultado
+    //     //Solita ao DAO a exclusão do cliente no BD já retornando o resultado
     //     return this.clienteDAO.delete(usuario.getID());
     // }
 }
