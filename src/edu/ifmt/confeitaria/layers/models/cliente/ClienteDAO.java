@@ -218,7 +218,7 @@ public class ClienteDAO {
     public List<Cliente> resultSetToList(ResultSet resultSet) throws SQLException {
         List<Cliente> clientes = new ArrayList<>();
         
-        //Percorre o ResultSet preenchendo a lista de usuários
+        //Percorre o ResultSet preenchendo a lista de clientes
         while(resultSet.next()) {
             clientes.add(new Cliente(resultSet.getLong("id_cliente"),
                                     resultSet.getString("nome"),
