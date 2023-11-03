@@ -117,38 +117,38 @@ public class ProdutoDAO {
         }
     }
 
-    // public boolean insert(Cliente cliente) {
-    //     PreparedStatement statement = null;
-    //     try {
-    //         //Cria a query
-    //         String sql =    "INSERT INTO cliente(nome, cpf, telefones, endereco, link_endereco) " +
-    //                         "VALUES(?, ?, ?, ?, ?) RETURNING id_produto";
+    public boolean insert(Produto produto) {
+        PreparedStatement statement = null;
+        try {
+            //Cria a query
+            String sql =    "INSERT INTO produto(descricao, vlr_unitario, observacoes, id_tipo_chocolate)" +
+                            "VALUES(?, ?, ?, (select id_tipo_chocolate from tipo_chocolate where descricao = ?)) " +
+                            "RETURNING id_produto";
             
-    //         //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
-    //         statement = DBConnection.getConnection().prepareStatement(sql);
-    //         statement.setString(1, cliente.getNome());
-    //         statement.setString(2, cliente.getCPF());
-    //         statement.setString(3, cliente.getTelefones());
-    //         statement.setString(4, cliente.getEndereco());
-    //         statement.setString(5, cliente.getLinkEndereco());
+            //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
+            statement = DBConnection.getConnection().prepareStatement(sql);
+            statement.setString(1, produto.getDescricao());
+            statement.setBigDecimal(2, produto.getVlrUnitario());
+            statement.setString(3, produto.getObservacoes());
+            statement.setString(4, produto.getTipoChocolate());
             
-    //         //Executa a query e obtém o ResultSet(que deverá conter o ID do cliente retornado pela inserção)
-    //         ResultSet resultSet = statement.executeQuery();
-    //         if(resultSet.next()) {
-    //             //Se a inserção foi realizada com sucesso, define o ID do cliente
-    //             cliente.setID(resultSet.getLong("id_produto"));
-    //         }
-    //         //Se a inserção foi realizada com sucesso, retorna true
-    //         return true;
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //         //Se a inserção não foi realizada com sucesso, retorna false
-    //         return false;
-    //     } finally {
-    //         //Fecha a conexão com o banco de dados e os recursos criados a partir dela
-    //         DBConnection.closeConnection(statement);
-    //     }
-    // }
+            //Executa a query e obtém o ResultSet(que deverá conter o ID do produto retornado pela inserção)
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()) {
+                //Se a inserção foi realizada com sucesso, define o ID do produto
+                produto.setID(resultSet.getLong("id_produto"));
+            }
+            //Se a inserção foi realizada com sucesso, retorna true
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            //Se a inserção não foi realizada com sucesso, retorna false
+            return false;
+        } finally {
+            //Fecha a conexão com o banco de dados e os recursos criados a partir dela
+            DBConnection.closeConnection(statement);
+        }
+    }
 
     // public boolean update(Cliente cliente, Long originalID) {
     //     if(originalID == null) return false;
