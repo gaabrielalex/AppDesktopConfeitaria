@@ -18,6 +18,7 @@ import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentMana
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperController;
 
 public class ProdutoController extends SuperController<Produto> {
+    static final String allOptionsText = "Todos";
     private final ProdutoView produtoView;
     private final ProdutoService produtoService;
     private DatabaseAccessComponentManager<Produto> produtoDBCManager;
@@ -41,6 +42,18 @@ public class ProdutoController extends SuperController<Produto> {
 
     @Override
     public void displayView() {
+        this.produtoView.getCmbTipoChoc().removeAllItems();
+        this.produtoView.getCmbTipoChocFiltro().removeAllItems();
+        for (String value : this.produtoService.selectAllTipoChocolate()) {
+            this.produtoView.getCmbTipoChoc().addItem(value);
+            this.produtoView.getCmbTipoChocFiltro().addItem(value);
+        }
+        this.produtoView.getCmbTipoChocFiltro().addItem(allOptionsText);
+        this.produtoView.getCmbTipoChocFiltro().setSelectedItem(allOptionsText);
+        /*Cancela qualquer operação que possa estar sendo realizada, isso porque houve
+        alterações acima ne um dos fields, logo, o manager entende que estava havendo uma
+        operação de atualização, o que não era o caso, eram apenas configurações iniciais*/
+        this.produtoDBCManager.cancel();
         this.produtoView.setVisible(true);
     }
     
@@ -54,7 +67,10 @@ public class ProdutoController extends SuperController<Produto> {
         this.displayView();
     }
 
-   public void partialSearch(String descricao, String tipoChocolate) {
+    public void partialSearch(String descricao, String tipoChocolate) {
+        if(tipoChocolate.equals(allOptionsText)) {
+            tipoChocolate = null;
+        }
         this.produtoDBCManager.setTemporaryTDataList(this.produtoService.partialSearch(descricao, tipoChocolate));
     }
 
@@ -72,9 +88,9 @@ public class ProdutoController extends SuperController<Produto> {
     @Override
     public void modelToFields(Produto produto) {
         this.produtoView.getEdtDescricao().setText(produto.getDescricao());
-        this.produtoView.getEdtObs().setText(produto.getObservacoes());
-        this.produtoView.getEdtVlrUnt().setText(produto.getVlrUnitario().toString());
         this.produtoView.getCmbTipoChoc().setSelectedItem(produto.getTipoChocolate());
+        this.produtoView.getEdtObs().setText(produto.getObservacoes());
+        this.produtoView.getEdtVlrUnt().setText(produto.getVlrUnitario() == null ? "" : produto.getVlrUnitario().toString()); 
     }
 
     @Override
@@ -84,7 +100,7 @@ public class ProdutoController extends SuperController<Produto> {
             this.produtoView.getEdtDescricao().getText(),
             new BigDecimal(this.produtoView.getEdtVlrUnt().getText()),
             this.produtoView.getEdtObs().getText(),
-            this.produtoView.getCmbTipoChoc().getSelectedItem().toString()
+            this.produtoView.getCmbTipoChoc().getSelectedItem() == null ? null : this.produtoView.getCmbTipoChoc().getSelectedItem().toString()
         );
     }
 
