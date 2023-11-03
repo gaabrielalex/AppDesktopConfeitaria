@@ -27,7 +27,7 @@ public class ClienteService extends SuperService<Cliente> {
     }
     
     @Override
-    public List<Cliente> redoLastPartialSearch(){
+    public List<Cliente> redoLastPartialSearch() {
         //Solicita os dados ao DAO
         return this.clienteDAO.redoLastPartialSearch();
     }
