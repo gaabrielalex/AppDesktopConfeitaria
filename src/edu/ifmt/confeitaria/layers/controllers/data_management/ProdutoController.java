@@ -34,7 +34,7 @@ public class ProdutoController extends SuperController<Produto> {
         List<Component> fields = Arrays.asList(produtoView.getEdtDescricao(), produtoView.getEdtObs(), 
             produtoView.getEdtVlrUnt(), produtoView.getCmbTipoChoc());
         this.produtoDBCManager.setFields(fields);
-        this.produtoDBCManager.configureComponents(null, this, null, produtoView.getBtnInsert(),
+        this.produtoDBCManager.configureComponents(Produto.class, this, this.produtoService, produtoView.getBtnInsert(),
             produtoView.getBtnUpdate(), produtoView.getBtnDelete(), produtoView.getBtnPost(),
             produtoView.getBtnCancel(), produtoView.getBtnRefresh(), produtoView.getTblProduto());
     }
