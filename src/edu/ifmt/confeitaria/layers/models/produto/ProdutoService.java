@@ -33,20 +33,20 @@ public class ProdutoService extends SuperService<Produto> {
     }
     
     @Override
-    public boolean insert(Cliente cliente) {
-        //Solita ao DAO a inserção do cliente no BD já retornando o resultado
-        return this.produtoDAO.insert(cliente);
+    public boolean insert(Produto produto) {
+        //Solita ao DAO a inserção do produto no BD já retornando o resultado
+        return this.produtoDAO.insert(produto);
     }
     
     @Override
-    public boolean update(Cliente cliente, Cliente clienteOriginal) {
-        //Solita ao DAO a atualização do cliente no BD já retornando o resultado
-        return this.produtoDAO.update(cliente, clienteOriginal.getID());
+    public boolean update(Produto produto, Produto produtoOriginal) {
+        //Solita ao DAO a atualização do produto no BD já retornando o resultado
+        return this.produtoDAO.update(produto, produtoOriginal.getID());
     }
 
     @Override
-    public boolean delete(Cliente cliente) {
-        //Solita ao DAO a exclusão do cliente no BD já retornando o resultado
-        return this.produtoDAO.delete(cliente.getID());
+    public boolean delete(Produto produto) {
+        //Solita ao DAO a exclusão do produto no BD já retornando o resultado
+        return this.produtoDAO.delete(produto.getID());
     }
 }
