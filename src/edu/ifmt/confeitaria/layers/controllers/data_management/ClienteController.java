@@ -57,6 +57,10 @@ public class ClienteController extends SuperController<Cliente> {
         this.displayView();
     }
 
+    public void partialSearch(String nome, String CPF) {
+        this.clienteDBCManager.setTemporaryTDataList(this.clienteService.partialSearch(nome, CPF));
+    }
+
     @Override
     public Object[] modelToTableRow(Cliente cliente) {
         return new Object[]{
