@@ -4,9 +4,16 @@
  */
 package edu.ifmt.confeitaria.layers.controllers.data_management;
 
+import edu.ifmt.confeitaria.layers.models.cliente.Cliente;
+import edu.ifmt.confeitaria.layers.models.cliente.ClienteService;
+import edu.ifmt.confeitaria.layers.models.usuario.UsuarioService;
 import edu.ifmt.confeitaria.layers.views.data_management.ClienteView;
 import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperController;
+
+import java.awt.Component;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.JFrame;
 
@@ -14,18 +21,23 @@ import javax.swing.JFrame;
  *
  * @author Gabriel
  */
-public class ClienteController extends SuperController {
+public class ClienteController extends SuperController<Cliente> {
     private final ClienteView clienteView;
-    private DatabaseAccessComponentManager clienteDBCManager;
+    private final ClienteService clienteService;
+    private DatabaseAccessComponentManager<Cliente> clienteDBCManager;
     
-    public ClienteController(JFrame previousView, DatabaseAccessComponentManager clienteDBCManager) {
+    public ClienteController(JFrame previousView, ClienteService clienteService, DatabaseAccessComponentManager clienteDBCManager) {
         //Injeção de dependências
+        this.clienteService = clienteService;
         this.clienteDBCManager = clienteDBCManager;
 
         //Instancia a View e define esta instância como seu controlador
         this.clienteView = new ClienteView(this, previousView);
 
         //Configurando o DatabaseAccessComponentManager
+        List<Component> fields = Arrays.asList(clienteView.getEdtNome(), clienteView.getEdtCPF(), 
+            clienteView.getEdtTelefones(), clienteView.getEdtEndereco(), clienteView.getEdtLinkEnd());
+        this.clienteDBCManager.setFields(fields);
         this.clienteDBCManager.configureComponents(null, this, null, clienteView.getBtnInsert(),
             clienteView.getBtnUpdate(), clienteView.getBtnDelete(), clienteView.getBtnPost(),
             clienteView.getBtnCancel(), clienteView.getBtnRefresh(), clienteView.getTblCliente());
