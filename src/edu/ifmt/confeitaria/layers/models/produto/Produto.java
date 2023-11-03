@@ -23,4 +23,36 @@ public class Produto extends SuperModel {
         this.tipo_chocolate = tipo_chocolate;
     }
 
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public BigDecimal getVlrUnitario() {
+        return VlrUnitario;
+    }
+
+    public void setVlrUnitario(BigDecimal vlrUnitario) {
+        VlrUnitario = vlrUnitario;
+    }
+
+    public String getObservacoes() {
+        return observacoes;
+    }
+
+    public void setObservacoes(String observacoes) {
+        this.observacoes = observacoes;
+    }
+
+    public String getTipo_chocolate() {
+        return tipo_chocolate;
+    }
+
+    public void setTipo_chocolate(String tipo_chocolate) {
+        this.tipo_chocolate = tipo_chocolate;
+    }
+
 }
