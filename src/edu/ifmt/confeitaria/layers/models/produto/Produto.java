@@ -8,19 +8,19 @@ public class Produto extends SuperModel {
     private String descricao;
     private BigDecimal VlrUnitario;
     private String observacoes;
-    private String tipo_chocolate;
+    private String tipoChocolate;
 
     /* Construtor vazio para configurações do DatabaseAcessComponentManager */
     public Produto() {
         super(null);
     }
 
-    public Produto(Long ID, String descricao, BigDecimal vlrUnitario, String observacoes, String tipo_chocolate) {
+    public Produto(Long ID, String descricao, BigDecimal vlrUnitario, String observacoes, String tipoChocolate) {
         super(ID);
         this.descricao = descricao;
         VlrUnitario = vlrUnitario;
         this.observacoes = observacoes;
-        this.tipo_chocolate = tipo_chocolate;
+        this.tipoChocolate = tipoChocolate;
     }
 
     public String getDescricao() {
@@ -47,12 +47,12 @@ public class Produto extends SuperModel {
         this.observacoes = observacoes;
     }
 
-    public String getTipo_chocolate() {
-        return tipo_chocolate;
+    public String getTipoChocolate() {
+        return tipoChocolate;
     }
 
-    public void setTipo_chocolate(String tipo_chocolate) {
-        this.tipo_chocolate = tipo_chocolate;
+    public void setTipoChocolate(String tipo_chocolate) {
+        this.tipoChocolate = tipo_chocolate;
     }
 
 }
