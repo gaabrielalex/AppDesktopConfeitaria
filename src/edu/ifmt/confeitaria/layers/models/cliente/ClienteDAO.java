@@ -151,38 +151,39 @@ public class ClienteDAO {
         }
     }
 
-    // public boolean update(Usuario usuario, Long originalID) {
-    //     if(originalID == null) return false;
-    //     PreparedStatement statement = null;
+    public boolean update(Cliente cliente, Long originalID) {
+        if(originalID == null) return false;
+        PreparedStatement statement = null;
 
-    //     //Cria a query
-    //         String sql =    "UPDATE usuario " +
-    //                         "SET id_usuario = ?, nome = ?, login = ?, senha = ? " +
-    //                             "WHERE id_usuario = ?";
+        //Cria a query
+            String sql =    "UPDATE cliente " +
+                            "SET id_cliente = ?, nome = ?, cpf = ?, telefones = ?, endereco = ?, link_endereco = ? " +
+                                "WHERE id_cliente = ?";
 
-    //     try {
-    //         //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
-    //         statement = DBConnection.getConnection().prepareStatement(sql);
-    //         statement.setLong(1, usuario.getID());
-    //         statement.setString(2, usuario.getNome());
-    //         statement.setString(3, usuario.getLogin());
-    //         statement.setString(4, usuario.getSenha());
-    //         statement.setLong(5, originalID);
+        try {
+            //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
+            statement = DBConnection.getConnection().prepareStatement(sql);
+            statement.setLong(1, cliente.getID());
+            statement.setString(2, cliente.getNome());
+            statement.setString(3, cliente.getCPF());
+            statement.setString(4, cliente.getTelefones());
+            statement.setString(5, cliente.getEndereco());
+            statement.setString(6, cliente.getLinkEndereco());
             
-    //         //Executa a query
-    //         statement.executeUpdate();
+            //Executa a query
+            statement.executeUpdate();
 
-    //         //Se a atualização foi realizada com sucesso, retorna true
-    //         return true;
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //         //Se a atualização não foi realizada com sucesso, retorna false
-    //         return false;
-    //     } finally {
-    //         //Fecha a conexão com o banco de dados e os recursos criados a partir dela
-    //         DBConnection.closeConnection(statement);
-    //     }
-    // }
+            //Se a atualização foi realizada com sucesso, retorna true
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            //Se a atualização não foi realizada com sucesso, retorna false
+            return false;
+        } finally {
+            //Fecha a conexão com o banco de dados e os recursos criados a partir dela
+            DBConnection.closeConnection(statement);
+        }
+    }
 
     // public boolean delete(Long idUsuario) {
     //     if(idUsuario == null) return false;
@@ -190,7 +191,7 @@ public class ClienteDAO {
 
     //     //Cria a query
     //     String sql =    "DELETE FROM usuario " +
-    //                     "WHERE id_usuario = ?";
+    //                     "WHERE id_cliente = ?";
         
     //     try {
     //         //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
