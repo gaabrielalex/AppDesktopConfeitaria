@@ -302,7 +302,6 @@ public class ProdutoView extends SuperView {
 
     public static void main(String args[]) {
         NimbusTheme.setTheme();
-
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new ProdutoView().setVisible(true);
