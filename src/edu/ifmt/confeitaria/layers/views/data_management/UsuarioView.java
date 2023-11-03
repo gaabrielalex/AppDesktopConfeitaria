@@ -354,7 +354,7 @@ public class UsuarioView extends SuperView {
     }//GEN-LAST:event_btnEnabledSenhaActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-        //Atulizando a lista de dados. O manager irá atualizar os componentes necessários 
+        //Atulizando a lista de dados. O manager atualizará os componentes necessários 
         this.usuarioController.partialSearch(this.edtNomeFiltro.getText(), this.edtLoginFiltro.getText());
     }//GEN-LAST:event_btnPesquisarActionPerformed
 

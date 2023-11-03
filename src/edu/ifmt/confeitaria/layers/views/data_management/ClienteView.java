@@ -93,6 +93,11 @@ public class ClienteView extends SuperView {
         }
 
         btnPesquisar.setText("Pesquisar");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlFiltroClienteLayout = new javax.swing.GroupLayout(pnlFiltroCliente);
         pnlFiltroCliente.setLayout(pnlFiltroClienteLayout);
@@ -307,6 +312,10 @@ public class ClienteView extends SuperView {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPesquisarActionPerformed
 
     public static void main(String args[]) {
         NimbusTheme.setTheme();
