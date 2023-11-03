@@ -26,7 +26,7 @@ public class ClienteController extends SuperController<Cliente> {
     private final ClienteService clienteService;
     private DatabaseAccessComponentManager<Cliente> clienteDBCManager;
     
-    public ClienteController(JFrame previousView, ClienteService clienteService, DatabaseAccessComponentManager clienteDBCManager) {
+    public ClienteController(JFrame previousView, ClienteService clienteService, DatabaseAccessComponentManager<Cliente> clienteDBCManager) {
         //Injeção de dependências
         this.clienteService = clienteService;
         this.clienteDBCManager = clienteDBCManager;
@@ -38,7 +38,7 @@ public class ClienteController extends SuperController<Cliente> {
         List<Component> fields = Arrays.asList(clienteView.getEdtNome(), clienteView.getEdtCPF(), 
             clienteView.getEdtTelefones(), clienteView.getEdtEndereco(), clienteView.getEdtLinkEnd());
         this.clienteDBCManager.setFields(fields);
-        this.clienteDBCManager.configureComponents(null, this, null, clienteView.getBtnInsert(),
+        this.clienteDBCManager.configureComponents(Cliente.class, this, this.clienteService, clienteView.getBtnInsert(),
             clienteView.getBtnUpdate(), clienteView.getBtnDelete(), clienteView.getBtnPost(),
             clienteView.getBtnCancel(), clienteView.getBtnRefresh(), clienteView.getTblCliente());
     }
