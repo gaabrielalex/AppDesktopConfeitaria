@@ -60,7 +60,7 @@ public class ClienteDAO {
                         "FROM cliente " +
                             "WHERE 1 = 1" +
                                 (selectByNome ?  "AND unaccent(nome) ILIKE unaccent(?)" : "") +  //Se o usuário deseja pesquisar por nome, adiciona a condição à query
-                                (selectByCPF ? "AND cpf ILIKE ?" : "") + //Se o usuário deseja pesquisar pelo CPF, adiciona a condição à query
+                                (selectByCPF ? "AND cpf LIKE ?" : "") + //Se o usuário deseja pesquisar pelo CPF, adiciona a condição à query
                         "ORDER BY nome, cpf";
 
         /*Define o padrão de pesquisa em relação aos parâmetros fornecidos pelo usuário*/
