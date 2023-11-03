@@ -2,7 +2,6 @@ package edu.ifmt.confeitaria.layers.models.produto;
 
 import java.util.List;
 
-import edu.ifmt.confeitaria.layers.models.cliente.Cliente;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperService;
 
 public class ProdutoService extends SuperService<Produto> {
@@ -49,5 +48,5 @@ public class ProdutoService extends SuperService<Produto> {
         //Solita ao DAO a exclusão do produto no BD já retornando o resultado
         return this.produtoDAO.delete(produto.getID());
     }
-    
+
 }
