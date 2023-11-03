@@ -46,25 +46,25 @@ public class ProdutoDAO {
         return this.partialSearch(null, null);
     }
     
-    public List<Produto> partialSearch(String nome, String tipoChocolate) {
+    public List<Produto> partialSearch(String descricao, String tipoChocolate) {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
         /*Verifica se os parâmetros foram fornecidos e se não são vazios, ou seja,
-        confere se o usuário deseja realizar a pesquisa por nome e/ou pelo tipo do chocolate*/
-        boolean selectByNome = nome != null && !nome.isEmpty();
+        confere se o usuário deseja realizar a pesquisa pela descrição do produto e/ou pelo tipo do chocolate*/
+        boolean selectByDescricao = descricao != null && !descricao.isEmpty();
         boolean selectByTipoChocolate = tipoChocolate != null && !tipoChocolate.isEmpty();
         
         //Cria a query
         String sql =    "SELECT *"+
-                        "FROM cliente " +
+                        "FROM produto " +
                             "WHERE 1 = 1" +
-                                (selectByNome ?  "AND unaccent(nome) ILIKE unaccent(?)" : "") +  // Se o usuário deseja pesquisar por nome, adiciona a condição à query
+                                (selectByDescricao ?  "AND unaccent(descricao) ILIKE unaccent(?)" : "") +  // Se o usuário deseja pesquisar por nome, adiciona a condição à query
                                 (selectByTipoChocolate ? "AND cpf = ?" : "") + // Se o usuário deseja pesquisar pelo tipo do chocolate, adiciona a condição à query
                         "ORDER BY nome, cpf";
 
         /*Define o padrão de pesquisa em relação aos parâmetros fornecidos pelo usuário*/
-        nome= "%" + nome + "%";
+        descricao= "%" + descricao + "%";
 
         //Define uma variável para armazenar o índice do parâmetro a ser configurado
         int paramIndexCount = 1;
@@ -73,8 +73,8 @@ public class ProdutoDAO {
             statement = DBConnection.getConnection().prepareStatement(sql);
 
             //Configura os parâmetros necessários
-            if(selectByNome) {
-                statement.setString(paramIndexCount, nome);
+            if(selectByDescricao) {
+                statement.setString(paramIndexCount, descricao);
                 paramIndexCount++; //Incrementa o índice do parâmetro para que o próximo seja configurado corretamente
             } 
             if(selectByTipoChocolate) {
