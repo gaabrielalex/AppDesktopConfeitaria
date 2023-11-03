@@ -42,6 +42,37 @@ public class ProdutoDAO {
         }
     }
 
+    public List<String> selectAllTipoChocolate() {
+        //Cria o PreparedStatement e o ResultSet
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        //Cria a query
+        String sql =    "SELECT descricao " +
+                        "FROM tipo_chocolate " +
+                            "ORDER BY descricao";
+
+        try{
+            //Define o PreparedStatement com o SQL
+            statement = DBConnection.getConnection().prepareStatement(sql);
+
+            //Obtém o ResultSet exexutando a query
+            resultSet = statement.executeQuery();
+
+            List<String> tipoChocolateList = new ArrayList<>();
+            while(resultSet.next()) {
+                tipoChocolateList.add(resultSet.getString("descricao"));
+            }
+            return tipoChocolateList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            //Fecha a conexão com o banco de dados e os recursos criados a partir dela
+            DBConnection.closeConnection(statement, resultSet);
+        }
+    }
+
     public List<Produto> selectAll() {
         return this.partialSearch(null, null);
     }
