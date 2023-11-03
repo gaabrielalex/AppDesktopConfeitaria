@@ -341,7 +341,7 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
         }
     }
  
-    private void cancel() {
+    public void cancel() {
         /*Estrutura condicional para determinar a ação a ser tomada de acordo com a operação atual*/
         if(this.currentOperation == Operation.INSERT) {
             this.resetManagerDefaultSettings();
