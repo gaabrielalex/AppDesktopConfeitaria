@@ -169,6 +169,7 @@ public class ClienteDAO {
             statement.setString(4, cliente.getTelefones());
             statement.setString(5, cliente.getEndereco());
             statement.setString(6, cliente.getLinkEndereco());
+            statement.setLong(7, originalID);
             
             //Executa a query
             statement.executeUpdate();
