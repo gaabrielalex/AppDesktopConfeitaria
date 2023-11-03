@@ -31,7 +31,7 @@ public class UsuarioService extends SuperService<Usuario> {
 
     /* ----- Métodos principais de manipulação de dados ----- */
     @Override
-    public List<Usuario> selectAll(){
+    public List<Usuario> selectAll() {
         return this.usuarioDAO.selectAll();
     }
     
@@ -45,7 +45,7 @@ public class UsuarioService extends SuperService<Usuario> {
     }
     
     @Override
-    public List<Usuario> redoLastPartialSearch(){
+    public List<Usuario> redoLastPartialSearch() {
         //Solicita os dados ao DAO
         return this.usuarioDAO.redoLastPartialSearch();
     }
@@ -126,7 +126,7 @@ public class UsuarioService extends SuperService<Usuario> {
         }
     }
     
-    public boolean isLoginExists(String login){
+    public boolean isLoginExists(String login) {
         //Solicta ao DAO a lista de usuários com o login especificado
         List<Usuario> usuarios = this.usuarioDAO.selectByLogin(login);
         
