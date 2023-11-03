@@ -38,17 +38,11 @@ public class ClienteService extends SuperService<Cliente> {
         return this.clienteDAO.insert(cliente);
     }
     
-    // @Override
-    // public boolean update(Usuario usuario, Usuario usuarioOriginal) {
-    //     //Valida os dados do usuário
-    //     if(this.validateDataUpdate(usuario, usuarioOriginal)) {
-    //         /*Caso os dados sejam válidos, solicita ao DAO a atualização
-    //         do usuário no banco de dados já retornando o resultado*/
-    //         return this.clienteDAO.update(usuario, usuarioOriginal.getID());
-    //     } else {
-    //         return false;
-    //     }
-    // }
+    @Override
+    public boolean update(Cliente cliente, Cliente clienteOriginal) {
+        //Solita ao DAO a atualização do cliente no BD já retornando o resultado
+        return this.clienteDAO.update(cliente, clienteOriginal.getID());
+    }
 
     // @Override
     // public boolean delete(Usuario usuario) {
