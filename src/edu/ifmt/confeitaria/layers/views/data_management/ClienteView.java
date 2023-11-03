@@ -346,7 +346,27 @@ public class ClienteView extends SuperView {
     private javax.swing.JPanel recordEditing;
     private javax.swing.JTable tblCliente;
     // End of variables declaration//GEN-END:variables
-    
+
+    public javax.swing.JTextField getEdtCPF() {
+        return edtCPF;
+    }
+
+    public javax.swing.JTextField getEdtEndereco() {
+        return edtEndereco;
+    }
+
+    public javax.swing.JTextField getEdtLinkEnd() {
+        return edtLinkEnd;
+    }
+
+    public javax.swing.JTextField getEdtNome() {
+        return edtNome;
+    }
+
+    public javax.swing.JTextField getEdtTelefones() {
+        return edtTelefones;
+    }
+
     public javax.swing.JButton getBtnCancel() {
         return btnCancel;
     }
