@@ -11,7 +11,6 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
-import edu.ifmt.confeitaria.layers.models.cliente.Cliente;
 import edu.ifmt.confeitaria.layers.models.produto.Produto;
 import edu.ifmt.confeitaria.layers.models.produto.ProdutoService;
 import edu.ifmt.confeitaria.layers.views.data_management.ProdutoView;
