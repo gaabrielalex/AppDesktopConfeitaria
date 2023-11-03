@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.ifmt.confeitaria.layers.models.usuario.Usuario;
 import edu.ifmt.confeitaria.util.database.DBConnection;
 
 public class ClienteDAO {
