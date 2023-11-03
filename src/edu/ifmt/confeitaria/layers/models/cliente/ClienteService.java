@@ -13,7 +13,7 @@ public class ClienteService extends SuperService<Cliente> {
 
     /* ----- Métodos principais de manipulação de dados ----- */
     @Override
-    public List<Cliente> selectAll(){
+    public List<Cliente> selectAll() {
         return this.clienteDAO.selectAll();
     }
     
