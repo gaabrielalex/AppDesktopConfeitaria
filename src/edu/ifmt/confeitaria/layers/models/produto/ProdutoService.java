@@ -12,6 +12,11 @@ public class ProdutoService extends SuperService<Produto> {
     }
 
     /* ----- Métodos principais de manipulação de dados ----- */
+    public List<String> selectAllTipoChocolate() {
+        //Solicita os dados ao DAO
+        return this.produtoDAO.selectAllTipoChocolate();
+    }
+
     @Override
     public List<Produto> selectAll() {
         return this.produtoDAO.selectAll();
