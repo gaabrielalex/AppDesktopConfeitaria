@@ -98,7 +98,7 @@ public class ProdutoController extends SuperController<Produto> {
         return new Produto(
             null,
             this.produtoView.getEdtDescricao().getText(),
-            new BigDecimal(this.produtoView.getEdtVlrUnt().getText()),
+            this.produtoView.getEdtVlrUnt().getText().equals("") ? null : new BigDecimal(this.produtoView.getEdtVlrUnt().getText()),
             this.produtoView.getEdtObs().getText(),
             this.produtoView.getCmbTipoChoc().getSelectedItem() == null ? null : this.produtoView.getCmbTipoChoc().getSelectedItem().toString()
         );
