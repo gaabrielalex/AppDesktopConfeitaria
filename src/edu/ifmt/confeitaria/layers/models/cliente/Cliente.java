@@ -4,7 +4,7 @@ import edu.ifmt.confeitaria.util.abstraction_classes.SuperModel;
 
 public class Cliente extends SuperModel {
     private String nome;
-    private String cpf;
+    private String CPF;
     private String telefones;
     private String endereco;
     private String link_endereco;
@@ -14,10 +14,10 @@ public class Cliente extends SuperModel {
         super(null);
     }
 
-    public Cliente(Long ID, String nome, String cpf, String telefones, String endereco, String link_endereco) {
+    public Cliente(Long ID, String nome, String CPF, String telefones, String endereco, String link_endereco) {
         super(ID);
         this.nome = nome;
-        this.cpf = cpf;
+        this.CPF = CPF;
         this.telefones = telefones;
         this.endereco = endereco;
         this.link_endereco = link_endereco;
@@ -31,12 +31,12 @@ public class Cliente extends SuperModel {
         this.nome = nome;
     }
 
-    public String getCpf() {
-        return cpf;
+    public String getCPF() {
+        return CPF;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setCPF(String cpf) {
+        this.CPF = cpf;
     }
 
     public String getTelefones() {
