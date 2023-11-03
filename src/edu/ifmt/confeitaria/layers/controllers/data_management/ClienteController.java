@@ -4,18 +4,17 @@
  */
 package edu.ifmt.confeitaria.layers.controllers.data_management;
 
-import edu.ifmt.confeitaria.layers.models.cliente.Cliente;
-import edu.ifmt.confeitaria.layers.models.cliente.ClienteService;
-import edu.ifmt.confeitaria.layers.models.usuario.UsuarioService;
-import edu.ifmt.confeitaria.layers.views.data_management.ClienteView;
-import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
-import edu.ifmt.confeitaria.util.abstraction_classes.SuperController;
-
 import java.awt.Component;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JFrame;
+
+import edu.ifmt.confeitaria.layers.models.cliente.Cliente;
+import edu.ifmt.confeitaria.layers.models.cliente.ClienteService;
+import edu.ifmt.confeitaria.layers.views.data_management.ClienteView;
+import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
+import edu.ifmt.confeitaria.util.abstraction_classes.SuperController;
 
 /**
  *
