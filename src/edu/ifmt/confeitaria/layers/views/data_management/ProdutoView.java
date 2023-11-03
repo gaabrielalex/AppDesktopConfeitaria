@@ -57,6 +57,11 @@ public class ProdutoView extends SuperView {
         cmbTipoChocFiltro.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         btnPesquisar.setText("Pesquisar");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
 
         tblProduto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -299,6 +304,10 @@ public class ProdutoView extends SuperView {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        this.produtoController.partialSearch(this.edtDescricaoFiltro.getText(), this.cmbTipoChocFiltro.getSelectedItem().toString());
+    }//GEN-LAST:event_btnPesquisarActionPerformed
 
     public static void main(String args[]) {
         NimbusTheme.setTheme();
