@@ -7,11 +7,11 @@ public class Usuario extends SuperModel {
     private String login;
     private String senha;
 
-    /*Construtor vazio para configurações do DatabaseAcessComponentManager*/
+    /* Construtor vazio para configurações do DatabaseAcessComponentManager */
     public Usuario() {
         super(null);
     }
-   
+
     public Usuario(Long ID, String nome, String login, String senha) {
         super(ID);
         this.nome = nome;
