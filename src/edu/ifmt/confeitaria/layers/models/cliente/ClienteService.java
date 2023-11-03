@@ -61,19 +61,4 @@ public class ClienteService extends SuperService<Cliente> {
     //     //Solicita ao DAO a exclusão do usuário no banco de dados já retornando o resultado
     //     return this.clienteDAO.delete(usuario.getID());
     // }
-
-    // /* ----- Regras de negócio ----- */
-    // public boolean isIdExists(Long ID){
-    //     //Solicta ao DAO a lista de usuários com o id especificado
-    //     List<Cliente> usuarios = this.clienteDAO.selectById(ID);
-        
-    //     if(usuarios != null) {
-    //         //Verifica se a lista está vazia
-    //         boolean response = usuarios.size() > 0;
-    //         return response;
-            
-    //     } else {
-    //         return false;
-    //     }
-    // }
 }
