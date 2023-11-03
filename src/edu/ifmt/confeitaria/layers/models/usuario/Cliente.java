@@ -9,8 +9,8 @@ public class Cliente extends SuperModel {
     private String endereco;
     private String link_endereco;
 
-     /*Construtor vazio para configurações do DatabaseAcessComponentManager*/
-     public Cliente() {
+    /* Construtor vazio para configurações do DatabaseAcessComponentManager */
+    public Cliente() {
         super(null);
     }
 
