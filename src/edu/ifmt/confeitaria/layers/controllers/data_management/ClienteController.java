@@ -59,18 +59,24 @@ public class ClienteController extends SuperController<Cliente> {
     }
 
     @Override
-    public Object[] modelToTableRow(Object object) {
-        // TODO Auto-generated method stub
-       return null;
+    public Object[] modelToTableRow(Cliente cliente) {
+        return new Object[]{
+            cliente.getID(),
+            cliente.getNome(),
+            cliente.getCPF(),
+            cliente.getTelefones(),
+            cliente.getEndereco(),
+            cliente.getLinkEndereco()
+        };
     }
 
     @Override
-    public void modelToFields(Object object) {
+    public void modelToFields(Cliente cliente) {
         // TODO Auto-generated method stub
     }
 
     @Override
-    public Object fieldsToModel() {
+    public Cliente fieldsToModel() {
         // TODO Auto-generated method stub
         return null;
     }
