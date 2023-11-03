@@ -43,37 +43,37 @@ public class ClienteDAO {
         }
     }
 
-    // public List<Usuario> selectByLogin(String login) {
-    //    if(login == null) return null;
+    public List<Cliente> selectByLogin(String login) {
+       if(login == null) return null;
 
-    //     //Cria o PreparedStatement e o ResultSet
-    //     PreparedStatement statement = null;
-    //     ResultSet resultSet = null;
+        //Cria o PreparedStatement e o ResultSet
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
 
-    //     //Cria a query
-    //     String sql =    "SELECT * " +
-    //                     "FROM usuario " +
-    //                         "WHERE login = ?";
+        //Cria a query
+        String sql =    "SELECT * " +
+                        "FROM usuario " +
+                            "WHERE login = ?";
 
-    //     try{
-    //         //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
-    //         statement = DBConnection.getConnection().prepareStatement(sql);
-    //         statement.setString(1, login);
+        try{
+            //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
+            statement = DBConnection.getConnection().prepareStatement(sql);
+            statement.setString(1, login);
 
-    //         //Obtém o ResultSet exexutando a query
-    //         resultSet = statement.executeQuery();
+            //Obtém o ResultSet exexutando a query
+            resultSet = statement.executeQuery();
             
-    //         return this.resultSetToList(resultSet); 
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //         return null;
-    //     } finally {
-    //         //Fecha a conexão com o banco de dados e os recursos criados a partir dela
-    //         DBConnection.closeConnection(statement, resultSet);
-    //     }
-    // }
+            return this.resultSetToList(resultSet); 
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            //Fecha a conexão com o banco de dados e os recursos criados a partir dela
+            DBConnection.closeConnection(statement, resultSet);
+        }
+    }
 
-    // public List<Usuario> selectByLoginAndPassword(String login, String senha) {
+    // public List<Cliente> selectByLoginAndPassword(String login, String senha) {
     //     PreparedStatement statement = null;
     //     ResultSet resultSet = null;
 
@@ -102,11 +102,11 @@ public class ClienteDAO {
     //     }
     // }
 
-    // public List<Usuario> selectAll() {
+    // public List<Cliente> selectAll() {
     //     return this.partialSearch(null, null);
     // }
     
-    // public List<Usuario> partialSearch(String nome, String login) {
+    // public List<Cliente> partialSearch(String nome, String login) {
     //     PreparedStatement statement = null;
     //     ResultSet resultSet = null;
 
@@ -157,7 +157,7 @@ public class ClienteDAO {
     //     }
     // }
 
-    // public List<Usuario> redoLastPartialSearch() {
+    // public List<Cliente> redoLastPartialSearch() {
     //     PreparedStatement statement = null;
     //     ResultSet resultSet = null;
 
