@@ -6,8 +6,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.ifmt.confeitaria.layers.models.cliente.Cliente;
 import edu.ifmt.confeitaria.layers.models.pedido.Pedido.StatusPagto;
 import edu.ifmt.confeitaria.layers.models.pedido.Pedido.StatusPedido;
+import edu.ifmt.confeitaria.layers.models.usuario.Usuario;
 import edu.ifmt.confeitaria.util.database.DBConnection;
 
 public class PedidoDAO {
@@ -275,9 +277,21 @@ public class PedidoDAO {
                 StatusPagto.valueOf(resultSet.getString("status_pagto")),
                 StatusPedido.valueOf(resultSet.getString("status_pedido")),
                 resultSet.getString("observacoes"),
-                resultSet.getLong("id_cliente"),
-                resultSet.getLong("id_metodo_pagto"),
-                resultSet.getLong("id_usuario")
+                new Cliente(
+                    resultSet.getLong("id_cliente"),
+                    resultSet.getString("nome"),
+                    resultSet.getString("cpf"),
+                    resultSet.getString("telefones"),
+                    resultSet.getString("endereco"),
+                    resultSet.getString("link_endereco")
+                ),
+                resultSet.getString("metodo_pagto"),
+                new Usuario(
+                    resultSet.getLong("id_usuario"),
+                    resultSet.getString("nome"),
+                    resultSet.getString("login"),
+                    resultSet.getString("senha")
+                )
             ));
         }
         return produtos;
