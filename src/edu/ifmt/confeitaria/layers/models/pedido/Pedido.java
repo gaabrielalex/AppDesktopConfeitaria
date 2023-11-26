@@ -6,7 +6,6 @@ import java.util.Date;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperModel;
 
 public class Pedido extends SuperModel {
-
     enum StatusPagto {
         PAGO('P'),
         ABERTO('A');
@@ -23,7 +22,20 @@ public class Pedido extends SuperModel {
     }
 
     enum StatusPedido {
-        PENDENTE, EM_PREPARO, PRONTO, ENTREGUE, CANCELADO
+        ATIVO('A'),
+        PRONTO('P'),
+        ENTREGUE('E'),
+        CANCELADO('C');
+
+        private char descricao;
+
+        StatusPedido(char descricao) {
+            this.descricao = descricao;
+        }
+
+        public char getDescricao() {
+            return descricao;
+        }        
     }
 
     private Date dtHrPedido;
