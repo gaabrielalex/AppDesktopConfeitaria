@@ -94,7 +94,7 @@ public class ProdutoDAO {
                         "ORDER BY p.descricao, tc.descricao, p.vlr_unitario";
 
         /*Define o padrão de pesquisa em relação aos parâmetros fornecidos pelo usuário*/
-        descricao= "%" + descricao + "%";
+        descricao = "%" + descricao + "%";
 
         //Define uma variável para armazenar o índice do parâmetro a ser configurado
         int paramIndexCount = 1;
