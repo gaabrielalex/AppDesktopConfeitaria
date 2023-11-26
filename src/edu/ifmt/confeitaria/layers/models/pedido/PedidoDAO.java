@@ -207,40 +207,49 @@ public class PedidoDAO {
         }
     }
 
-//     public boolean update(Produto produto, Long originalID) {
-//         if(originalID == null) return false;
-//         PreparedStatement statement = null;
+    public boolean update(Pedido pedido, Long originalID) {
+        if(originalID == null) return false;
+        PreparedStatement statement = null;
 
-//         //Cria a query
-//             String sql =    "UPDATE produto " +
-//                             "SET id_produto = ?, descricao = ?, vlr_unitario = ?, observacoes = ?," +
-//                                 "id_tipo_chocolate = (select id_tipo_chocolate from tipo_chocolate where descricao = ?) " +
-//                             "WHERE id_produto = ?";
+        //Cria a query
+            String sql =    "UPDATE pedido " +
+                            "SET id_pedido = ?, dt_hr_pedido = ?, dt_hr_entrega = ?, vlr_total_pedido = ?, " +
+                                "desconto = ?, nome_destinatario = ?, retirada_loja = ?, status_pagto = ?, status_pedido = ?, " +
+                                "observacoes = ?, id_cliente = ?, id_metodo_pagto = (select id_metodo_pagto from metodo_pagto where descricao = ?), id_usuario = ? " +
+                            "WHERE id_pedido = ?";                         
 
-//         try {
-//             //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
-//             statement = DBConnection.getConnection().prepareStatement(sql);
-//             statement.setLong(1, produto.getID());
-//             statement.setString(2, produto.getDescricao());
-//             statement.setBigDecimal(3, produto.getVlrUnitario());
-//             statement.setString(4, produto.getObservacoes());
-//             statement.setString(5, produto.getTipoChocolate());
-//             statement.setLong(6, originalID);
+        try {
+            //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
+            statement = DBConnection.getConnection().prepareStatement(sql);
+            statement.setLong(1, pedido.getID());
+            statement.setDate(2, new java.sql.Date(pedido.getDtHrPedido().getTime()));
+            statement.setDate(3, new java.sql.Date(pedido.getDtHrEntrega().getTime()));
+            statement.setBigDecimal(4, pedido.getVlrTotalPedido());
+            statement.setBigDecimal(5, pedido.getDesconto());
+            statement.setString(6, pedido.getNomeDestinatario());
+            statement.setBoolean(7, pedido.isRetiradaLoja());
+            statement.setString(8, Character.toString(pedido.getStatusPagto().getDescricao()));
+            statement.setString(9, Character.toString(pedido.getStatusPedido().getDescricao()));
+            statement.setString(10, pedido.getObservacoes());
+            statement.setLong(11, pedido.getCliente().getID());
+            statement.setString(12, pedido.getMetodoPagto());
+            statement.setLong(13, pedido.getUsuario().getID());
+            statement.setLong(14, originalID);
             
-//             //Executa a query
-//             statement.executeUpdate();
+            //Executa a query
+            statement.executeUpdate();
 
-//             //Se a atualização foi realizada com sucesso, retorna true
-//             return true;
-//         } catch (SQLException e) {
-//             e.printStackTrace();
-//             //Se a atualização não foi realizada com sucesso, retorna false
-//             return false;
-//         } finally {
-//             //Fecha a conexão com o banco de dados e os recursos criados a partir dela
-//             DBConnection.closeConnection(statement);
-//         }
-//     }
+            //Se a atualização foi realizada com sucesso, retorna true
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            //Se a atualização não foi realizada com sucesso, retorna false
+            return false;
+        } finally {
+            //Fecha a conexão com o banco de dados e os recursos criados a partir dela
+            DBConnection.closeConnection(statement);
+        }
+    }
 
 //     public boolean delete(Long idPedido) {
 //         if(idPedido == null) return false;
