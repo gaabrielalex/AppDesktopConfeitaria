@@ -6,6 +6,16 @@ import java.util.Date;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperModel;
 
 public class Pedido extends SuperModel {
+
+    enum StatusPagto {
+        PAGO,
+        ABERTO,
+    }
+
+    enum StatusPedido {
+        PENDENTE, EM_PREPARO, PRONTO, ENTREGUE, CANCELADO
+    }
+
     private Date dtHrPedido;
     private Date dtHrEntrega;
     private BigDecimal vlrTotalPedido;
