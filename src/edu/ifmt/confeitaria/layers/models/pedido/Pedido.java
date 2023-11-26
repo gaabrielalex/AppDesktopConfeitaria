@@ -8,8 +8,18 @@ import edu.ifmt.confeitaria.util.abstraction_classes.SuperModel;
 public class Pedido extends SuperModel {
 
     enum StatusPagto {
-        PAGO,
-        ABERTO,
+        PAGO('P'),
+        ABERTO('A');
+
+        private char descricao;
+
+        StatusPagto(char descricao) {
+            this.descricao = descricao;
+        }
+
+        public char getDescricao() {
+            return descricao;
+        }
     }
 
     enum StatusPedido {
