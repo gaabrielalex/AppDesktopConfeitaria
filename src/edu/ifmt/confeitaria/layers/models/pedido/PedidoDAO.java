@@ -109,13 +109,21 @@ public class PedidoDAO {
             statement = DBConnection.getConnection().prepareStatement(sql);
 
             //Configura os parâmetros necessários
-            
             if(selectByNomeCliente) {
-                statement.setString(paramIndexCount, descricao);
+                statement.setString(paramIndexCount, nomeCliente);
                 paramIndexCount++; //Incrementa o índice do parâmetro para que o próximo seja configurado corretamente
-            } 
-            if(selectByTipoChocolate) {
-                statement.setString(paramIndexCount, tipoChocolate);
+            }
+            if(selectByNomeDestinatario) {
+                statement.setString(paramIndexCount, nomeDestinatario);
+                paramIndexCount++;
+            }
+            if(selectByStatusPagto) {
+                statement.setString(paramIndexCount, Character.toString(statusPagto.getDescricao()));
+                paramIndexCount++;
+            }
+            if(selectByStatusPedido) {
+                statement.setString(paramIndexCount, Character.toString(statusPedido.getDescricao()));
+                paramIndexCount++;
             }
             //Armazena o SQL para haver refefência da última consulta realizada pelo DAO
             this.lastSqlPartialSearch = statement.toString();
