@@ -1,6 +1,12 @@
 package edu.ifmt.confeitaria.layers.models.pedido;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+
+import edu.ifmt.confeitaria.util.database.DBConnection;
 
 public class PedidoDAO {
     private String lastSqlPartialSearch;
@@ -15,8 +21,8 @@ public class PedidoDAO {
 
         //Cria a query
         String sql =    "SELECT * " +
-                        "FROM produto " +
-                            "WHERE id_produto = ?";
+                        "FROM pedido " +
+                            "WHERE id_pedido = ?";
 
         try{
             //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
@@ -237,18 +243,28 @@ public class PedidoDAO {
 //         }
 //     }
 
-//     /* ------ Métodos/Operações auxiliares ------ */
-//     public List<Pedido> resultSetToList(ResultSet resultSet) throws SQLException {
-//         List<Pedido> produtos = new ArrayList<>();
+    /* ------ Métodos/Operações auxiliares ------ */
+    public List<Pedido> resultSetToList(ResultSet resultSet) throws SQLException {
+        List<Pedido> produtos = new ArrayList<>();
         
-//         //Percorre o ResultSet preenchendo a lista de produtos
-//         while(resultSet.next()) {
-//             produtos.add(new Produto(resultSet.getLong("id_produto"),
-//                                     resultSet.getString("descricao"),
-//                                     resultSet.getBigDecimal("vlr_unitario"),
-//                                     resultSet.getString("observacoes"),
-//                                     resultSet.getString("tipo_chocolate")));
-//         }
-//         return produtos;
-//     }   
+        //Percorre o ResultSet preenchendo a lista de produtos
+        while(resultSet.next()) {
+            produtos.add(new Pedido(
+                resultSet.getLong("id_pedido"),
+                resultSet.getDate("dt_hr_pedido"),
+                resultSet.getDate("dt_hr_entrega"),
+                resultSet.getBigDecimal("vlr_total_pedido"),
+                resultSet.getBigDecimal("desconto"),
+                resultSet.getString("nome_destinatario"),
+                resultSet.getBoolean("retirada_loja"),
+                resultSet.getString("status_pagto").charAt(0),
+                resultSet.getString("status_pedido").charAt(0),
+                resultSet.getString("observacoes"),
+                resultSet.getLong("id_cliente"),
+                resultSet.getLong("id_metodo_pagto"),
+                resultSet.getLong("id_usuario")
+            ));
+        }
+        return produtos;
+    }   
 }
