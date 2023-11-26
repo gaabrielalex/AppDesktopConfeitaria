@@ -1,5 +1,7 @@
 package edu.ifmt.confeitaria.layers.models.pedido;
 
-public class Pedido {
+import edu.ifmt.confeitaria.util.abstraction_classes.SuperModel;
+
+public class Pedido extends SuperModel {
     
 }
