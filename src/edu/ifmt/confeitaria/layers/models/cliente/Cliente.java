@@ -62,5 +62,4 @@ public class Cliente extends SuperModel {
     public void setLinkEndereco(String link_endereco) {
         this.linkEndereco = link_endereco;
     }
-    
 }
