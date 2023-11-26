@@ -44,8 +44,8 @@ public class Pedido extends SuperModel {
     private BigDecimal desconto;
     private String nomeDestinatario;
     private boolean retiradaLoja;
-    private char statusPagto;
-    private char statusPedido;
+    private StatusPagto statusPagto;
+    private StatusPedido statusPedido;
     private String observacoes;
     private Long idCliente;
     private Long idMetodoPagto;
@@ -57,8 +57,8 @@ public class Pedido extends SuperModel {
     }
 
     public Pedido(Long ID, Date dtHrPedido, Date dtHrEntrega, BigDecimal vlrTotalPedido, BigDecimal desconto,
-            String nomeDestinatario, boolean retiradaLoja, char statusPagto, char statusPedido, String observacoes,
-            Long idCliente, Long idMetodoPagto, Long idUsuario) {
+            String nomeDestinatario, boolean retiradaLoja, StatusPagto statusPagto, StatusPedido statusPedido,
+            String observacoes, Long idCliente, Long idMetodoPagto, Long idUsuario) {
         super(ID);
         this.dtHrPedido = dtHrPedido;
         this.dtHrEntrega = dtHrEntrega;
@@ -122,19 +122,19 @@ public class Pedido extends SuperModel {
         this.retiradaLoja = retiradaLoja;
     }
 
-    public char getStatusPagto() {
+    public StatusPagto getStatusPagto() {
         return statusPagto;
     }
 
-    public void setStatusPagto(char statusPagto) {
+    public void setStatusPagto(StatusPagto statusPagto) {
         this.statusPagto = statusPagto;
     }
 
-    public char getStatusPedido() {
+    public StatusPedido getStatusPedido() {
         return statusPedido;
     }
 
-    public void setStatusPedido(char statusPedido) {
+    public void setStatusPedido(StatusPedido statusPedido) {
         this.statusPedido = statusPedido;
     }
 
