@@ -54,5 +54,4 @@ public class Produto extends SuperModel {
     public void setTipoChocolate(String tipo_chocolate) {
         this.tipoChocolate = tipo_chocolate;
     }
-
 }
