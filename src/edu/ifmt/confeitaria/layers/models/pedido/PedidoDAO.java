@@ -164,38 +164,48 @@ public class PedidoDAO {
         }
     }
 
-//     public boolean insert(Produto produto) {
-//         PreparedStatement statement = null;
-//         try {
-//             //Cria a query
-//             String sql =    "INSERT INTO produto(descricao, vlr_unitario, observacoes, id_tipo_chocolate)" +
-//                             "VALUES(?, ?, ?, (select id_tipo_chocolate from tipo_chocolate where descricao = ?)) " +
-//                             "RETURNING id_produto";
+    public boolean insert(Pedido pedido) {
+        PreparedStatement statement = null;
+        try {
+            //Cria a query
+            String sql =    "INSERT INTO pedido(dt_hr_pedido, dt_hr_entrega, vlr_total_pedido, " +
+                                "desconto, nome_destinatario, retirada_loja, status_pagto, status_pedido, " +
+                                "observacoes, id_cliente, id_metodo_pagto, id_usuario) " +
+                            "VALUES(? , ?, ?, ?, ?, ?, ?, ?, ?, ?, (select id_metodo_pagto from metodo_pagto where descricao = ?), ?) " +
+                            "RETURNING id_pedido";
             
-//             //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
-//             statement = DBConnection.getConnection().prepareStatement(sql);
-//             statement.setString(1, produto.getDescricao());
-//             statement.setBigDecimal(2, produto.getVlrUnitario());
-//             statement.setString(3, produto.getObservacoes());
-//             statement.setString(4, produto.getTipoChocolate());
+            //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
+            statement = DBConnection.getConnection().prepareStatement(sql);
+            statement.setDate(1, new java.sql.Date(pedido.getDtHrPedido().getTime()));
+            statement.setDate(2, new java.sql.Date(pedido.getDtHrEntrega().getTime()));
+            statement.setBigDecimal(3, pedido.getVlrTotalPedido());
+            statement.setBigDecimal(4, pedido.getDesconto());
+            statement.setString(5, pedido.getNomeDestinatario());
+            statement.setBoolean(6, pedido.isRetiradaLoja());
+            statement.setString(7, Character.toString(pedido.getStatusPagto().getDescricao()));
+            statement.setString(8, Character.toString(pedido.getStatusPedido().getDescricao()));
+            statement.setString(9, pedido.getObservacoes());
+            statement.setLong(10, pedido.getCliente().getID());
+            statement.setString(11, pedido.getMetodoPagto());
+            statement.setLong(12, pedido.getUsuario().getID());
             
-//             //Executa a query e obtém o ResultSet(que deverá conter o ID do produto retornado pela inserção)
-//             ResultSet resultSet = statement.executeQuery();
-//             if(resultSet.next()) {
-//                 //Se a inserção foi realizada com sucesso, define o ID do produto
-//                 produto.setID(resultSet.getLong("id_produto"));
-//             }
-//             //Se a inserção foi realizada com sucesso, retorna true
-//             return true;
-//         } catch (SQLException e) {
-//             e.printStackTrace();
-//             //Se a inserção não foi realizada com sucesso, retorna false
-//             return false;
-//         } finally {
-//             //Fecha a conexão com o banco de dados e os recursos criados a partir dela
-//             DBConnection.closeConnection(statement);
-//         }
-//     }
+            //Executa a query e obtém o ResultSet(que deverá conter o ID do pedido retornado pela inserção)
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()) {
+                //Se a inserção foi realizada com sucesso, define o ID do pedido
+                pedido.setID(resultSet.getLong("id_pedido"));
+            }
+            //Se a inserção foi realizada com sucesso, retorna true
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            //Se a inserção não foi realizada com sucesso, retorna false
+            return false;
+        } finally {
+            //Fecha a conexão com o banco de dados e os recursos criados a partir dela
+            DBConnection.closeConnection(statement);
+        }
+    }
 
 //     public boolean update(Produto produto, Long originalID) {
 //         if(originalID == null) return false;
