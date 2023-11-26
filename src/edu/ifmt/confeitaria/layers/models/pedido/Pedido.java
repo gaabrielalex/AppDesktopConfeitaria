@@ -3,6 +3,8 @@ package edu.ifmt.confeitaria.layers.models.pedido;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import edu.ifmt.confeitaria.layers.models.cliente.Cliente;
+import edu.ifmt.confeitaria.layers.models.usuario.Usuario;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperModel;
 
 public class Pedido extends SuperModel {
@@ -47,9 +49,9 @@ public class Pedido extends SuperModel {
     private StatusPagto statusPagto;
     private StatusPedido statusPedido;
     private String observacoes;
-    private Long idCliente;
-    private Long idMetodoPagto;
-    private Long idUsuario;
+    private Cliente cliente;
+    private String MetodoPagto;
+    private Usuario usuario;
 
     /* Construtor vazio para configurações do DatabaseAcessComponentManager */
     public Pedido() {
@@ -58,7 +60,7 @@ public class Pedido extends SuperModel {
 
     public Pedido(Long ID, Date dtHrPedido, Date dtHrEntrega, BigDecimal vlrTotalPedido, BigDecimal desconto,
             String nomeDestinatario, boolean retiradaLoja, StatusPagto statusPagto, StatusPedido statusPedido,
-            String observacoes, Long idCliente, Long idMetodoPagto, Long idUsuario) {
+            String observacoes, Cliente cliente, String metodoPagto, Usuario usuario) {
         super(ID);
         this.dtHrPedido = dtHrPedido;
         this.dtHrEntrega = dtHrEntrega;
@@ -69,9 +71,9 @@ public class Pedido extends SuperModel {
         this.statusPagto = statusPagto;
         this.statusPedido = statusPedido;
         this.observacoes = observacoes;
-        this.idCliente = idCliente;
-        this.idMetodoPagto = idMetodoPagto;
-        this.idUsuario = idUsuario;
+        this.cliente = cliente;
+        MetodoPagto = metodoPagto;
+        this.usuario = usuario;
     }
 
     public Date getDtHrPedido() {
@@ -146,27 +148,27 @@ public class Pedido extends SuperModel {
         this.observacoes = observacoes;
     }
 
-    public Long getIdCliente() {
-        return idCliente;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setIdCliente(Long idCliente) {
-        this.idCliente = idCliente;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
-    public Long getIdMetodoPagto() {
-        return idMetodoPagto;
+    public String getMetodoPagto() {
+        return MetodoPagto;
     }
 
-    public void setIdMetodoPagto(Long idMetodoPagto) {
-        this.idMetodoPagto = idMetodoPagto;
+    public void setMetodoPagto(String metodoPagto) {
+        MetodoPagto = metodoPagto;
     }
 
-    public Long getIdUsuario() {
-        return idUsuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setIdUsuario(Long idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }
