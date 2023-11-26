@@ -73,9 +73,9 @@ public class PedidoDAO {
         }
     }
 
-//     public List<Pedido> selectAll() {
-//         return this.partialSearch(null, null);
-//     }
+    public List<Pedido> selectAll() {
+        return this.partialSearch(null, null);
+    }
     
 //     public List<Pedido> partialSearch(String descricao, String tipoChocolate) {
 //         PreparedStatement statement = null;
