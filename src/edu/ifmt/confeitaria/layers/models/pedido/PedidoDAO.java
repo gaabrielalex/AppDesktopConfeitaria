@@ -75,58 +75,63 @@ public class PedidoDAO {
         }
     }
 
-    public List<Pedido> selectAll() {
-        return this.partialSearch(null, null);
-    }
-    
-    // public List<Pedido> partialSearch(String descricao, String tipoChocolate) {
-    //     PreparedStatement statement = null;
-    //     ResultSet resultSet = null;
-
-    //     /*Verifica se os parâmetros foram fornecidos e se não são vazios, ou seja,
-    //     confere se o usuário deseja realizar a pesquisa pela descrição do produto e/ou pelo tipo do chocolate*/
-    //     boolean selectByDescricao = descricao != null && !descricao.isEmpty();
-    //     boolean selectByTipoChocolate = tipoChocolate != null && !tipoChocolate.isEmpty();
-        
-    //     //Cria a query
-    //     String sql =    "SELECT p.*, tc.descricao as tipo_chocolate FROM produto p LEFT JOIN tipo_chocolate tc ON p.id_tipo_chocolate = tc.id_tipo_chocolate " +
-    //                         "WHERE 1 = 1" +
-    //                             (selectByDescricao ?  "AND unaccent(p.descricao) ILIKE unaccent(?)" : "") +  // Se o usuário deseja pesquisar pela descrição, adiciona a condição à query
-    //                             (selectByTipoChocolate ? "AND tc.descricao = ?" : "") + // Se o usuário deseja pesquisar pelo tipo do chocolate, adiciona a condição à query
-    //                     "ORDER BY p.descricao, tc.descricao, p.vlr_unitario";
-
-    //     /*Define o padrão de pesquisa em relação aos parâmetros fornecidos pelo usuário*/
-    //     descricao= "%" + descricao + "%";
-
-    //     //Define uma variável para armazenar o índice do parâmetro a ser configurado
-    //     int paramIndexCount = 1;
-    //     try{
-    //         //Define o PreparedStatement com o SQL
-    //         statement = DBConnection.getConnection().prepareStatement(sql);
-
-    //         //Configura os parâmetros necessários
-    //         if(selectByDescricao) {
-    //             statement.setString(paramIndexCount, descricao);
-    //             paramIndexCount++; //Incrementa o índice do parâmetro para que o próximo seja configurado corretamente
-    //         } 
-    //         if(selectByTipoChocolate) {
-    //             statement.setString(paramIndexCount, tipoChocolate);
-    //         }
-    //         //Armazena o SQL para haver refefência da última consulta realizada pelo DAO
-    //         this.lastSqlPartialSearch = statement.toString();
-
-    //         //Obtém o ResultSet exexutando a query
-    //         resultSet = statement.executeQuery();
-
-    //         return this.resultSetToList(resultSet);
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //         return null;
-    //     } finally {
-    //         //Fecha a conexão com o banco de dados e os recursos criados a partir dela
-    //         DBConnection.closeConnection(statement, resultSet);
-    //     }
+    // public List<Pedido> selectAll() {
+    //     return this.partialSearch(null, null);
     // }
+    
+    public List<Pedido> partialSearch(String nomeCliente, String nomeDestinatario, StatusPagto statusPagto, StatusPedido statusPedido) {
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        /*Define por quais campos o usuário deseja realizar a pesquisa*/
+        boolean selectByNomeCliente = nomeCliente != null && !nomeCliente.isEmpty();
+        boolean selectByNomeDestinatario = nomeDestinatario != null && !nomeDestinatario.isEmpty();
+        boolean selectByStatusPagto = statusPagto != null;
+        boolean selectByStatusPedido = statusPedido != null;
+        
+        //Cria a query
+        String sql =    "SELECT p.*, c.*, mp.descricao as metodo_pagto FROM pedido p LEFT JOIN cliente c ON p.id_cliente = c.id_cliente LEFT JOIN metodo_pagto mp ON p.id_metodo_pagto = mp.id_metodo_pagto " + 
+                            "WHERE 1 = 1" +
+                                (selectByNomeCliente ?  "AND unaccent(c.nome) ILIKE unaccent(?)" : "") +  // Se o usuário deseja pesquisar pelo nome do cliente, adiciona a condição à query
+                                (selectByNomeDestinatario ?  "AND unaccent(p.nome_destinatario) ILIKE unaccent(?)" : "") +  // Se o usuário deseja pesquisar pelo nome do destinatário, adiciona a condição à query
+                                (selectByStatusPagto ?  "AND p.status_pagto = ?" : "") +  // Se o usuário deseja pesquisar pelo status do pagamento, adiciona a condição à query
+                                (selectByStatusPedido ?  "AND p.status_pedido = ?" : "") +  // Se o usuário deseja pesquisar pelo status do pedido, adiciona a condição à query
+                        "ORDER BY p.data_hora_pedido DESC, c.nome, p.nome_destinatario, mp.descricao";
+
+        /*Define o padrão de pesquisa em relação aos parâmetros fornecidos pelo usuário*/
+        if(selectByNomeCliente) nomeCliente= "%" + nomeCliente + "%";
+        if(selectByNomeDestinatario) nomeDestinatario= "%" + nomeDestinatario + "%";
+
+        //Define uma variável para armazenar o índice do parâmetro a ser configurado
+        int paramIndexCount = 1;
+        try{
+            //Define o PreparedStatement com o SQL
+            statement = DBConnection.getConnection().prepareStatement(sql);
+
+            //Configura os parâmetros necessários
+            
+            if(selectByNomeCliente) {
+                statement.setString(paramIndexCount, descricao);
+                paramIndexCount++; //Incrementa o índice do parâmetro para que o próximo seja configurado corretamente
+            } 
+            if(selectByTipoChocolate) {
+                statement.setString(paramIndexCount, tipoChocolate);
+            }
+            //Armazena o SQL para haver refefência da última consulta realizada pelo DAO
+            this.lastSqlPartialSearch = statement.toString();
+
+            //Obtém o ResultSet exexutando a query
+            resultSet = statement.executeQuery();
+
+            return this.resultSetToList(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            //Fecha a conexão com o banco de dados e os recursos criados a partir dela
+            DBConnection.closeConnection(statement, resultSet);
+        }
+    }
 
 //     public List<Pedido> redoLastPartialSearch() {
 //         PreparedStatement statement = null;
