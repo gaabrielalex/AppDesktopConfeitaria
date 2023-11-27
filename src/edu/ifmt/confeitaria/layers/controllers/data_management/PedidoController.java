@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
+import edu.ifmt.confeitaria.layers.models.cliente.Cliente;
 import edu.ifmt.confeitaria.layers.models.cliente.ClienteDAO;
 import edu.ifmt.confeitaria.layers.models.cliente.ClienteService;
 import edu.ifmt.confeitaria.layers.models.pedido.Pedido;
@@ -46,7 +47,7 @@ public class PedidoController extends SuperController<Pedido> {
     }
     
     public void requestDisplayClienteViewForLookUp() {
-        new ClienteController(this.pedidoView, new ClienteService(new ClienteDAO()), new DatabaseAccessComponentManager()).displayViewForLookUp();
+        new ClienteController(this.pedidoView, new ClienteService(new ClienteDAO()), new DatabaseAccessComponentManager<Cliente>()).displayViewForLookUp();
     }
 
     @Override
