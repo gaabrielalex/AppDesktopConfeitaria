@@ -103,5 +103,4 @@ public class ProdutoController extends SuperController<Produto> {
             this.produtoView.getCmbTipoChoc().getSelectedItem() == null ? null : this.produtoView.getCmbTipoChoc().getSelectedItem().toString()
         );
     }
-
 }
