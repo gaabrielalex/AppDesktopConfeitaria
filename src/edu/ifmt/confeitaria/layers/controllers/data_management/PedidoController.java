@@ -133,16 +133,16 @@ public class PedidoController extends SuperController<Pedido> {
     public Pedido fieldsToModel() {
         return new Pedido(
             null,
-            new Cliente(
-                Long.parseLong(this.pedidoView.getEdtCodCliente().getText()),
-                this.pedidoView.getEdtCliente().getText(),
-                null,
+            new Usuario(
+                UsuarioService.getInstance().getLoggedUser().getValue().getID(),
                 null,
                 null,
                 null
             ),
-            new Usuario(
-                UsuarioService.getInstance().getLoggedUser().getValue().getID(),
+            new Cliente(
+                Long.parseLong(this.pedidoView.getEdtCodCliente().getText()),
+                this.pedidoView.getEdtCliente().getText(),
+                null,
                 null,
                 null,
                 null
@@ -160,5 +160,4 @@ public class PedidoController extends SuperController<Pedido> {
             this.pedidoView.getCmbMtdPagto().getSelectedItem().toString()
         );
     }
-
 }
