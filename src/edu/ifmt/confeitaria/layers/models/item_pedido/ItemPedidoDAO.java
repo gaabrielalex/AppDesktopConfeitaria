@@ -1,38 +1,45 @@
 package edu.ifmt.confeitaria.layers.models.item_pedido;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import edu.ifmt.confeitaria.util.database.DBConnection;
+
 public class ItemPedidoDAO {
     private String lastSqlPartialSearch;
 
     /* ------ Operações básicas de banco de dados ------ */
-    // public List<Produto> selectById(Long idProduto) {
-    //     if(idProduto == null) return null;
+    public List<ItemPedido> selectById(Long idItemPedido) {
+        if(idItemPedido == null) return null;
 
-    //     //Cria o PreparedStatement e o ResultSet
-    //     PreparedStatement statement = null;
-    //     ResultSet resultSet = null;
+        //Cria o PreparedStatement e o ResultSet
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
 
-    //     //Cria a query
-    //     String sql =    "SELECT * " +
-    //                     "FROM produto " +
-    //                         "WHERE id_produto = ?";
+        //Cria a query
+        String sql =    "SELECT * " +
+                        "FROM item_pedido " +
+                            "WHERE id_item_pedido = ?";
 
-    //     try{
-    //         //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
-    //         statement = DBConnection.getConnection().prepareStatement(sql);
-    //         statement.setLong(1, idProduto);
+        try{
+            //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
+            statement = DBConnection.getConnection().prepareStatement(sql);
+            statement.setLong(1, idItemPedido);
 
-    //         //Obtém o ResultSet exexutando a query
-    //         resultSet = statement.executeQuery();
+            //Obtém o ResultSet exexutando a query
+            resultSet = statement.executeQuery();
             
-    //         return this.resultSetToList(resultSet); 
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //         return null;
-    //     } finally {
-    //         //Fecha a conexão com o banco de dados e os recursos criados a partir dela
-    //         DBConnection.closeConnection(statement, resultSet);
-    //     }
-    // }
+            return this.resultSetToList(resultSet); 
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            //Fecha a conexão com o banco de dados e os recursos criados a partir dela
+            DBConnection.closeConnection(statement, resultSet);
+        }
+    }
 
     // public List<String> selectAllTipoChocolate() {
     //     //Cria o PreparedStatement e o ResultSet
@@ -65,11 +72,11 @@ public class ItemPedidoDAO {
     //     }
     // }
 
-    // public List<Produto> selectAll() {
+    // public List<ItemPedido> selectAll() {
     //     return this.partialSearch(null, null);
     // }
     
-    // public List<Produto> partialSearch(String descricao, String tipoChocolate) {
+    // public List<ItemPedido> partialSearch(String descricao, String tipoChocolate) {
     //     PreparedStatement statement = null;
     //     ResultSet resultSet = null;
 
@@ -118,7 +125,7 @@ public class ItemPedidoDAO {
     //     }
     // }
 
-    // public List<Produto> redoLastPartialSearch() {
+    // public List<ItemPedido> redoLastPartialSearch() {
     //     PreparedStatement statement = null;
     //     ResultSet resultSet = null;
 
@@ -207,8 +214,8 @@ public class ItemPedidoDAO {
     //     }
     // }
 
-    // public boolean delete(Long idProduto) {
-    //     if(idProduto == null) return false;
+    // public boolean delete(Long idItemPedido) {
+    //     if(idItemPedido == null) return false;
     //     PreparedStatement statement = null;
 
     //     //Cria a query
@@ -218,7 +225,7 @@ public class ItemPedidoDAO {
     //     try {
     //         //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
     //         statement = DBConnection.getConnection().prepareStatement(sql);
-    //         statement.setLong(1, idProduto);
+    //         statement.setLong(1, idItemPedido);
             
     //         //Executa a query
     //         statement.executeUpdate();
@@ -236,8 +243,8 @@ public class ItemPedidoDAO {
     // }
 
     // /* ------ Métodos/Operações auxiliares ------ */
-    // public List<Produto> resultSetToList(ResultSet resultSet) throws SQLException {
-    //     List<Produto> produtos = new ArrayList<>();
+    // public List<ItemPedido> resultSetToList(ResultSet resultSet) throws SQLException {
+    //     List<ItemPedido> produtos = new ArrayList<>();
         
     //     //Percorre o ResultSet preenchendo a lista de produtos
     //     while(resultSet.next()) {
