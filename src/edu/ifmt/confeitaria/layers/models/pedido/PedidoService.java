@@ -41,11 +41,11 @@ public class PedidoService extends SuperService<Pedido> {
         return this.pedidoDAO.redoLastPartialSearch();
     }
     
-    // @Override
-    // public boolean insert(Produto produto) {
-    //     //Solita ao DAO a inserção do produto no BD já retornando o resultado
-    //     return this.pedidoDAO.insert(produto);
-    // }
+    @Override
+    public boolean insert(Pedido pedido) {
+        //Solita ao DAO a inserção do pedido no BD já retornando o resultado
+        return this.pedidoDAO.insert(pedido);
+    }
     
     // @Override
     // public boolean update(Produto produto, Produto produtoOriginal) {
