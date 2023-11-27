@@ -10,6 +10,8 @@ import edu.ifmt.confeitaria.layers.models.cliente.Cliente;
 import edu.ifmt.confeitaria.layers.models.cliente.ClienteDAO;
 import edu.ifmt.confeitaria.layers.models.cliente.ClienteService;
 import edu.ifmt.confeitaria.layers.models.pedido.Pedido;
+import edu.ifmt.confeitaria.layers.models.pedido.Pedido.StatusPagto;
+import edu.ifmt.confeitaria.layers.models.pedido.Pedido.StatusPedido;
 import edu.ifmt.confeitaria.layers.models.pedido.PedidoService;
 import edu.ifmt.confeitaria.layers.views.data_management.PedidoView;
 import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
@@ -75,7 +77,7 @@ public class PedidoController extends SuperController<Pedido> {
         new ClienteController(this.pedidoView, new ClienteService(new ClienteDAO()), new DatabaseAccessComponentManager<Cliente>()).displayViewForLookUp();
     }
 
-    public void partialSearch(String nomeCliente, String nomeDestinatario, Pedido.StatusPagto statusPagto, Pedido.StatusPedido statusPedido) {
+    public void partialSearch(String nomeCliente, String nomeDestinatario, StatusPagto statusPagto, StatusPedido statusPedido) {
         if(tipoChocolate.equals(ViewUtils.ALL_OPTIONS_TEXT)) {
             tipoChocolate = null;
         }
