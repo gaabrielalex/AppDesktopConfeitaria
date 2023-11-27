@@ -2,6 +2,7 @@ package edu.ifmt.confeitaria.layers.controllers.data_management;
 
 import java.awt.Component;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 
@@ -112,8 +113,8 @@ public class PedidoController extends SuperController<Pedido> {
             pedido.getCliente().getTelefones(),
             pedido.getCliente().getEndereco(),
             pedido.getCliente().getLinkEndereco(),
-            pedido.getDtHrPedido(),
-            pedido.getDtHrEntrega(),
+            new SimpleDateFormat("dd/MM/yyyy").format(pedido.getDtHrPedido().getTime()),
+            new SimpleDateFormat("dd/MM/yyyy").format(pedido.getDtHrEntrega().getTime()),
             pedido.getVlrTotalPedido(),
             pedido.getDesconto(),
             pedido.getMetodoPagto(),
