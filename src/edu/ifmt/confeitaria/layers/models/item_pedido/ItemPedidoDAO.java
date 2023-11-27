@@ -56,8 +56,7 @@ public class ItemPedidoDAO {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
-        /*Verifica se os parâmetros foram fornecidos e se não são vazios, ou seja, confere se o
-        usuário deseja realizar a pesquisa pela descrição do produto e/ou pelo tipo do chocolate*/
+        /*Define por quais campos o usuário deseja realizar a pesquisa*/
         boolean selectByDescricao = produto != null && !produto.isEmpty();
         boolean selectByTipoChocolate = tipoChocolate != null && !tipoChocolate.isEmpty();
         
