@@ -19,9 +19,10 @@ public class PedidoController extends SuperController<Pedido> {
     private final PedidoService pedidoService;
     private DatabaseAccessComponentManager<Pedido> pedidoDBCManager;
     
-    public PedidoController(JFrame previousView, DatabaseAccessComponentManager pedidoDBCManager) {
+    public PedidoController(JFrame previousView, PedidoService pedidoService, DatabaseAccessComponentManager<Pedido> pedidoDBCManager) {
         //Injeção de dependências
         this.pedidoDBCManager = pedidoDBCManager;
+        this.pedidoService = pedidoService;
 
         //Instancia a View e define esta instância como seu controlador
         this.pedidoView = new PedidoView(this, null, previousView);
