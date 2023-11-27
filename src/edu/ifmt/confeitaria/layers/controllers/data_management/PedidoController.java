@@ -154,7 +154,7 @@ public class PedidoController extends SuperController<Pedido> {
                 null
             ),
             new Cliente(
-                Long.parseLong(this.pedidoView.getEdtCodCliente().getText()),
+                this.pedidoView.getEdtCodCliente().getText().equals("") ? null : Long.parseLong(this.pedidoView.getEdtCodCliente().getText()),
                 this.pedidoView.getEdtCliente().getText(),
                 null,
                 null,
@@ -167,8 +167,8 @@ public class PedidoController extends SuperController<Pedido> {
             this.pedidoView.getEdtDesconto().getText().equals("") ? null : new BigDecimal(this.pedidoView.getEdtDesconto().getText()),
             this.pedidoView.getEdtDestinatario().getText(),
             this.pedidoView.getCkBRetirada().isSelected(),
-            StatusPagto.valueOf(this.pedidoView.getCmbSttsPagto().getSelectedItem() == null ? null : this.pedidoView.getCmbSttsPagto().getSelectedItem().toString()),
-            StatusPedido.valueOf(this.pedidoView.getCmbSttsPedido().getSelectedItem() == null ? null : this.pedidoView.getCmbSttsPedido().getSelectedItem().toString()),
+            StatusPagto.valueOf(this.pedidoView.getCmbSttsPagto().getSelectedItem() == null ? null : this.pedidoView.getCmbSttsPagto().getSelectedItem().toString().toUpperCase()),
+            StatusPedido.valueOf(this.pedidoView.getCmbSttsPedido().getSelectedItem() == null ? null : this.pedidoView.getCmbSttsPedido().getSelectedItem().toString().toUpperCase()),
             this.pedidoView.getEdtObs().getText(),
             this.pedidoView.getCmbMtdPagto().getSelectedItem().toString()
         );
