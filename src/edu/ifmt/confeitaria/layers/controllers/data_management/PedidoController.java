@@ -151,7 +151,6 @@ public class PedidoController extends SuperController<Pedido> {
             this.pedidoView.getDtChooserDtEntrega().getDate(),
             this.pedidoView.getEdtVlrTotalPedido().getText().equals("") ? null : new BigDecimal(this.pedidoView.getEdtVlrTotalPedido().getText()),
             this.pedidoView.getEdtDesconto().getText().equals("") ? null : new BigDecimal(this.pedidoView.getEdtDesconto().getText()),
-
             this.pedidoView.getEdtDestinatario().getText(),
             this.pedidoView.getCkBRetirada().isSelected(),
             StatusPagto.valueOf(this.pedidoView.getCmbSttsPagto().getSelectedItem().toString()),
