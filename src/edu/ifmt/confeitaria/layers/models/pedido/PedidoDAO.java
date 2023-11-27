@@ -305,7 +305,7 @@ public class PedidoDAO {
                     }
                 }
             } catch (Exception e) {
-                // e.printStackTrace();
+                e.printStackTrace();
             }
 
             produtos.add(new Pedido(
