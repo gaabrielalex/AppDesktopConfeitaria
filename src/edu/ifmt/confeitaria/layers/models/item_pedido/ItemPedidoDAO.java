@@ -52,54 +52,54 @@ public class ItemPedidoDAO {
         return this.partialSearch(null, null);
     }
     
-    // public List<ItemPedido> partialSearch(String descricao, String tipoChocolate) {
-    //     PreparedStatement statement = null;
-    //     ResultSet resultSet = null;
+    public List<ItemPedido> partialSearch(String produto, String tipoChocolate) {
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
 
-    //     /*Verifica se os parâmetros foram fornecidos e se não são vazios, ou seja,
-    //     confere se o usuário deseja realizar a pesquisa pela descrição do produto e/ou pelo tipo do chocolate*/
-    //     boolean selectByDescricao = descricao != null && !descricao.isEmpty();
-    //     boolean selectByTipoChocolate = tipoChocolate != null && !tipoChocolate.isEmpty();
+        /*Verifica se os parâmetros foram fornecidos e se não são vazios, ou seja, confere se o
+        usuário deseja realizar a pesquisa pela descrição do produto e/ou pelo tipo do chocolate*/
+        boolean selectByDescricao = produto != null && !produto.isEmpty();
+        boolean selectByTipoChocolate = tipoChocolate != null && !tipoChocolate.isEmpty();
         
-    //     //Cria a query
-    //     String sql =    "SELECT p.*, tc.descricao as tipo_chocolate FROM produto p LEFT JOIN tipo_chocolate tc ON p.id_tipo_chocolate = tc.id_tipo_chocolate " +
-    //                         "WHERE 1 = 1" +
-    //                             (selectByDescricao ?  "AND unaccent(p.descricao) ILIKE unaccent(?)" : "") +  // Se o usuário deseja pesquisar pela descrição, adiciona a condição à query
-    //                             (selectByTipoChocolate ? "AND tc.descricao = ?" : "") + // Se o usuário deseja pesquisar pelo tipo do chocolate, adiciona a condição à query
-    //                     "ORDER BY p.descricao, tc.descricao, p.vlr_unitario";
+        //Cria a query
+        String sql =    "SELECT p.*, tc.descricao as tipo_chocolate FROM produto p LEFT JOIN tipo_chocolate tc ON p.id_tipo_chocolate = tc.id_tipo_chocolate " +
+                            "WHERE 1 = 1" +
+                                (selectByDescricao ?  "AND unaccent(p.descricao) ILIKE unaccent(?)" : "") +  // Se o usuário deseja pesquisar pela descrição, adiciona a condição à query
+                                (selectByTipoChocolate ? "AND tc.descricao = ?" : "") + // Se o usuário deseja pesquisar pelo tipo do chocolate, adiciona a condição à query
+                        "ORDER BY p.descricao, tc.descricao, p.vlr_unitario";
 
-    //     /*Define o padrão de pesquisa em relação aos parâmetros fornecidos pelo usuário*/
-    //     descricao = "%" + descricao + "%";
+        /*Define o padrão de pesquisa em relação aos parâmetros fornecidos pelo usuário*/
+        produto = "%" + produto + "%";
 
-    //     //Define uma variável para armazenar o índice do parâmetro a ser configurado
-    //     int paramIndexCount = 1;
-    //     try{
-    //         //Define o PreparedStatement com o SQL
-    //         statement = DBConnection.getConnection().prepareStatement(sql);
+        //Define uma variável para armazenar o índice do parâmetro a ser configurado
+        int paramIndexCount = 1;
+        try{
+            //Define o PreparedStatement com o SQL
+            statement = DBConnection.getConnection().prepareStatement(sql);
 
-    //         //Configura os parâmetros necessários
-    //         if(selectByDescricao) {
-    //             statement.setString(paramIndexCount, descricao);
-    //             paramIndexCount++; //Incrementa o índice do parâmetro para que o próximo seja configurado corretamente
-    //         } 
-    //         if(selectByTipoChocolate) {
-    //             statement.setString(paramIndexCount, tipoChocolate);
-    //         }
-    //         //Armazena o SQL para haver refefência da última consulta realizada pelo DAO
-    //         this.lastSqlPartialSearch = statement.toString();
+            //Configura os parâmetros necessários
+            if(selectByDescricao) {
+                statement.setString(paramIndexCount, produto);
+                paramIndexCount++; //Incrementa o índice do parâmetro para que o próximo seja configurado corretamente
+            } 
+            if(selectByTipoChocolate) {
+                statement.setString(paramIndexCount, tipoChocolate);
+            }
+            //Armazena o SQL para haver refefência da última consulta realizada pelo DAO
+            this.lastSqlPartialSearch = statement.toString();
 
-    //         //Obtém o ResultSet exexutando a query
-    //         resultSet = statement.executeQuery();
+            //Obtém o ResultSet exexutando a query
+            resultSet = statement.executeQuery();
 
-    //         return this.resultSetToList(resultSet);
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //         return null;
-    //     } finally {
-    //         //Fecha a conexão com o banco de dados e os recursos criados a partir dela
-    //         DBConnection.closeConnection(statement, resultSet);
-    //     }
-    // }
+            return this.resultSetToList(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            //Fecha a conexão com o banco de dados e os recursos criados a partir dela
+            DBConnection.closeConnection(statement, resultSet);
+        }
+    }
 
     // public List<ItemPedido> redoLastPartialSearch() {
     //     PreparedStatement statement = null;
