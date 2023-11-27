@@ -55,8 +55,8 @@ public class PedidoController extends SuperController<Pedido> {
         this.pedidoView.getCmbSttsPagtoFiltro().removeAllItems();
         this.pedidoView.getCmbSttsPedidoFiltro().removeAllItems();
         for (Pedido.StatusPagto value : Pedido.StatusPagto.values()) {
-            this.pedidoView.getCmbSttsPagto().addItem(Character.toString(value.getDescricao()));
-            this.pedidoView.getCmbSttsPagtoFiltro().addItem(Character.toString(value.getDescricao()));
+            this.pedidoView.getCmbSttsPagto().addItem(value.toString().toLowerCase()
+            this.pedidoView.getCmbSttsPagtoFiltro().addItem(value.toString());
         }
         for (Pedido.StatusPedido value : Pedido.StatusPedido.values()) {
             this.pedidoView.getCmbSttsPedido().addItem(Character.toString(value.getDescricao()));

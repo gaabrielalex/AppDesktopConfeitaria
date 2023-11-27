@@ -63,4 +63,9 @@ public class ViewUtils {
         label.setText("");
         // label.setForeground(new Color(0, 255, 0));
     }
+
+    public static String customToLowerCase(String value) {
+        value = value.substring(0, 1).toUpperCase() + value.substring(1).toLowerCase();
+        return value;
+    }
 }
