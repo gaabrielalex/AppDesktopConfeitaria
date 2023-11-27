@@ -4,8 +4,6 @@ import java.util.List;
 
 import edu.ifmt.confeitaria.layers.models.pedido.Pedido.StatusPagto;
 import edu.ifmt.confeitaria.layers.models.pedido.Pedido.StatusPedido;
-import edu.ifmt.confeitaria.layers.models.produto.Produto;
-import edu.ifmt.confeitaria.layers.models.produto.ProdutoDAO;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperService;
 
 public class PedidoService extends SuperService<Pedido> {
