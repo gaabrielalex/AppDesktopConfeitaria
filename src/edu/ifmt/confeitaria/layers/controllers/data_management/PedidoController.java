@@ -35,7 +35,7 @@ public class PedidoController extends SuperController<Pedido> {
             pedidoView.getDtChooserDtEntrega(), pedidoView.getDtChooserDtPedido(), pedidoView.getEdtVlrTotalPedido(), pedidoView.getEdtDesconto(),
             pedidoView.getCmbMtdPagto(), pedidoView.getEdtDestinatario(), pedidoView.getCkBRetirada(), pedidoView.getCmbSttsPagto(), pedidoView.getCmbSttsPedido(), pedidoView.getEdtObs()); 
         this.pedidoDBCManager.setFields(fields);
-        this.pedidoDBCManager.configureComponents(null, this, null, pedidoView.getBtnInsertPedido(),
+        this.pedidoDBCManager.configureComponents(Pedido.class, this, this.pedidoService, pedidoView.getBtnInsertPedido(),
             pedidoView.getBtnUpdatePedido(), pedidoView.getBtnDeletePedido(), pedidoView.getBtnPostPedido(),
             pedidoView.getBtnCancelPedido(), pedidoView.getBtnRefreshPedido(), pedidoView.getTblPedido());
     }
