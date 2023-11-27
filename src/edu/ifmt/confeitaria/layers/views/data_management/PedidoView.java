@@ -157,6 +157,11 @@ public class PedidoView extends SuperView {
         cmbSttsPagtoFiltro.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         btnPesquisarPedido.setText("Pesquisar");
+        btnPesquisarPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarPedidoActionPerformed(evt);
+            }
+        });
 
         lblDestinatarioFiltro.setText("Destinatário:");
 
@@ -848,6 +853,12 @@ public class PedidoView extends SuperView {
     private void btnPesquisarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarClienteActionPerformed
         this.pedidoController.requestDisplayClienteViewForLookUp();
     }//GEN-LAST:event_btnPesquisarClienteActionPerformed
+
+    private void btnPesquisarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarPedidoActionPerformed
+        this.pedidoController.partialSearch(this.edtClienteFiltro.getText(), this.edtDestinatarioFiltro.getText(), 
+                this.cmbSttsPedidoFiltro.getSelectedItem().toString(), 
+                this.cmbSttsPagtoFiltro.getSelectedItem().toString());
+    }//GEN-LAST:event_btnPesquisarPedidoActionPerformed
 
     public static void main(String args[]) {
         NimbusTheme.setTheme();
