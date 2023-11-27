@@ -97,7 +97,21 @@ public class PedidoController extends SuperController<Pedido> {
         if(pedido.getCliente() == null) {
             pedido.setCliente(new Cliente());
         }
-        if(pedido.getUsuario())
+        if(pedido.getCliente().getNome() == null) {
+            pedido.getCliente().setNome("");
+        }
+        if(pedido.getCliente().getCPF() == null) {
+            pedido.getCliente().setCPF("");
+        }
+        if(pedido.getCliente().getTelefones() == null) {
+            pedido.getCliente().setTelefones("");
+        }
+        if(pedido.getCliente().getEndereco() == null) {
+            pedido.getCliente().setEndereco("");
+        }
+        if(pedido.getCliente().getLinkEndereco() == null) {
+            pedido.getCliente().setLinkEndereco("");
+        }
         if(pedido.getUsuario() == null) {
             pedido.setUsuario(new Usuario());
         }
