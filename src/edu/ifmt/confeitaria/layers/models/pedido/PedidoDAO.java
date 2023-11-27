@@ -98,7 +98,7 @@ public class PedidoDAO {
                                 (selectByNomeDestinatario ?  "AND unaccent(p.nome_destinatario) ILIKE unaccent(?)" : "") +  // Se o usuário deseja pesquisar pelo nome do destinatário, adiciona a condição à query
                                 (selectByStatusPagto ?  "AND p.status_pagto = ?" : "") +  // Se o usuário deseja pesquisar pelo status do pagamento, adiciona a condição à query
                                 (selectByStatusPedido ?  "AND p.status_pedido = ?" : "") +  // Se o usuário deseja pesquisar pelo status do pedido, adiciona a condição à query
-                        "ORDER BY p.data_hora_pedido DESC, c.nome, p.nome_destinatario, mp.descricao";
+                        "ORDER BY p.dt_hr_pedido DESC, c.nome, p.nome_destinatario, mp.descricao";
 
         /*Define o padrão de pesquisa em relação aos parâmetros fornecidos pelo usuário*/
         if(selectByNomeCliente) nomeCliente= "%" + nomeCliente + "%";
