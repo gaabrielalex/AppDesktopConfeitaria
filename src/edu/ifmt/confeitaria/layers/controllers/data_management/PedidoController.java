@@ -1,6 +1,7 @@
 package edu.ifmt.confeitaria.layers.controllers.data_management;
 
 import java.awt.Component;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,6 +13,8 @@ import edu.ifmt.confeitaria.layers.models.cliente.ClienteService;
 import edu.ifmt.confeitaria.layers.models.pedido.Pedido;
 import edu.ifmt.confeitaria.layers.models.pedido.Pedido.StatusPagto;
 import edu.ifmt.confeitaria.layers.models.pedido.Pedido.StatusPedido;
+import edu.ifmt.confeitaria.layers.models.usuario.Usuario;
+import edu.ifmt.confeitaria.layers.models.usuario.UsuarioService;
 import edu.ifmt.confeitaria.layers.models.pedido.PedidoService;
 import edu.ifmt.confeitaria.layers.views.data_management.PedidoView;
 import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
@@ -130,24 +133,31 @@ public class PedidoController extends SuperController<Pedido> {
     public Pedido fieldsToModel() {
         return new Pedido(
             null,
-            this.pedidoView.getDtChooserDtPedido().getDate(),
-            this.pedidoView.getDtChooserDtEntrega().getDate(),
-            this.pedidoView.getEdtVlrTotalPedido().getText().isEmpty() ? null : Double.parseDouble(this.pedidoView.getEdtVlrTotalPedido().getText()),
-            this.pedidoView.getEdtDesconto().getText().isEmpty() ? null : Double.parseDouble(this.pedidoView.getEdtDesconto().getText()),
-            this.pedidoView.getCmbMtdPagto().getSelectedItem().toString(),
-            this.pedidoView.getEdtDestinatario().getText(),
-            this.pedidoView.getCkBRetirada().isSelected(),
-            StatusPagto.valueOf(this.pedidoView.getCmbSttsPagto().getSelectedItem().toString()),
-            StatusPedido.valueOf(this.pedidoView.getCmbSttsPedido().getSelectedItem().toString()),
-            this.pedidoView.getEdtObs().getText()
             new Cliente(
-                Integer.parseInt(this.pedidoView.getEdtCodCliente().getText()),
+                Long.parseLong(this.pedidoView.getEdtCodCliente().getText()),
                 this.pedidoView.getEdtCliente().getText(),
                 null,
                 null,
                 null,
                 null
             ),
+            new Usuario(
+                UsuarioService.getInstance().getLoggedUser().getValue().getID(),
+                null,
+                null,
+                null
+            ),
+            this.pedidoView.getDtChooserDtPedido().getDate(),
+            this.pedidoView.getDtChooserDtEntrega().getDate(),
+            this.pedidoView.getEdtVlrTotalPedido().getText().equals("") ? null : new BigDecimal(this.pedidoView.getEdtVlrTotalPedido().getText()),
+            this.pedidoView.getEdtDesconto().getText().equals("") ? null : new BigDecimal(this.pedidoView.getEdtDesconto().getText()),
+
+            this.pedidoView.getEdtDestinatario().getText(),
+            this.pedidoView.getCkBRetirada().isSelected(),
+            StatusPagto.valueOf(this.pedidoView.getCmbSttsPagto().getSelectedItem().toString()),
+            StatusPedido.valueOf(this.pedidoView.getCmbSttsPedido().getSelectedItem().toString()),
+            this.pedidoView.getEdtObs().getText(),
+            this.pedidoView.getCmbMtdPagto().getSelectedItem().toString()
         );
     }
 

@@ -51,7 +51,7 @@ public class Pedido extends SuperModel {
     private StatusPagto statusPagto;
     private StatusPedido statusPedido;
     private String observacoes;
-    private String MetodoPagto;
+    private String metodoPagto;
 
     /* Construtor vazio para configurações do DatabaseAcessComponentManager */
     public Pedido() {
@@ -73,7 +73,7 @@ public class Pedido extends SuperModel {
         this.statusPagto = statusPagto;
         this.statusPedido = statusPedido;
         this.observacoes = observacoes;
-        MetodoPagto = metodoPagto;
+        this.metodoPagto = metodoPagto;
     }
 
     public Usuario getUsuario() {
@@ -165,10 +165,10 @@ public class Pedido extends SuperModel {
     }
 
     public String getMetodoPagto() {
-        return MetodoPagto;
+        return metodoPagto;
     }
 
     public void setMetodoPagto(String metodoPagto) {
-        MetodoPagto = metodoPagto;
+        metodoPagto = metodoPagto;
     }
 }
