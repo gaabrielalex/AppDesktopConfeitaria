@@ -287,6 +287,20 @@ public class PedidoDAO {
         while(resultSet.next()) {
             produtos.add(new Pedido(
                 resultSet.getLong("id_pedido"),
+                new Usuario(
+                    resultSet.getLong("id_usuario"),
+                    resultSet.getString("nome"),
+                    resultSet.getString("login"),
+                    resultSet.getString("senha")
+                ),
+                new Cliente(
+                    resultSet.getLong("id_cliente"),
+                    resultSet.getString("nome"),
+                    resultSet.getString("cpf"),
+                    resultSet.getString("telefones"),
+                    resultSet.getString("endereco"),
+                    resultSet.getString("link_endereco")
+                ),
                 resultSet.getDate("dt_hr_pedido"),
                 resultSet.getDate("dt_hr_entrega"),
                 resultSet.getBigDecimal("vlr_total_pedido"),
@@ -296,21 +310,7 @@ public class PedidoDAO {
                 StatusPagto.valueOf(resultSet.getString("status_pagto")),
                 StatusPedido.valueOf(resultSet.getString("status_pedido")),
                 resultSet.getString("observacoes"),
-                new Cliente(
-                    resultSet.getLong("id_cliente"),
-                    resultSet.getString("nome"),
-                    resultSet.getString("cpf"),
-                    resultSet.getString("telefones"),
-                    resultSet.getString("endereco"),
-                    resultSet.getString("link_endereco")
-                ),
-                resultSet.getString("metodo_pagto"),
-                new Usuario(
-                    resultSet.getLong("id_usuario"),
-                    resultSet.getString("nome"),
-                    resultSet.getString("login"),
-                    resultSet.getString("senha")
-                )
+                resultSet.getString("metodo_pagto")
             ));
         }
         return produtos;
