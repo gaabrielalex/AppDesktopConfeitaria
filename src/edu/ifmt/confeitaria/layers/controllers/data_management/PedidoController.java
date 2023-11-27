@@ -77,7 +77,12 @@ public class PedidoController extends SuperController<Pedido> {
     }
     
     public void requestDisplayClienteViewForLookUp() {
-        new ClienteController(this.pedidoView, new ClienteService(new ClienteDAO()), new DatabaseAccessComponentManager<Cliente>()).displayViewForLookUp();
+        new ClienteController(this.pedidoView, new ClienteService(new ClienteDAO()), new DatabaseAccessComponentManager<Cliente>()).displayViewForLookUp(this::setCustomerFields);
+    }
+
+    public void setCustomerFields(Cliente cliente) {
+        this.pedidoView.getEdtCliente().setText(cliente.getNome());
+        this.pedidoView.getEdtCodCliente().setText(cliente.getID() == null ? "" : cliente.getID().toString());
     }
 
     public void partialSearch(String nomeCliente, String nomeDestinatario, String statusPagto, String statusPedido) {

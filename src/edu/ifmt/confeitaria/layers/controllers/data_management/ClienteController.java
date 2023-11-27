@@ -11,6 +11,7 @@ import edu.ifmt.confeitaria.layers.models.cliente.ClienteService;
 import edu.ifmt.confeitaria.layers.views.data_management.ClienteView;
 import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperController;
+import io.reactivex.rxjava3.functions.Consumer;
 
 public class ClienteController extends SuperController<Cliente> {
     private final ClienteView clienteView;
@@ -39,7 +40,7 @@ public class ClienteController extends SuperController<Cliente> {
         this.clienteView.setVisible(true);
     }
     
-    public void displayViewForLookUp() {
+    public void displayViewForLookUp(Consumer<Cliente> clienteConsumer) {
         //Configurações obrigatórias
         this.clienteView.setTitle("Pesquisa de Clientes");
         this.clienteView.setResizable(false);
@@ -47,6 +48,7 @@ public class ClienteController extends SuperController<Cliente> {
 
         //Exibe a view
         this.displayView();
+        this.clienteDBCManager.subscribeTSelectedRecord(clienteConsumer);
     }
 
     public void partialSearch(String nome, String CPF) {

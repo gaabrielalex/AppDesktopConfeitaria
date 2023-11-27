@@ -18,6 +18,7 @@ import com.toedter.calendar.JDateChooser;
 
 import edu.ifmt.confeitaria.util.custom_components.CustomDialogs;
 import edu.ifmt.confeitaria.util.views.ViewUtils;
+import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
 public class DatabaseAccessComponentManager<T extends SuperModel> {
@@ -53,9 +54,11 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
     //Componente setado separadamente(fora do método configureComponents)
     private List<Component> fields;
 
-    //CONSTRUCTORS
-
     //GETTERS, SETTERS E OBSERVABLES
+    public void subscribeTSelectedRecord(Consumer<T> consumer) {
+        this.tSelectedRecord.subscribe(consumer);
+    }
+
     private void updateTemporaryTDataList(List<T> tDataList) {
         /*Verifica se a lista de dados temporária está vazia, se estiver, 
         adiciona um registro em branco na lista para evitar bugs*/
