@@ -113,8 +113,8 @@ public class PedidoController extends SuperController<Pedido> {
             pedido.getCliente().getTelefones(),
             pedido.getCliente().getEndereco(),
             pedido.getCliente().getLinkEndereco(),
-            new SimpleDateFormat("dd/MM/yyyy").format(pedido.getDtHrPedido().getTime()),
-            new SimpleDateFormat("dd/MM/yyyy").format(pedido.getDtHrEntrega().getTime()),
+            pedido.getDtHrPedido() == null ? "" : new SimpleDateFormat("dd/MM/yyyy").format(pedido.getDtHrPedido().getTime()),
+            pedido.getDtHrEntrega() == null ? "" : new SimpleDateFormat("dd/MM/yyyy").format(pedido.getDtHrEntrega().getTime()),
             pedido.getVlrTotalPedido(),
             pedido.getDesconto(),
             pedido.getMetodoPagto(),
@@ -176,10 +176,10 @@ public class PedidoController extends SuperController<Pedido> {
             this.pedidoView.getEdtDesconto().getText().equals("") ? null : new BigDecimal(this.pedidoView.getEdtDesconto().getText()),
             this.pedidoView.getEdtDestinatario().getText(),
             this.pedidoView.getCkBRetirada().isSelected(),
-            StatusPagto.valueOf(this.pedidoView.getCmbSttsPagto().getSelectedItem() == null ? null : this.pedidoView.getCmbSttsPagto().getSelectedItem().toString().toUpperCase()),
-            StatusPedido.valueOf(this.pedidoView.getCmbSttsPedido().getSelectedItem() == null ? null : this.pedidoView.getCmbSttsPedido().getSelectedItem().toString().toUpperCase()),
+            this.pedidoView.getCmbSttsPagto().getSelectedItem() == null ? null : StatusPagto.valueOf(this.pedidoView.getCmbSttsPagto().getSelectedItem().toString().toUpperCase()),
+            this.pedidoView.getCmbSttsPedido().getSelectedItem() == null ? null : StatusPedido.valueOf(this.pedidoView.getCmbSttsPedido().getSelectedItem().toString().toUpperCase()),
             this.pedidoView.getEdtObs().getText(),
-            this.pedidoView.getCmbMtdPagto().getSelectedItem().toString()
+            this.pedidoView.getCmbMtdPagto().getSelectedItem() == null ? null : this.pedidoView.getCmbMtdPagto().getSelectedItem().toString()
         );
     }
 }
