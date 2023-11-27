@@ -176,14 +176,14 @@ public class PedidoDAO {
             
             //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
             statement = DBConnection.getConnection().prepareStatement(sql);
-            statement.setDate(1, new java.sql.Date(pedido.getDtHrPedido().getTime()));
-            statement.setDate(2, new java.sql.Date(pedido.getDtHrEntrega().getTime()));
+            statement.setDate(1, pedido.getDtHrPedido() == null ? null : new java.sql.Date(pedido.getDtHrPedido().getTime()));
+            statement.setDate(2, pedido.getDtHrEntrega() == null ? null : new java.sql.Date(pedido.getDtHrEntrega().getTime()));
             statement.setBigDecimal(3, pedido.getVlrTotalPedido());
             statement.setBigDecimal(4, pedido.getDesconto());
             statement.setString(5, pedido.getNomeDestinatario());
             statement.setBoolean(6, pedido.isRetiradaLoja());
-            statement.setString(7, Character.toString(pedido.getStatusPagto().getDescricao()));
-            statement.setString(8, Character.toString(pedido.getStatusPedido().getDescricao()));
+            statement.setString(7, pedido.getStatusPagto() == null ? null : Character.toString(pedido.getStatusPagto().getDescricao()));
+            statement.setString(8, pedido.getStatusPagto() == null ? null : Character.toString(pedido.getStatusPedido().getDescricao()));
             statement.setString(9, pedido.getObservacoes());
             statement.setLong(10, pedido.getCliente().getID());
             statement.setString(11, pedido.getMetodoPagto());
@@ -225,14 +225,14 @@ public class PedidoDAO {
             //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
             statement = DBConnection.getConnection().prepareStatement(sql);
             statement.setLong(1, pedido.getID());
-            statement.setDate(2, new java.sql.Date(pedido.getDtHrPedido().getTime()));
-            statement.setDate(3, new java.sql.Date(pedido.getDtHrEntrega().getTime()));
+            statement.setDate(2, pedido.getDtHrPedido() == null ? null : new java.sql.Date(pedido.getDtHrPedido().getTime()));
+            statement.setDate(3, pedido.getDtHrEntrega() == null ? null : new java.sql.Date(pedido.getDtHrEntrega().getTime()));
             statement.setBigDecimal(4, pedido.getVlrTotalPedido());
             statement.setBigDecimal(5, pedido.getDesconto());
             statement.setString(6, pedido.getNomeDestinatario());
             statement.setBoolean(7, pedido.isRetiradaLoja());
-            statement.setString(8, Character.toString(pedido.getStatusPagto().getDescricao()));
-            statement.setString(9, Character.toString(pedido.getStatusPedido().getDescricao()));
+            statement.setString(8, pedido.getStatusPagto() == null ? null : Character.toString(pedido.getStatusPagto().getDescricao()));
+            statement.setString(9, pedido.getStatusPagto() == null ? null : Character.toString(pedido.getStatusPedido().getDescricao()));
             statement.setString(10, pedido.getObservacoes());
             statement.setLong(11, pedido.getCliente().getID());
             statement.setString(12, pedido.getMetodoPagto());
