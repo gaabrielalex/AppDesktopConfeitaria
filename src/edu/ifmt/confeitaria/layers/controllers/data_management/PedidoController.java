@@ -75,6 +75,13 @@ public class PedidoController extends SuperController<Pedido> {
         new ClienteController(this.pedidoView, new ClienteService(new ClienteDAO()), new DatabaseAccessComponentManager<Cliente>()).displayViewForLookUp();
     }
 
+    public void partialSearch(String nomeCliente, String nomeDestinatario, Pedido.StatusPagto statusPagto, Pedido.StatusPedido statusPedido) {
+        if(tipoChocolate.equals(ViewUtils.ALL_OPTIONS_TEXT)) {
+            tipoChocolate = null;
+        }
+        this.produtoDBCManager.setTemporaryTDataList(this.produtoService.partialSearch(descricao, tipoChocolate));
+    }
+
     @Override
     public Object[] modelToTableRow(Pedido pedido) {
         // TODO Auto-generated method stub
