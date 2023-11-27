@@ -76,13 +76,13 @@ public class PedidoController extends SuperController<Pedido> {
     }
 
     @Override
-    public Object[] modelToTableRow(Object object) {
+    public Object[] modelToTableRow(Pedido pedido) {
         // TODO Auto-generated method stub
        return null;
     }
 
     @Override
-    public void modelToFields(Object object) {
+    public void modelToFields(Pedido pedido) {
         // TODO Auto-generated method stub
     }
 
