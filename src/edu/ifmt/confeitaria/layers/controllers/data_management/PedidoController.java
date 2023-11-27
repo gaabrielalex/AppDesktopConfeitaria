@@ -152,21 +152,23 @@ public class PedidoController extends SuperController<Pedido> {
 
     @Override
     public Pedido fieldsToModel() {
+        Pedido pedidoSelecionado = this.pedidoDBCManager.getTSelectedRecord().getValue();
+
         return new Pedido(
             null,
             new Usuario(
                 UsuarioService.getInstance().getLoggedUser().getValue().getID(),
-                null,
-                null,
+                UsuarioService.getInstance().getLoggedUser().getValue().getNome(),
+                UsuarioService.getInstance().getLoggedUser().getValue().getLogin(),
                 null
             ),
             new Cliente(
                 this.pedidoView.getEdtCodCliente().getText().equals("") ? null : Long.parseLong(this.pedidoView.getEdtCodCliente().getText()),
                 this.pedidoView.getEdtCliente().getText(),
-                null,
-                null,
-                null,
-                null
+                pedidoSelecionado.getCliente().getCPF(),
+                pedidoSelecionado.getCliente().getTelefones(),
+                pedidoSelecionado.getCliente().getEndereco(),
+                pedidoSelecionado.getCliente().getLinkEndereco()
             ),
             this.pedidoView.getDtChooserDtPedido().getDate(),
             this.pedidoView.getDtChooserDtEntrega().getDate(),
