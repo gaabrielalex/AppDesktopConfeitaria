@@ -81,10 +81,10 @@ public class PedidoController extends SuperController<Pedido> {
     }
 
     public void partialSearch(String nomeCliente, String nomeDestinatario, String statusPagto, String statusPedido) {
-        if (statusPagto.equals(ViewUtils.ALL_OPTIONS_TEXT)) {
+        if (statusPagto.equals(ViewUtils.ALL_OPTIONS_TEXT) || statusPagto.equals(ViewUtils.ALL_OPTIONS_TEXT.toUpperCase())) {
             statusPagto = null;
         }
-        if (statusPedido.equals(ViewUtils.ALL_OPTIONS_TEXT)) {
+        if (statusPedido.equals(ViewUtils.ALL_OPTIONS_TEXT) || statusPedido.equals(ViewUtils.ALL_OPTIONS_TEXT.toUpperCase())) {
             statusPedido = null;
         }
         this.pedidoDBCManager.setTemporaryTDataList(this.pedidoService.partialSearch(nomeCliente, nomeDestinatario,
