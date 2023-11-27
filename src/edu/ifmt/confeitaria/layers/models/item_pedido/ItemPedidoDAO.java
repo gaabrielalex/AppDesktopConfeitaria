@@ -245,16 +245,16 @@ public class ItemPedidoDAO {
 
     /* ------ Métodos/Operações auxiliares ------ */
     public List<ItemPedido> resultSetToList(ResultSet resultSet) throws SQLException {
-        List<ItemPedido> produtos = new ArrayList<>();
+        List<ItemPedido> itensPedido = new ArrayList<>();
         
         //Percorre o ResultSet preenchendo a lista de produtos
         while(resultSet.next()) {
-            produtos.add(new Produto(resultSet.getLong("id_produto"),
+            itensPedido.add(new Produto(resultSet.getLong("id_produto"),
                                     resultSet.getString("descricao"),
                                     resultSet.getBigDecimal("vlr_unitario"),
                                     resultSet.getString("observacoes"),
                                     resultSet.getString("tipo_chocolate")));
         }
-        return produtos;
+        return itensPedido;
     }
 }
