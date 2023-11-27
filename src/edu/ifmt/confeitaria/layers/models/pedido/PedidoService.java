@@ -2,6 +2,8 @@ package edu.ifmt.confeitaria.layers.models.pedido;
 
 import java.util.List;
 
+import edu.ifmt.confeitaria.layers.models.pedido.Pedido.StatusPagto;
+import edu.ifmt.confeitaria.layers.models.pedido.Pedido.StatusPedido;
 import edu.ifmt.confeitaria.layers.models.produto.Produto;
 import edu.ifmt.confeitaria.layers.models.produto.ProdutoDAO;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperService;
@@ -24,13 +26,14 @@ public class PedidoService extends SuperService<Pedido> {
         return this.pedidoDAO.selectAll();
     }
     
-    // public List<Pedido> partialSearch(String nome, String tipoChocolate) {
-    //     //Remove os espaços em branco do início e do fim das strings necessárias
-    //     if(nome != null) nome = nome.stripLeading().stripTrailing();
+    public List<Pedido> partialSearch(String nomeCliente, String nomeDestinatario, StatusPagto statusPagto, StatusPedido statusPedido) {
+        //Remove os espaços em branco do início e do fim das strings necessárias
+        if(nomeCliente != null) nomeCliente = nomeCliente.stripLeading().stripTrailing();
+        if(nomeDestinatario != null) nomeDestinatario = nomeDestinatario.stripLeading().stripTrailing();
         
-    //     //Solicita os dados ao DAO
-    //     return this.pedidoDAO.partialSearch(nome, tipoChocolate);
-    // }
+        //Solicita os dados ao DAO
+        return this.pedidoDAO.partialSearch(nomeCliente, nomeDestinatario, statusPagto, statusPedido);
+    }
     
     // @Override
     // public List<Pedido> redoLastPartialSearch() {
