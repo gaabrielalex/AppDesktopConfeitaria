@@ -10,6 +10,9 @@ import edu.ifmt.confeitaria.layers.controllers.main.MainController;
 import edu.ifmt.confeitaria.layers.models.cliente.Cliente;
 import edu.ifmt.confeitaria.layers.models.cliente.ClienteDAO;
 import edu.ifmt.confeitaria.layers.models.cliente.ClienteService;
+import edu.ifmt.confeitaria.layers.models.pedido.Pedido;
+import edu.ifmt.confeitaria.layers.models.pedido.PedidoDAO;
+import edu.ifmt.confeitaria.layers.models.pedido.PedidoService;
 import edu.ifmt.confeitaria.layers.models.produto.Produto;
 import edu.ifmt.confeitaria.layers.models.produto.ProdutoDAO;
 import edu.ifmt.confeitaria.layers.models.produto.ProdutoService;
@@ -136,7 +139,7 @@ public class MainView extends SuperView {
     }//GEN-LAST:event_mnItemProdutoActionPerformed
 
     private void mnItemPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnItemPedidoActionPerformed
-        this.mainController.requestDisplayMenuItemView(new PedidoController(this, new DatabaseAccessComponentManager()));
+        this.mainController.requestDisplayMenuItemView(new PedidoController(this, new PedidoService(new PedidoDAO()) ,new DatabaseAccessComponentManager<Pedido>()));
     }//GEN-LAST:event_mnItemPedidoActionPerformed
 
     private void mnSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnSairMouseClicked
