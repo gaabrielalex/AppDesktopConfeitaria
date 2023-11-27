@@ -57,13 +57,13 @@ public class ItemPedidoDAO {
         ResultSet resultSet = null;
 
         /*Define por quais campos o usuário deseja realizar a pesquisa*/
-        boolean selectByDescricao = produto != null && !produto.isEmpty();
+        boolean selectByProduto = produto != null && !produto.isEmpty();
         boolean selectByTipoChocolate = tipoChocolate != null && !tipoChocolate.isEmpty();
         
         //Cria a query
         String sql =    "SELECT p.*, tc.descricao as tipo_chocolate FROM produto p LEFT JOIN tipo_chocolate tc ON p.id_tipo_chocolate = tc.id_tipo_chocolate " +
                             "WHERE 1 = 1" +
-                                (selectByDescricao ?  "AND unaccent(p.descricao) ILIKE unaccent(?)" : "") +  // Se o usuário deseja pesquisar pela descrição, adiciona a condição à query
+                                (selectByProduto ?  "AND unaccent(p.descricao) ILIKE unaccent(?)" : "") +  // Se o usuário deseja pesquisar pela descrição, adiciona a condição à query
                                 (selectByTipoChocolate ? "AND tc.descricao = ?" : "") + // Se o usuário deseja pesquisar pelo tipo do chocolate, adiciona a condição à query
                         "ORDER BY p.descricao, tc.descricao, p.vlr_unitario";
 
@@ -77,7 +77,7 @@ public class ItemPedidoDAO {
             statement = DBConnection.getConnection().prepareStatement(sql);
 
             //Configura os parâmetros necessários
-            if(selectByDescricao) {
+            if(selectByProduto) {
                 statement.setString(paramIndexCount, produto);
                 paramIndexCount++; //Incrementa o índice do parâmetro para que o próximo seja configurado corretamente
             } 
