@@ -112,11 +112,23 @@ public class PedidoController extends SuperController<Pedido> {
 
     @Override
     public void modelToFields(Pedido pedido) {
-        // TODO Auto-generated method stub
+        //Mapeamento de campos
+        this.pedidoView.getEdtCliente().setText(pedido.getCliente().getNome());
+        this.pedidoView.getEdtCodCliente().setText(pedido.getCliente().getID().toString());
+        this.pedidoView.getDtChooserDtPedido().setDate(pedido.getDtHrPedido());
+        this.pedidoView.getDtChooserDtEntrega().setDate(pedido.getDtHrEntrega());
+        this.pedidoView.getEdtVlrTotalPedido().setText(pedido.getVlrTotalPedido().toString());
+        this.pedidoView.getEdtDesconto().setText(pedido.getDesconto().toString());
+        this.pedidoView.getCmbMtdPagto().setSelectedItem(pedido.getMetodoPagto());
+        this.pedidoView.getEdtDestinatario().setText(pedido.getNomeDestinatario());
+        this.pedidoView.getCkBRetirada().setSelected(pedido.isRetiradaLoja());
+        this.pedidoView.getCmbSttsPagto().setSelectedItem(pedido.getStatusPagto().getDescricao());
+        this.pedidoView.getCmbSttsPedido().setSelectedItem(pedido.getStatusPedido().getDescricao());
+        this.pedidoView.getEdtObs().setText(pedido.getObservacoes());
     }
 
     @Override
-    public Object fieldsToModel() {
+    public Pedido fieldsToModel() {
         // TODO Auto-generated method stub
         return null;
     }
