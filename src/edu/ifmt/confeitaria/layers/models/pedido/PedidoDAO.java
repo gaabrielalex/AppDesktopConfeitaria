@@ -92,8 +92,8 @@ public class PedidoDAO {
         boolean selectByStatusPedido = statusPedido != null;
         
         //Cria a query
-        String sql =    "SELECT p.*, c.*, mp.descricao as metodo_pagto FROM pedido p LEFT JOIN cliente c ON p.id_cliente = c.id_cliente LEFT JOIN metodo_pagto mp ON p.id_metodo_pagto = mp.id_metodo_pagto " + 
-                            "WHERE 1 = 1" +
+        String sql =    "SELECT u.*, p.*, c.*, mp.descricao as metodo_pagto FROM usuario, pedido p LEFT JOIN cliente c ON p.id_cliente = c.id_cliente LEFT JOIN metodo_pagto mp ON p.id_metodo_pagto = mp.id_metodo_pagto " + 
+                            "WHERE p.id_usuario = u.id_usuario " +
                                 (selectByNomeCliente ?  "AND unaccent(c.nome) ILIKE unaccent(?)" : "") +  // Se o usuário deseja pesquisar pelo nome do cliente, adiciona a condição à query
                                 (selectByNomeDestinatario ?  "AND unaccent(p.nome_destinatario) ILIKE unaccent(?)" : "") +  // Se o usuário deseja pesquisar pelo nome do destinatário, adiciona a condição à query
                                 (selectByStatusPagto ?  "AND p.status_pagto = ?" : "") +  // Se o usuário deseja pesquisar pelo status do pagamento, adiciona a condição à query
