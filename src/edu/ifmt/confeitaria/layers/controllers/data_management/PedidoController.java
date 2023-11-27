@@ -46,7 +46,19 @@ public class PedidoController extends SuperController<Pedido> {
         this.pedidoView.getCmbSttsPagto().removeAllItems();
         this.pedidoView.getCmbSttsPedido().removeAllItems();
         this.pedidoView.getCmbMtdPagto().removeAllItems();
-        
+        this.pedidoView.getCmbSttsPagtoFiltro().removeAllItems();
+        this.pedidoView.getCmbSttsPedidoFiltro().removeAllItems();
+        for (Pedido.StatusPagto value : Pedido.StatusPagto.values()) {
+            this.pedidoView.getCmbSttsPagto().addItem(Character.toString(value.getDescricao()));
+            this.pedidoView.getCmbSttsPagtoFiltro().addItem(Character.toString(value.getDescricao()));
+        }
+        for (Pedido.StatusPedido value : Pedido.StatusPedido.values()) {
+            this.pedidoView.getCmbSttsPedido().addItem(Character.toString(value.getDescricao()));
+            this.pedidoView.getCmbSttsPedidoFiltro().addItem(Character.toString(value.getDescricao()));
+        }
+        for (String value : this.pedidoService.selectAllMetodoPagto()) {
+            this.pedidoView.getCmbMtdPagto().addItem(value);
+        }
 
         this.pedidoView.setVisible(true);
     }

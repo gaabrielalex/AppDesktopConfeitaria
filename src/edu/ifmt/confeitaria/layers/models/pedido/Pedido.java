@@ -8,7 +8,7 @@ import edu.ifmt.confeitaria.layers.models.usuario.Usuario;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperModel;
 
 public class Pedido extends SuperModel {
-    enum StatusPagto {
+    public enum StatusPagto {
         PAGO('P'),
         ABERTO('A');
 
@@ -23,7 +23,7 @@ public class Pedido extends SuperModel {
         }
     }
 
-    enum StatusPedido {
+    public enum StatusPedido {
         ATIVO('A'),
         PRONTO('P'),
         ENTREGUE('E'),
