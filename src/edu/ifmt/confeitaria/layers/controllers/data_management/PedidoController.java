@@ -14,6 +14,7 @@ import edu.ifmt.confeitaria.layers.models.pedido.PedidoService;
 import edu.ifmt.confeitaria.layers.views.data_management.PedidoView;
 import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperController;
+import edu.ifmt.confeitaria.util.views.ViewUtils;
 
 public class PedidoController extends SuperController<Pedido> {
     private final PedidoView pedidoView;
@@ -59,6 +60,10 @@ public class PedidoController extends SuperController<Pedido> {
         for (String value : this.pedidoService.selectAllMetodoPagto()) {
             this.pedidoView.getCmbMtdPagto().addItem(value);
         }
+        this.pedidoView.getCmbSttsPagtoFiltro().addItem(ViewUtils.ALL_OPTIONS_TEXT);
+        this.pedidoView.getCmbSttsPedidoFiltro().addItem(ViewUtils.ALL_OPTIONS_TEXT);
+        this.pedidoView.getCmbSttsPagtoFiltro().setSelectedItem(ViewUtils.ALL_OPTIONS_TEXT);
+        this.pedidoView.getCmbSttsPedidoFiltro().setSelectedItem(ViewUtils.ALL_OPTIONS_TEXT);
 
         this.pedidoView.setVisible(true);
     }
