@@ -128,8 +128,27 @@ public class PedidoController extends SuperController<Pedido> {
 
     @Override
     public Pedido fieldsToModel() {
-        // TODO Auto-generated method stub
-        return null;
+        return new Pedido(
+            null,
+            this.pedidoView.getDtChooserDtPedido().getDate(),
+            this.pedidoView.getDtChooserDtEntrega().getDate(),
+            this.pedidoView.getEdtVlrTotalPedido().getText().isEmpty() ? null : Double.parseDouble(this.pedidoView.getEdtVlrTotalPedido().getText()),
+            this.pedidoView.getEdtDesconto().getText().isEmpty() ? null : Double.parseDouble(this.pedidoView.getEdtDesconto().getText()),
+            this.pedidoView.getCmbMtdPagto().getSelectedItem().toString(),
+            this.pedidoView.getEdtDestinatario().getText(),
+            this.pedidoView.getCkBRetirada().isSelected(),
+            StatusPagto.valueOf(this.pedidoView.getCmbSttsPagto().getSelectedItem().toString()),
+            StatusPedido.valueOf(this.pedidoView.getCmbSttsPedido().getSelectedItem().toString()),
+            this.pedidoView.getEdtObs().getText()
+            new Cliente(
+                Integer.parseInt(this.pedidoView.getEdtCodCliente().getText()),
+                this.pedidoView.getEdtCliente().getText(),
+                null,
+                null,
+                null,
+                null
+            ),
+        );
     }
 
 }

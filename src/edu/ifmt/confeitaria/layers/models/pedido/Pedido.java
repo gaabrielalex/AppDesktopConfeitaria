@@ -40,6 +40,8 @@ public class Pedido extends SuperModel {
         }        
     }
 
+    private Usuario usuario;
+    private Cliente cliente;
     private Date dtHrPedido;
     private Date dtHrEntrega;
     private BigDecimal vlrTotalPedido;
@@ -49,19 +51,19 @@ public class Pedido extends SuperModel {
     private StatusPagto statusPagto;
     private StatusPedido statusPedido;
     private String observacoes;
-    private Cliente cliente;
     private String MetodoPagto;
-    private Usuario usuario;
 
     /* Construtor vazio para configurações do DatabaseAcessComponentManager */
     public Pedido() {
         super(null);
     }
 
-    public Pedido(Long ID, Date dtHrPedido, Date dtHrEntrega, BigDecimal vlrTotalPedido, BigDecimal desconto,
-            String nomeDestinatario, boolean retiradaLoja, StatusPagto statusPagto, StatusPedido statusPedido,
-            String observacoes, Cliente cliente, String metodoPagto, Usuario usuario) {
+    public Pedido(Long ID, Usuario usuario, Cliente cliente, Date dtHrPedido, Date dtHrEntrega,
+            BigDecimal vlrTotalPedido, BigDecimal desconto, String nomeDestinatario, boolean retiradaLoja,
+            StatusPagto statusPagto, StatusPedido statusPedido, String observacoes, String metodoPagto) {
         super(ID);
+        this.usuario = usuario;
+        this.cliente = cliente;
         this.dtHrPedido = dtHrPedido;
         this.dtHrEntrega = dtHrEntrega;
         this.vlrTotalPedido = vlrTotalPedido;
@@ -71,9 +73,23 @@ public class Pedido extends SuperModel {
         this.statusPagto = statusPagto;
         this.statusPedido = statusPedido;
         this.observacoes = observacoes;
-        this.cliente = cliente;
         MetodoPagto = metodoPagto;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public Date getDtHrPedido() {
@@ -148,27 +164,11 @@ public class Pedido extends SuperModel {
         this.observacoes = observacoes;
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
     public String getMetodoPagto() {
         return MetodoPagto;
     }
 
     public void setMetodoPagto(String metodoPagto) {
         MetodoPagto = metodoPagto;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 }
