@@ -53,9 +53,9 @@ public class PedidoService extends SuperService<Pedido> {
         return this.pedidoDAO.update(pedido, pedidoOriginal.getID());
     }
 
-    // @Override
-    // public boolean delete(Produto produto) {
-    //     //Solita ao DAO a exclusão do produto no BD já retornando o resultado
-    //     return this.pedidoDAO.delete(produto.getID());
-    // }
+    @Override
+    public boolean delete(Pedido pedido) {
+        //Solita ao DAO a exclusão do pedido no BD já retornando o resultado
+        return this.pedidoDAO.delete(pedido.getID());
+    }
 }
