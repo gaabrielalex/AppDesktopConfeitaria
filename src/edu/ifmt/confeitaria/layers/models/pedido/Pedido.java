@@ -169,6 +169,6 @@ public class Pedido extends SuperModel {
     }
 
     public void setMetodoPagto(String metodoPagto) {
-        metodoPagto = metodoPagto;
+        this.metodoPagto = metodoPagto;
     }
 }
