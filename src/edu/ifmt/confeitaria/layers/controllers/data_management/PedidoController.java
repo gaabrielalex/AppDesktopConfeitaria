@@ -124,8 +124,8 @@ public class PedidoController extends SuperController<Pedido> {
         this.pedidoView.getCmbMtdPagto().setSelectedItem(pedido.getMetodoPagto());
         this.pedidoView.getEdtDestinatario().setText(pedido.getNomeDestinatario());
         this.pedidoView.getCkBRetirada().setSelected(pedido.isRetiradaLoja());
-        this.pedidoView.getCmbSttsPagto().setSelectedItem(pedido.getStatusPagto().getDescricao());
-        this.pedidoView.getCmbSttsPedido().setSelectedItem(pedido.getStatusPedido().getDescricao());
+        this.pedidoView.getCmbSttsPagto().setSelectedItem(pedido.getStatusPagto() == null ? null : pedido.getStatusPagto().getDescricao());
+        this.pedidoView.getCmbSttsPedido().setSelectedItem(pedido.getStatusPedido() == null ? null : pedido.getStatusPedido().getDescricao());
         this.pedidoView.getEdtObs().setText(pedido.getObservacoes());
     }
 

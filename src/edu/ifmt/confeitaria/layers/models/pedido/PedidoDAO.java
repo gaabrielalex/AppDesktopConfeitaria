@@ -288,13 +288,16 @@ public class PedidoDAO {
             StatusPagto statusPagto;
             StatusPedido statusPedido;
             try {
+                // statusPagto = StatusPagto.valueOf(resultSet.getString("status_pagto"));
                 statusPagto = StatusPagto.valueOf(resultSet.getString("status_pagto"));
             } catch (Exception e) {
+                e.printStackTrace();
                 statusPagto = null;
             }
             try {
                 statusPedido = StatusPedido.valueOf(resultSet.getString("status_pedido"));
             } catch (Exception e) {
+                e.printStackTrace();
                 statusPedido = null;
             }
 
