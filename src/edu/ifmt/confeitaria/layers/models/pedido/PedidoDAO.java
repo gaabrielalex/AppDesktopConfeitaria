@@ -92,7 +92,7 @@ public class PedidoDAO {
         boolean selectByStatusPedido = statusPedido != null;
         
         //Cria a query
-        String sql =    "SELECT u.*, p.*, c.*, mp.descricao as metodo_pagto FROM usuario u, pedido p LEFT JOIN cliente c ON p.id_cliente = c.id_cliente LEFT JOIN metodo_pagto mp ON p.id_metodo_pagto = mp.id_metodo_pagto " + 
+        String sql =    "SELECT u.*, u.nome AS nome_usuario, p.*, c.*, c.nome AS nome_cliente, mp.descricao AS metodo_pagto FROM usuario u, pedido p LEFT JOIN cliente c ON p.id_cliente = c.id_cliente LEFT JOIN metodo_pagto mp ON p.id_metodo_pagto = mp.id_metodo_pagto " + 
                             "WHERE p.id_usuario = u.id_usuario " +
                                 (selectByNomeCliente ?  "AND unaccent(c.nome) ILIKE unaccent(?)" : "") +  // Se o usuário deseja pesquisar pelo nome do cliente, adiciona a condição à query
                                 (selectByNomeDestinatario ?  "AND unaccent(p.nome_destinatario) ILIKE unaccent(?)" : "") +  // Se o usuário deseja pesquisar pelo nome do destinatário, adiciona a condição à query
@@ -315,13 +315,13 @@ public class PedidoDAO {
                 resultSet.getLong("id_pedido"),
                 new Usuario(
                     resultSet.getLong("id_usuario"),
-                    resultSet.getString("nome"),
+                    resultSet.getString("nome_usuario"),
                     resultSet.getString("login"),
                     resultSet.getString("senha")
                 ),
                 new Cliente(
                     resultSet.getLong("id_cliente"),
-                    resultSet.getString("nome"),
+                    resultSet.getString("nome_cliente"),
                     resultSet.getString("cpf"),
                     resultSet.getString("telefones"),
                     resultSet.getString("endereco"),
