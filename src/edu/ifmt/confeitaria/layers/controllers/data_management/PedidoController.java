@@ -8,12 +8,14 @@ import javax.swing.JFrame;
 
 import edu.ifmt.confeitaria.layers.models.cliente.ClienteDAO;
 import edu.ifmt.confeitaria.layers.models.cliente.ClienteService;
+import edu.ifmt.confeitaria.layers.models.pedido.PedidoService;
 import edu.ifmt.confeitaria.layers.views.data_management.PedidoView;
 import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperController;
 
 public class PedidoController extends SuperController {
     private final PedidoView pedidoView;
+    private final PedidoService pedidoService;
     private DatabaseAccessComponentManager pedidoDBCManager;
     
     public PedidoController(JFrame previousView, DatabaseAccessComponentManager pedidoDBCManager) {
