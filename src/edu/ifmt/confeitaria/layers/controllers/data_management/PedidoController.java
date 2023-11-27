@@ -55,12 +55,12 @@ public class PedidoController extends SuperController<Pedido> {
         this.pedidoView.getCmbSttsPagtoFiltro().removeAllItems();
         this.pedidoView.getCmbSttsPedidoFiltro().removeAllItems();
         for (Pedido.StatusPagto value : Pedido.StatusPagto.values()) {
-            this.pedidoView.getCmbSttsPagto().addItem(value.toString().toLowerCase()
-            this.pedidoView.getCmbSttsPagtoFiltro().addItem(value.toString());
+            this.pedidoView.getCmbSttsPagto().addItem(ViewUtils.customToLowerCase(value.toString()));
+            this.pedidoView.getCmbSttsPagtoFiltro().addItem(ViewUtils.customToLowerCase(value.toString()));
         }
         for (Pedido.StatusPedido value : Pedido.StatusPedido.values()) {
-            this.pedidoView.getCmbSttsPedido().addItem(Character.toString(value.getDescricao()));
-            this.pedidoView.getCmbSttsPedidoFiltro().addItem(Character.toString(value.getDescricao()));
+            this.pedidoView.getCmbSttsPedido().addItem(ViewUtils.customToLowerCase(value.toString()));
+            this.pedidoView.getCmbSttsPedidoFiltro().addItem(ViewUtils.customToLowerCase(value.toString()));
         }
         for (String value : this.pedidoService.selectAllMetodoPagto()) {
             this.pedidoView.getCmbMtdPagto().addItem(value);
