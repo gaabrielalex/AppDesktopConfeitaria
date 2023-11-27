@@ -77,11 +77,16 @@ public class PedidoController extends SuperController<Pedido> {
         new ClienteController(this.pedidoView, new ClienteService(new ClienteDAO()), new DatabaseAccessComponentManager<Cliente>()).displayViewForLookUp();
     }
 
-    public void partialSearch(String nomeCliente, String nomeDestinatario, StatusPagto statusPagto, StatusPedido statusPedido) {
-        if(tipoChocolate.equals(ViewUtils.ALL_OPTIONS_TEXT)) {
-            tipoChocolate = null;
+    public void partialSearch(String nomeCliente, String nomeDestinatario, String statusPagto, String statusPedido) {
+        if (statusPagto.equals(ViewUtils.ALL_OPTIONS_TEXT)) {
+            statusPagto = null;
         }
-        this.produtoDBCManager.setTemporaryTDataList(this.produtoService.partialSearch(descricao, tipoChocolate));
+        if (statusPedido.equals(ViewUtils.ALL_OPTIONS_TEXT)) {
+            statusPedido = null;
+        }
+        this.pedidoDBCManager.setTemporaryTDataList(this.pedidoService.partialSearch(nomeCliente, nomeDestinatario,
+                statusPagto == null ? null : StatusPagto.valueOf(statusPagto),
+                statusPedido == null ? null : StatusPedido.valueOf(statusPedido)));
     }
 
     @Override
