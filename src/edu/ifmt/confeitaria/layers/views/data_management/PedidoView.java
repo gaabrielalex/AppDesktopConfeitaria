@@ -189,7 +189,7 @@ public class PedidoView extends SuperView {
 
         tblPedido.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, "23/02/2003 - 18:00", null, "R$ 10.000,99", "R$ 1.000,99", "cartão de crédito", null, null, "Aberto", "Cancelado", null},
+                {null, null, null, null, null, "23/02/2003 - 18:00", null, "R$ 10.000,99", "R$ 1.000,99", "cartão de crédito", null, null, "Cancelado", "Aberto", null},
                 {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
@@ -207,7 +207,7 @@ public class PedidoView extends SuperView {
                 {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Código", "Cliente", "Telefones", "Endereço", "Link Endereço", "Data Pedido", "Data Entrega", "Valor Total", "Desconto", "Método Pag.", "Destinatário", "Retirada na Loja", "Stts Pag.", "Stts Pedido", "Observações"
+                "Código", "Cliente", "Telefones", "Endereço", "Link Endereço", "Data Pedido", "Data Entrega", "Valor Total", "Desconto", "Método Pag.", "Destinatário", "Retirada na Loja", "Stts Pedido", "Stts Pag.", "Observações"
             }
         ) {
             Class[] types = new Class [] {
@@ -236,7 +236,7 @@ public class PedidoView extends SuperView {
             tblPedido.getColumnModel().getColumn(9).setPreferredWidth(105);
             tblPedido.getColumnModel().getColumn(10).setPreferredWidth(100);
             tblPedido.getColumnModel().getColumn(11).setPreferredWidth(100);
-            tblPedido.getColumnModel().getColumn(12).setPreferredWidth(60);
+            tblPedido.getColumnModel().getColumn(13).setPreferredWidth(60);
             tblPedido.getColumnModel().getColumn(14).setPreferredWidth(630);
         }
 
