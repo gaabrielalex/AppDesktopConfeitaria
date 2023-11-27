@@ -78,7 +78,7 @@ public class PedidoDAO {
     }
 
     public List<Pedido> selectAll() {
-        return this.partialSearch(null, null);
+        return this.partialSearch(null, null, null, null);
     }
     
     public List<Pedido> partialSearch(String nomeCliente, String nomeDestinatario, StatusPagto statusPagto, StatusPedido statusPedido) {
