@@ -97,27 +97,12 @@ public class PedidoController extends SuperController<Pedido> {
         if(pedido.getCliente() == null) {
             pedido.setCliente(new Cliente());
         }
-        if(pedido.getCliente().getNome() == null) {
-            pedido.getCliente().setNome("");
-        }
-        if(pedido.getCliente().getCPF() == null) {
-            pedido.getCliente().setCPF("");
-        }
-        if(pedido.getCliente().getTelefones() == null) {
-            pedido.getCliente().setTelefones("");
-        }
-        if(pedido.getCliente().getEndereco() == null) {
-            pedido.getCliente().setEndereco("");
-        }
-        if(pedido.getCliente().getLinkEndereco() == null) {
-            pedido.getCliente().setLinkEndereco("");
-        }
         if(pedido.getUsuario() == null) {
             pedido.setUsuario(new Usuario());
         }
 
         return new Object[]{
-            pedido.getID(),
+            pedido.getID() == null ? "" : pedido.getID(),
             pedido.getCliente().getNome(),
             pedido.getCliente().getTelefones(),
             pedido.getCliente().getEndereco(),
@@ -137,8 +122,15 @@ public class PedidoController extends SuperController<Pedido> {
 
     @Override
     public void modelToFields(Pedido pedido) {
+        if(pedido.getCliente() == null) {
+            pedido.setCliente(new Cliente());
+        }
+        if(pedido.getUsuario() == null) {
+            pedido.setUsuario(new Usuario());
+        }
+
         this.pedidoView.getEdtCliente().setText(pedido.getCliente().getNome());
-        this.pedidoView.getEdtCodCliente().setText(pedido.getCliente().getID().toString());
+        this.pedidoView.getEdtCodCliente().setText(pedido.getCliente().getID() == null ? "" : pedido.getCliente().getID().toString());
         this.pedidoView.getDtChooserDtPedido().setDate(pedido.getDtHrPedido());
         this.pedidoView.getDtChooserDtEntrega().setDate(pedido.getDtHrEntrega());
         this.pedidoView.getEdtVlrTotalPedido().setText(pedido.getVlrTotalPedido() == null ? "" : pedido.getVlrTotalPedido().toString());
