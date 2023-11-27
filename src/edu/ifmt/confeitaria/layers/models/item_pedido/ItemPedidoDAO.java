@@ -6,6 +6,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.ifmt.confeitaria.layers.models.cliente.Cliente;
+import edu.ifmt.confeitaria.layers.models.pedido.Pedido;
+import edu.ifmt.confeitaria.layers.models.pedido.Pedido.StatusPagto;
+import edu.ifmt.confeitaria.layers.models.pedido.Pedido.StatusPedido;
+import edu.ifmt.confeitaria.layers.models.produto.Produto;
+import edu.ifmt.confeitaria.layers.models.usuario.Usuario;
 import edu.ifmt.confeitaria.util.database.DBConnection;
 
 public class ItemPedidoDAO {
@@ -249,11 +255,66 @@ public class ItemPedidoDAO {
         
         //Percorre o ResultSet preenchendo a lista de produtos
         while(resultSet.next()) {
-            itensPedido.add(new Produto(resultSet.getLong("id_produto"),
-                                    resultSet.getString("descricao"),
-                                    resultSet.getBigDecimal("vlr_unitario"),
-                                    resultSet.getString("observacoes"),
-                                    resultSet.getString("tipo_chocolate")));
+             StatusPagto statusPagto = null;
+            StatusPedido statusPedido = null;
+            try {
+                for (StatusPagto value : StatusPagto.values()) {
+                    if(value.getDescricao() == resultSet.getString("status_pagto").charAt(0)) {
+                        statusPagto = value;
+                        break;
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                for (StatusPedido value : StatusPedido.values()) {
+                    if(value.getDescricao() == resultSet.getString("status_pedido").charAt(0)) {
+                        statusPedido = value;
+                        break;
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            itensPedido.add(new ItemPedido(
+                    resultSet.getLong("id_item_pedido"),
+                    resultSet.getInt("qtde"),
+                    resultSet.getBigDecimal("vlr_total_item"),
+                    new Pedido(
+                        resultSet.getLong("id_pedido"),
+                        new Usuario(
+                            resultSet.getLong("id_usuario"),
+                            resultSet.getString("nome_usuario"),
+                            resultSet.getString("login"),
+                            resultSet.getString("senha")
+                        ),
+                        new Cliente(
+                            resultSet.getLong("id_cliente"),
+                            resultSet.getString("nome_cliente"),
+                            resultSet.getString("cpf"),
+                            resultSet.getString("telefones"),
+                            resultSet.getString("endereco"),
+                            resultSet.getString("link_endereco")
+                        ),
+                        resultSet.getDate("dt_hr_pedido"),
+                        resultSet.getDate("dt_hr_entrega"),
+                        resultSet.getBigDecimal("vlr_total_pedido"),
+                        resultSet.getBigDecimal("desconto"),
+                        resultSet.getString("nome_destinatario"),
+                        resultSet.getBoolean("retirada_loja"),
+                        statusPagto,
+                        statusPedido,
+                        resultSet.getString("observacoes"),
+                        resultSet.getString("metodo_pagto")
+                    ),
+                    new Produto(resultSet.getLong("id_produto"),
+                        resultSet.getString("descricao"),
+                        resultSet.getBigDecimal("vlr_unitario"),
+                        resultSet.getString("observacoes"),
+                        resultSet.getString("tipo_chocolate"))
+                ));
         }
         return itensPedido;
     }
