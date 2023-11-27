@@ -3,7 +3,7 @@ package edu.ifmt.confeitaria.layers.models.item_pedido;
 public class ItemPedidoDAO {
     private String lastSqlPartialSearch;
 
-    // /* ------ Operações básicas de banco de dados ------ */
+    /* ------ Operações básicas de banco de dados ------ */
     // public List<Produto> selectById(Long idProduto) {
     //     if(idProduto == null) return null;
 
