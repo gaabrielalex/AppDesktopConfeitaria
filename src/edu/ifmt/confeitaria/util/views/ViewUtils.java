@@ -9,6 +9,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 public class ViewUtils {
+    public static final String ALL_OPTIONS_TEXT = "Todos";
     public static final Color ERROR_COLOR = new Color(255, 0, 0);
     public static String SPECIAL_CHARACTERS= " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
     public static String NUMBERS = "0123456789";

@@ -16,9 +16,9 @@ import edu.ifmt.confeitaria.layers.models.produto.ProdutoService;
 import edu.ifmt.confeitaria.layers.views.data_management.ProdutoView;
 import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperController;
+import edu.ifmt.confeitaria.util.views.ViewUtils;
 
 public class ProdutoController extends SuperController<Produto> {
-    static final String allOptionsText = "Todos";
     private final ProdutoView produtoView;
     private final ProdutoService produtoService;
     private DatabaseAccessComponentManager<Produto> produtoDBCManager;
@@ -48,8 +48,8 @@ public class ProdutoController extends SuperController<Produto> {
             this.produtoView.getCmbTipoChoc().addItem(value);
             this.produtoView.getCmbTipoChocFiltro().addItem(value);
         }
-        this.produtoView.getCmbTipoChocFiltro().addItem(allOptionsText);
-        this.produtoView.getCmbTipoChocFiltro().setSelectedItem(allOptionsText);
+        this.produtoView.getCmbTipoChocFiltro().addItem(ViewUtils.ALL_OPTIONS_TEXT);
+        this.produtoView.getCmbTipoChocFiltro().setSelectedItem(ViewUtils.ALL_OPTIONS_TEXT);
         /*Cancela qualquer operação que possa estar sendo realizada, isso porque houve
         alterações acima ne um dos fields, logo, o manager entende que estava havendo uma
         operação de atualização, o que não era o caso, eram apenas configurações iniciais*/
@@ -68,7 +68,7 @@ public class ProdutoController extends SuperController<Produto> {
     }
 
     public void partialSearch(String descricao, String tipoChocolate) {
-        if(tipoChocolate.equals(allOptionsText)) {
+        if(tipoChocolate.equals(ViewUtils.ALL_OPTIONS_TEXT)) {
             tipoChocolate = null;
         }
         this.produtoDBCManager.setTemporaryTDataList(this.produtoService.partialSearch(descricao, tipoChocolate));
