@@ -92,7 +92,7 @@ public class PedidoDAO {
         boolean selectByStatusPedido = statusPedido != null;
         
         //Cria a query
-        String sql =    "SELECT u.*, p.*, c.*, mp.descricao as metodo_pagto FROM usuario, pedido p LEFT JOIN cliente c ON p.id_cliente = c.id_cliente LEFT JOIN metodo_pagto mp ON p.id_metodo_pagto = mp.id_metodo_pagto " + 
+        String sql =    "SELECT u.*, p.*, c.*, mp.descricao as metodo_pagto FROM usuario u, pedido p LEFT JOIN cliente c ON p.id_cliente = c.id_cliente LEFT JOIN metodo_pagto mp ON p.id_metodo_pagto = mp.id_metodo_pagto " + 
                             "WHERE p.id_usuario = u.id_usuario " +
                                 (selectByNomeCliente ?  "AND unaccent(c.nome) ILIKE unaccent(?)" : "") +  // Se o usuário deseja pesquisar pelo nome do cliente, adiciona a condição à query
                                 (selectByNomeDestinatario ?  "AND unaccent(p.nome_destinatario) ILIKE unaccent(?)" : "") +  // Se o usuário deseja pesquisar pelo nome do destinatário, adiciona a condição à query
@@ -285,6 +285,19 @@ public class PedidoDAO {
         
         //Percorre o ResultSet preenchendo a lista de produtos
         while(resultSet.next()) {
+            StatusPagto statusPagto;
+            StatusPedido statusPedido;
+            try {
+                statusPagto = StatusPagto.valueOf(resultSet.getString("status_pagto"));
+            } catch (Exception e) {
+                statusPagto = null;
+            }
+            try {
+                statusPedido = StatusPedido.valueOf(resultSet.getString("status_pedido"));
+            } catch (Exception e) {
+                statusPedido = null;
+            }
+
             produtos.add(new Pedido(
                 resultSet.getLong("id_pedido"),
                 new Usuario(
@@ -307,8 +320,8 @@ public class PedidoDAO {
                 resultSet.getBigDecimal("desconto"),
                 resultSet.getString("nome_destinatario"),
                 resultSet.getBoolean("retirada_loja"),
-                StatusPagto.valueOf(resultSet.getString("status_pagto")),
-                StatusPedido.valueOf(resultSet.getString("status_pedido")),
+                statusPagto,
+                statusPedido,
                 resultSet.getString("observacoes"),
                 resultSet.getString("metodo_pagto")
             ));
