@@ -943,6 +943,14 @@ public class PedidoView extends SuperView {
         return btnCancelItemPedido;
     }
 
+    public javax.swing.JComboBox<String> getCmbSttsPagtoFiltro() {
+        return cmbSttsPagtoFiltro;
+    }
+
+    public javax.swing.JComboBox<String> getCmbSttsPedidoFiltro() {
+        return cmbSttsPedidoFiltro;
+    }
+
     public javax.swing.JButton getBtnCancelPedido() {
         return btnCancelPedido;
     }

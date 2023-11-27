@@ -43,6 +43,11 @@ public class PedidoController extends SuperController<Pedido> {
 
     @Override
     public void displayView() {
+        this.pedidoView.getCmbSttsPagto().removeAllItems();
+        this.pedidoView.getCmbSttsPedido().removeAllItems();
+        this.pedidoView.getCmbMtdPagto().removeAllItems();
+        
+
         this.pedidoView.setVisible(true);
     }
     
