@@ -91,8 +91,23 @@ public class PedidoController extends SuperController<Pedido> {
 
     @Override
     public Object[] modelToTableRow(Pedido pedido) {
-        // TODO Auto-generated method stub
-       return null;
+        return new Object[]{
+            pedido.getID(),
+            pedido.getCliente().getNome(),
+            pedido.getCliente().getTelefones(),
+            pedido.getCliente().getEndereco(),
+            pedido.getCliente().getLinkEndereco(),
+            pedido.getDtHrPedido(),
+            pedido.getDtHrEntrega(),
+            pedido.getVlrTotalPedido(),
+            pedido.getDesconto(),
+            pedido.getMetodoPagto(),
+            pedido.getNomeDestinatario(),
+            pedido.isRetiradaLoja(),
+            pedido.getStatusPagto(),
+            pedido.getStatusPedido(),
+            pedido.getObservacoes()
+        };
     }
 
     @Override
