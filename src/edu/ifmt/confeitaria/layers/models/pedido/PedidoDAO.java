@@ -285,20 +285,27 @@ public class PedidoDAO {
         
         //Percorre o ResultSet preenchendo a lista de produtos
         while(resultSet.next()) {
-            StatusPagto statusPagto;
-            StatusPedido statusPedido;
+            StatusPagto statusPagto = null;
+            StatusPedido statusPedido = null;
             try {
-                // statusPagto = StatusPagto.valueOf(resultSet.getString("status_pagto"));
-                statusPagto = StatusPagto.valueOf(resultSet.getString("status_pagto"));
+                for (StatusPagto value : StatusPagto.values()) {
+                    if(value.getDescricao() == resultSet.getString("status_pagto").charAt(0)) {
+                        statusPagto = value;
+                        break;
+                    }
+                }
             } catch (Exception e) {
                 e.printStackTrace();
-                statusPagto = null;
             }
             try {
-                statusPedido = StatusPedido.valueOf(resultSet.getString("status_pedido"));
+                for (StatusPedido value : StatusPedido.values()) {
+                    if(value.getDescricao() == resultSet.getString("status_pedido").charAt(0)) {
+                        statusPedido = value;
+                        break;
+                    }
+                }
             } catch (Exception e) {
-                e.printStackTrace();
-                statusPedido = null;
+                // e.printStackTrace();
             }
 
             produtos.add(new Pedido(
