@@ -17,4 +17,43 @@ public class ItemPedido extends SuperModel {
         super(null);
     }
 
+    public ItemPedido(Long ID, int qtde, BigDecimal vlrTotalItem, Pedido pedido, Produto produto) {
+        super(ID);
+        this.qtde = qtde;
+        this.vlrTotalItem = vlrTotalItem;
+        this.pedido = pedido;
+        this.produto = produto;
+    }
+
+    public int getQtde() {
+        return qtde;
+    }
+
+    public void setQtde(int qtde) {
+        this.qtde = qtde;
+    }
+
+    public BigDecimal getVlrTotalItem() {
+        return vlrTotalItem;
+    }
+
+    public void setVlrTotalItem(BigDecimal vlrTotalItem) {
+        this.vlrTotalItem = vlrTotalItem;
+    }
+
+    public Pedido getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
+    }
+
+    public Produto getProduto() {
+        return produto;
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
+    }
 }
