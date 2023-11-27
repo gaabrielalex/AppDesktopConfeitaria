@@ -284,7 +284,7 @@ public class PedidoDAO {
 
     /* ------ Métodos/Operações auxiliares ------ */
     public List<Pedido> resultSetToList(ResultSet resultSet) throws SQLException {
-        List<Pedido> produtos = new ArrayList<>();
+        List<Pedido> pedido = new ArrayList<>();
         
         //Percorre o ResultSet preenchendo a lista de produtos
         while(resultSet.next()) {
@@ -311,7 +311,7 @@ public class PedidoDAO {
                 e.printStackTrace();
             }
 
-            produtos.add(new Pedido(
+            pedido.add(new Pedido(
                 resultSet.getLong("id_pedido"),
                 new Usuario(
                     resultSet.getLong("id_usuario"),
@@ -339,6 +339,6 @@ public class PedidoDAO {
                 resultSet.getString("metodo_pagto")
             ));
         }
-        return produtos;
+        return pedido;
     }   
 }

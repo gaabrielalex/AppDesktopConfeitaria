@@ -3,6 +3,7 @@ package edu.ifmt.confeitaria.layers.models.item_pedido;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.ifmt.confeitaria.util.database.DBConnection;
@@ -242,18 +243,18 @@ public class ItemPedidoDAO {
     //     }
     // }
 
-    // /* ------ Métodos/Operações auxiliares ------ */
-    // public List<ItemPedido> resultSetToList(ResultSet resultSet) throws SQLException {
-    //     List<ItemPedido> produtos = new ArrayList<>();
+    /* ------ Métodos/Operações auxiliares ------ */
+    public List<ItemPedido> resultSetToList(ResultSet resultSet) throws SQLException {
+        List<ItemPedido> produtos = new ArrayList<>();
         
-    //     //Percorre o ResultSet preenchendo a lista de produtos
-    //     while(resultSet.next()) {
-    //         produtos.add(new Produto(resultSet.getLong("id_produto"),
-    //                                 resultSet.getString("descricao"),
-    //                                 resultSet.getBigDecimal("vlr_unitario"),
-    //                                 resultSet.getString("observacoes"),
-    //                                 resultSet.getString("tipo_chocolate")));
-    //     }
-    //     return produtos;
-    // }
+        //Percorre o ResultSet preenchendo a lista de produtos
+        while(resultSet.next()) {
+            produtos.add(new Produto(resultSet.getLong("id_produto"),
+                                    resultSet.getString("descricao"),
+                                    resultSet.getBigDecimal("vlr_unitario"),
+                                    resultSet.getString("observacoes"),
+                                    resultSet.getString("tipo_chocolate")));
+        }
+        return produtos;
+    }
 }
