@@ -54,4 +54,49 @@ public class Produto extends SuperModel {
     public void setTipoChocolate(String tipo_chocolate) {
         this.tipoChocolate = tipo_chocolate;
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
+        result = prime * result + ((vlrUnitario == null) ? 0 : vlrUnitario.hashCode());
+        result = prime * result + ((observacoes == null) ? 0 : observacoes.hashCode());
+        result = prime * result + ((tipoChocolate == null) ? 0 : tipoChocolate.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Produto other = (Produto) obj;
+        if (descricao == null) {
+            if (other.descricao != null)
+                return false;
+        } else if (!descricao.equals(other.descricao))
+            return false;
+        if (vlrUnitario == null) {
+            if (other.vlrUnitario != null)
+                return false;
+        } else if (!vlrUnitario.equals(other.vlrUnitario))
+            return false;
+        if (observacoes == null) {
+            if (other.observacoes != null)
+                return false;
+        } else if (!observacoes.equals(other.observacoes))
+            return false;
+        if (tipoChocolate == null) {
+            if (other.tipoChocolate != null)
+                return false;
+        } else if (!tipoChocolate.equals(other.tipoChocolate))
+            return false;
+        return true;
+    }
+
+    
 }

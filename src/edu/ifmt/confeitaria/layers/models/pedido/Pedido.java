@@ -171,4 +171,86 @@ public class Pedido extends SuperModel {
     public void setMetodoPagto(String metodoPagto) {
         this.metodoPagto = metodoPagto;
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
+        result = prime * result + ((cliente == null) ? 0 : cliente.hashCode());
+        result = prime * result + ((dtHrPedido == null) ? 0 : dtHrPedido.hashCode());
+        result = prime * result + ((dtHrEntrega == null) ? 0 : dtHrEntrega.hashCode());
+        result = prime * result + ((vlrTotalPedido == null) ? 0 : vlrTotalPedido.hashCode());
+        result = prime * result + ((desconto == null) ? 0 : desconto.hashCode());
+        result = prime * result + ((nomeDestinatario == null) ? 0 : nomeDestinatario.hashCode());
+        result = prime * result + (retiradaLoja ? 1231 : 1237);
+        result = prime * result + ((statusPagto == null) ? 0 : statusPagto.hashCode());
+        result = prime * result + ((statusPedido == null) ? 0 : statusPedido.hashCode());
+        result = prime * result + ((observacoes == null) ? 0 : observacoes.hashCode());
+        result = prime * result + ((metodoPagto == null) ? 0 : metodoPagto.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Pedido other = (Pedido) obj;
+        if (usuario == null) {
+            if (other.usuario != null)
+                return false;
+        } else if (!usuario.equals(other.usuario))
+            return false;
+        if (cliente == null) {
+            if (other.cliente != null)
+                return false;
+        } else if (!cliente.equals(other.cliente))
+            return false;
+        if (dtHrPedido == null) {
+            if (other.dtHrPedido != null)
+                return false;
+        } else if (!dtHrPedido.equals(other.dtHrPedido))
+            return false;
+        if (dtHrEntrega == null) {
+            if (other.dtHrEntrega != null)
+                return false;
+        } else if (!dtHrEntrega.equals(other.dtHrEntrega))
+            return false;
+        if (vlrTotalPedido == null) {
+            if (other.vlrTotalPedido != null)
+                return false;
+        } else if (!vlrTotalPedido.equals(other.vlrTotalPedido))
+            return false;
+        if (desconto == null) {
+            if (other.desconto != null)
+                return false;
+        } else if (!desconto.equals(other.desconto))
+            return false;
+        if (nomeDestinatario == null) {
+            if (other.nomeDestinatario != null)
+                return false;
+        } else if (!nomeDestinatario.equals(other.nomeDestinatario))
+            return false;
+        if (retiradaLoja != other.retiradaLoja)
+            return false;
+        if (statusPagto != other.statusPagto)
+            return false;
+        if (statusPedido != other.statusPedido)
+            return false;
+        if (observacoes == null) {
+            if (other.observacoes != null)
+                return false;
+        } else if (!observacoes.equals(other.observacoes))
+            return false;
+        if (metodoPagto == null) {
+            if (other.metodoPagto != null)
+                return false;
+        } else if (!metodoPagto.equals(other.metodoPagto))
+            return false;
+        return true;
+    }
 }

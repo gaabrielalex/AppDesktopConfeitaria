@@ -81,13 +81,23 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
     public void modelToFields(ItemPedido itemPedido) {
         //ItemPedido não está funcionando por motivo desconhecido
         ItemPedido itemPedidoSelecionado = this.itemPedidoDBCManager.getTSelectedRecord().getValue();
+        List<ItemPedido> listaAtual = this.itemPedidoDBCManager.getTemporaryTDataList().getValue();
         if (itemPedidoSelecionado.getProduto() == null) {
             itemPedidoSelecionado.setProduto(new Produto());
         }
+        ItemPedido itemNulo = new ItemPedido(
+            null,
+            0,
+            null,
+            null,
+            new Produto()
+        );
         this.pedidoView.getEdtProduto().setText(itemPedidoSelecionado.getProduto().getDescricao());
         this.pedidoView.getEdtCodProduto().setText(itemPedidoSelecionado.getProduto().getID() == null ? "" : itemPedidoSelecionado.getProduto().getID().toString());
-        this.pedidoView.getEdtQtde().setText(this.itemPedidoDBCManager.get
-             Integer.toString(itemPedidoSelecionado.getQtde()));
+        this.pedidoView.getEdtQtde().setText(listaAtual != null && !listaAtual.isEmpty()
+            && !(listaAtual.size() == 1 && listaAtual.get(0).equals(itemNulo))
+                ? Integer.toString(itemPedidoSelecionado.getQtde())
+                : "" );
         this.pedidoView.getEdtVlrUnt().setText(itemPedidoSelecionado.getProduto().getVlrUnitario() == null ? "" : itemPedidoSelecionado.getProduto().getVlrUnitario().toString());
         this.pedidoView.getEdtVlrTotalItemPedido().setText(itemPedidoSelecionado.getVlrTotalItem() == null ? "" : itemPedidoSelecionado.getVlrTotalItem().toString());
     }
