@@ -19,35 +19,35 @@ public class ItemPedidoService extends SuperService<ItemPedido> {
         return this.itemPedidoDAO.selectAll();
     }
     
-    public List<ItemPedido> partialSearch(String nome, String tipoChocolate) {
+    public List<ItemPedido> partialSearch(String produto, String tipoChocolate) {
         //Remove os espaços em branco do início e do fim das strings necessárias
-        if(nome != null) nome = nome.stripLeading().stripTrailing();
+        if(produto != null) produto = produto.stripLeading().stripTrailing();
         
         //Solicita os dados ao DAO
-        return this.itemPedidoDAO.partialSearch(nome, tipoChocolate);
+        return this.itemPedidoDAO.partialSearch(produto, tipoChocolate);
     }
     
-    @Override
-    public List<ItemPedido> redoLastPartialSearch() {
-        //Solicita os dados ao DAO
-        return this.itemPedidoDAO.redoLastPartialSearch();
-    }
+    // @Override
+    // public List<ItemPedido> redoLastPartialSearch() {
+    //     //Solicita os dados ao DAO
+    //     return this.itemPedidoDAO.redoLastPartialSearch();
+    // }
     
-    @Override
-    public boolean insert(Produto produto) {
-        //Solita ao DAO a inserção do produto no BD já retornando o resultado
-        return this.itemPedidoDAO.insert(produto);
-    }
+    // @Override
+    // public boolean insert(Produto produto) {
+    //     //Solita ao DAO a inserção do produto no BD já retornando o resultado
+    //     return this.itemPedidoDAO.insert(produto);
+    // }
     
-    @Override
-    public boolean update(Produto produto, Produto produtoOriginal) {
-        //Solita ao DAO a atualização do produto no BD já retornando o resultado
-        return this.itemPedidoDAO.update(produto, produtoOriginal.getID());
-    }
+    // @Override
+    // public boolean update(Produto produto, Produto produtoOriginal) {
+    //     //Solita ao DAO a atualização do produto no BD já retornando o resultado
+    //     return this.itemPedidoDAO.update(produto, produtoOriginal.getID());
+    // }
 
-    @Override
-    public boolean delete(Produto produto) {
-        //Solita ao DAO a exclusão do produto no BD já retornando o resultado
-        return this.itemPedidoDAO.delete(produto.getID());
-    }
+    // @Override
+    // public boolean delete(Produto produto) {
+    //     //Solita ao DAO a exclusão do produto no BD já retornando o resultado
+    //     return this.itemPedidoDAO.delete(produto.getID());
+    // }
 }
