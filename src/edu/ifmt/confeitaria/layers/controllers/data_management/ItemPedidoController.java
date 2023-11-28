@@ -52,6 +52,7 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
     public void setProdutoFields(Produto produto) {
         this.pedidoView.getEdtProduto().setText(produto.getDescricao());
         this.pedidoView.getEdtCodProduto().setText(produto.getID() == null ? "" : produto.getID().toString());
+        this.pedidoView.getEdtVlrUnt().setText(produto.getVlrUnitario() == null ? "" : produto.getVlrUnitario().toString());
     }
 
     public void partialSearch(String produto, String tipoChocolate) {
