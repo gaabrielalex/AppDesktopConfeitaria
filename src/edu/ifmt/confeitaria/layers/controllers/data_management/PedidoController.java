@@ -11,6 +11,9 @@ import javax.swing.JFrame;
 import edu.ifmt.confeitaria.layers.models.cliente.Cliente;
 import edu.ifmt.confeitaria.layers.models.cliente.ClienteDAO;
 import edu.ifmt.confeitaria.layers.models.cliente.ClienteService;
+import edu.ifmt.confeitaria.layers.models.item_pedido.ItemPedido;
+import edu.ifmt.confeitaria.layers.models.item_pedido.ItemPedidoDAO;
+import edu.ifmt.confeitaria.layers.models.item_pedido.ItemPedidoService;
 import edu.ifmt.confeitaria.layers.models.pedido.Pedido;
 import edu.ifmt.confeitaria.layers.models.pedido.Pedido.StatusPagto;
 import edu.ifmt.confeitaria.layers.models.pedido.Pedido.StatusPedido;
@@ -36,7 +39,7 @@ public class PedidoController extends SuperController<Pedido> {
         this.pedidoView = new PedidoView(this, null, previousView);
 
         //Configura corretamente o ItemPedidoController
-        this.pedidoView.setItemPedidoController(new ItemPedidoController(this.pedidoView, new DatabaseAccessComponentManager()));
+        this.pedidoView.setItemPedidoController(new ItemPedidoController(this.pedidoView, new ItemPedidoService(new ItemPedidoDAO()),new DatabaseAccessComponentManager<ItemPedido>()));
 
         //Configurando o DatabaseAccessComponentManager
         List<Component> fields = Arrays.asList(pedidoView.getEdtCliente(), pedidoView.getEdtCliente(), 
