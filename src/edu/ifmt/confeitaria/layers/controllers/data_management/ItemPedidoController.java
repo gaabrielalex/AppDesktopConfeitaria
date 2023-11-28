@@ -46,6 +46,11 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
         this.itemPedidoDBCManager.configureComponents(ItemPedido.class, this, this.itemPedidoService, pedidoView.getBtnInsertItemPedido(),
             pedidoView.getBtnUpdateItemPedido(), pedidoView.getBtnDeleteItemPedido(), pedidoView.getBtnPostItemPedido(),
             pedidoView.getBtnCancelItemPedido(), pedidoView.getBtnRefreshItemPedido(), pedidoView.getTblItemPedido());
+
+        //Configurando o mestre detalhe
+        this.pedidoDBCManagerForMasterDetail.subscribeTSelectedRecord((pedido) -> {
+            this.partialSearch(
+        });
     }
 
     /* O método displey view não faz nada, pois a view em que a entidade do sistema 'item pedido' está
