@@ -45,7 +45,7 @@ public class ItemPedidoDAO {
     }
 
     public List<ItemPedido> selectAll() {
-        return this.partialSearch(null, null);
+        return this.partialSearch(null, null, null);
     }
     
     public List<ItemPedido> partialSearch(Long idPedido, String produto, String tipoChocolate) {
