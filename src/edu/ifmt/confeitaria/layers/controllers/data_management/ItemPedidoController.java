@@ -12,6 +12,7 @@ import edu.ifmt.confeitaria.layers.models.produto.ProdutoService;
 import edu.ifmt.confeitaria.layers.views.data_management.PedidoView;
 import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperController;
+import edu.ifmt.confeitaria.util.views.ViewUtils;
 
 public class ItemPedidoController extends SuperController<ItemPedido> {
     private final PedidoView pedidoView;
@@ -39,6 +40,13 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
     
     public void requestDisplayProdutoViewForLookUp(JFrame current) {
         new ProdutoController(current, new ProdutoService(new ProdutoDAO()), new DatabaseAccessComponentManager<Produto>()).displayViewForLookUp();
+    }
+
+    public void partialSearch(String produto, String tipoChocolate) {
+        if(tipoChocolate.equals(ViewUtils.ALL_OPTIONS_TEXT)) {
+            tipoChocolate = null;
+        }
+        this.itemPedidoDBCManager.setTemporaryTDataList(this.itemPedidoService.partialSearch(produto, tipoChocolate));
     }
 
     @Override

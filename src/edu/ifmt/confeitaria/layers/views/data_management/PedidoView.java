@@ -602,6 +602,11 @@ public class PedidoView extends SuperView {
         cmbTipoChocFiltro.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         btnPesquisarItemPedido.setText("Pesquisar");
+        btnPesquisarItemPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarItemPedidoActionPerformed(evt);
+            }
+        });
 
         tblItemPedido.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -860,6 +865,12 @@ public class PedidoView extends SuperView {
                 this.cmbSttsPagtoFiltro.getSelectedItem().toString().toUpperCase(),
                 this.cmbSttsPedidoFiltro.getSelectedItem().toString().toUpperCase());
     }//GEN-LAST:event_btnPesquisarPedidoActionPerformed
+
+    private void btnPesquisarItemPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarItemPedidoActionPerformed
+        this.itemPedidoController.partialSearch(this.edtClienteFiltro.getText(), this.edtDestinatarioFiltro.getText(), 
+                this.cmbSttsPagtoFiltro.getSelectedItem().toString().toUpperCase(),
+                this.cmbSttsPedidoFiltro.getSelectedItem().toString().toUpperCase());
+    }//GEN-LAST:event_btnPesquisarItemPedidoActionPerformed
 
     public static void main(String args[]) {
         NimbusTheme.setTheme();
