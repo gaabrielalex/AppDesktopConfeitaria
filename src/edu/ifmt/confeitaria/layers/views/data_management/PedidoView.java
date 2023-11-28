@@ -95,6 +95,8 @@ public class PedidoView extends SuperView {
         btnInsertItemPedido = new javax.swing.JButton();
         btnDeleteItemPedido = new javax.swing.JButton();
         btnUpdateItemPedido = new javax.swing.JButton();
+        edtVlrUnt = new javax.swing.JTextField();
+        lblVlrUnt = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -742,6 +744,8 @@ public class PedidoView extends SuperView {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        lblVlrUnt.setText("Vlr. Unit.:");
+
         javax.swing.GroupLayout pnlEditingItemPedidoLayout = new javax.swing.GroupLayout(pnlEditingItemPedido);
         pnlEditingItemPedido.setLayout(pnlEditingItemPedidoLayout);
         pnlEditingItemPedidoLayout.setHorizontalGroup(
@@ -753,8 +757,13 @@ public class PedidoView extends SuperView {
                     .addComponent(lblQtde, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlEditingItemPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(edtProduto)
-                    .addComponent(edtQtde, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(edtProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlEditingItemPedidoLayout.createSequentialGroup()
+                        .addComponent(edtQtde, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblVlrUnt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(edtVlrUnt, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(30, 30, 30)
                 .addGroup(pnlEditingItemPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblCodProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -765,7 +774,7 @@ public class PedidoView extends SuperView {
                     .addComponent(edtCodProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addComponent(btnPesquisarProduto)
-                .addGap(30, 30, 30))
+                .addGap(30, 39, Short.MAX_VALUE))
             .addGroup(pnlEditingItemPedidoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnlFiltroItemPedido, javax.swing.GroupLayout.DEFAULT_SIZE, 689, Short.MAX_VALUE)
@@ -792,7 +801,10 @@ public class PedidoView extends SuperView {
                     .addComponent(lblQtde)
                     .addComponent(lblVlrTotalItemPedido)
                     .addComponent(edtVlrTotalItemPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(edtQtde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(edtQtde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlEditingItemPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblVlrUnt)
+                        .addComponent(edtVlrUnt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
                 .addComponent(recordEditingItemPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -923,6 +935,7 @@ public class PedidoView extends SuperView {
     private javax.swing.JTextField edtQtde;
     private javax.swing.JTextField edtVlrTotalItemPedido;
     private javax.swing.JTextField edtVlrTotalPedido;
+    private javax.swing.JTextField edtVlrUnt;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblCliente;
     private javax.swing.JLabel lblClienteFiltro;
@@ -946,6 +959,7 @@ public class PedidoView extends SuperView {
     private javax.swing.JLabel lblTituloItemPedido;
     private javax.swing.JLabel lblTituloPedido;
     private javax.swing.JLabel lblVlrTotalItemPedido;
+    private javax.swing.JLabel lblVlrUnt;
     private javax.swing.JPanel pnlEditingItemPedido;
     private javax.swing.JPanel pnlEditingPedido;
     private javax.swing.JPanel pnlFiltroItemPedido;
