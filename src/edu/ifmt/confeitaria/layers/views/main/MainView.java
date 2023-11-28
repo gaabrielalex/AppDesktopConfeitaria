@@ -139,7 +139,7 @@ public class MainView extends SuperView {
     }//GEN-LAST:event_mnItemProdutoActionPerformed
 
     private void mnItemPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnItemPedidoActionPerformed
-        this.mainController.requestDisplayMenuItemView(new PedidoController(this, new PedidoService(new PedidoDAO()) ,new DatabaseAccessComponentManager<Pedido>()));
+        this.mainController.requestDisplayMenuItemView(new PedidoController(this, new PedidoService(new PedidoDAO()), new ProdutoService(new ProdutoDAO()), new DatabaseAccessComponentManager<Pedido>()));
     }//GEN-LAST:event_mnItemPedidoActionPerformed
 
     private void mnSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnSairMouseClicked

@@ -17,6 +17,7 @@ import edu.ifmt.confeitaria.layers.models.item_pedido.ItemPedidoService;
 import edu.ifmt.confeitaria.layers.models.pedido.Pedido;
 import edu.ifmt.confeitaria.layers.models.pedido.Pedido.StatusPagto;
 import edu.ifmt.confeitaria.layers.models.pedido.Pedido.StatusPedido;
+import edu.ifmt.confeitaria.layers.models.produto.ProdutoService;
 import edu.ifmt.confeitaria.layers.models.usuario.Usuario;
 import edu.ifmt.confeitaria.layers.models.usuario.UsuarioService;
 import edu.ifmt.confeitaria.layers.models.pedido.PedidoService;
@@ -28,12 +29,14 @@ import edu.ifmt.confeitaria.util.views.ViewUtils;
 public class PedidoController extends SuperController<Pedido> {
     private final PedidoView pedidoView;
     private final PedidoService pedidoService;
+    private final ProdutoService produtoService;
     private DatabaseAccessComponentManager<Pedido> pedidoDBCManager;
     
-    public PedidoController(JFrame previousView, PedidoService pedidoService, DatabaseAccessComponentManager<Pedido> pedidoDBCManager) {
+    public PedidoController(JFrame previousView, PedidoService pedidoService, ProdutoService produtoService, DatabaseAccessComponentManager<Pedido> pedidoDBCManager) {
         //Injeção de dependências
         this.pedidoDBCManager = pedidoDBCManager;
         this.pedidoService = pedidoService;
+        this.produtoService = produtoService;
 
         //Instancia a View e define esta instância como seu controlador
         this.pedidoView = new PedidoView(this, null, previousView);
@@ -58,6 +61,7 @@ public class PedidoController extends SuperController<Pedido> {
         this.pedidoView.getCmbMtdPagto().removeAllItems();
         this.pedidoView.getCmbSttsPagtoFiltro().removeAllItems();
         this.pedidoView.getCmbSttsPedidoFiltro().removeAllItems();
+        this.pedidoView.getCmbTipoChocFiltro().removeAllItems();
         for (Pedido.StatusPagto value : Pedido.StatusPagto.values()) {
             this.pedidoView.getCmbSttsPagto().addItem(ViewUtils.customToLowerCase(value.toString()));
             this.pedidoView.getCmbSttsPagtoFiltro().addItem(ViewUtils.customToLowerCase(value.toString()));
@@ -68,6 +72,9 @@ public class PedidoController extends SuperController<Pedido> {
         }
         for (String value : this.pedidoService.selectAllMetodoPagto()) {
             this.pedidoView.getCmbMtdPagto().addItem(value);
+        }
+        for (String value : this.produtoService.selectAllTipoChocolate()) {
+            this.pedidoView.getCmbTipoChocFiltro().addItem(value);
         }
         this.pedidoView.getCmbSttsPagtoFiltro().addItem(ViewUtils.ALL_OPTIONS_TEXT);
         this.pedidoView.getCmbSttsPedidoFiltro().addItem(ViewUtils.ALL_OPTIONS_TEXT);
