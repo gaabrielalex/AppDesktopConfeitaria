@@ -63,13 +63,13 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
 
     @Override
     public void modelToFields(ItemPedido itemPedido) {
-        if (itemPedido.getProduto() == null) {
-            itemPedido.setProduto(new Produto());
-        }
-        this.pedidoView.getEdtProduto().setText(itemPedido.getProduto().getDescricao());
-        this.pedidoView.getEdtCodProduto().setText(itemPedido.getProduto().getID() == null ? "" : itemPedido.getProduto().getID().toString());
+        // if (itemPedido.getProduto() == null) {
+        //     itemPedido.setProduto(new Produto());
+        // }
+        // this.pedidoView.getEdtProduto().setText(itemPedido.getProduto().getDescricao());
+        // this.pedidoView.getEdtCodProduto().setText(itemPedido.getProduto().getID() == null ? "" : itemPedido.getProduto().getID().toString());
         this.pedidoView.getEdtQtde().setText(Integer.toString(itemPedido.getQtde()));
-        this.pedidoView.getEdtVlrTotalItemPedido().setText(itemPedido.getProduto().getVlrUnitario().toString());
+        this.pedidoView.getEdtVlrTotalItemPedido().setText(itemPedido.getVlrTotalItem() == null ? "" : itemPedido.getVlrTotalItem().toString());
     }
 
     @Override
