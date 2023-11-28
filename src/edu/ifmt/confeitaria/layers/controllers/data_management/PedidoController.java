@@ -147,7 +147,6 @@ public class PedidoController extends SuperController<Pedido> {
         if(pedido.getUsuario() == null) {
             pedido.setUsuario(new Usuario());
         }
-
         this.pedidoView.getEdtCliente().setText(pedido.getCliente().getNome());
         this.pedidoView.getEdtCodCliente().setText(pedido.getCliente().getID() == null ? "" : pedido.getCliente().getID().toString());
         this.pedidoView.getDtChooserDtPedido().setDate(pedido.getDtHrPedido());

@@ -52,7 +52,7 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
     @Override
     public Object[] modelToTableRow(ItemPedido itemPedido) {
         return new Object[]{
-            itemPedido.getID(),
+            itemPedido.getID() == null ? "" : itemPedido.getID(),
             itemPedido.getProduto().getDescricao(),
             itemPedido.getProduto().getTipoChocolate(),
             itemPedido.getQtde(),
@@ -63,6 +63,9 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
 
     @Override
     public void modelToFields(ItemPedido itemPedido) {
+        if (itemPedido.getProduto() == null) {
+            itemPedido.setProduto(new Produto());
+        }
         this.pedidoView.getEdtProduto().setText(itemPedido.getProduto().getDescricao());
         this.pedidoView.getEdtCodProduto().setText(itemPedido.getProduto().getID() == null ? "" : itemPedido.getProduto().getID().toString());
         this.pedidoView.getEdtQtde().setText(Integer.toString(itemPedido.getQtde()));
