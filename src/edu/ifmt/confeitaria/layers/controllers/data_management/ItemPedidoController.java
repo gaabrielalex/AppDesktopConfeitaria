@@ -47,9 +47,10 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
             pedidoView.getBtnUpdateItemPedido(), pedidoView.getBtnDeleteItemPedido(), pedidoView.getBtnPostItemPedido(),
             pedidoView.getBtnCancelItemPedido(), pedidoView.getBtnRefreshItemPedido(), pedidoView.getTblItemPedido());
 
-        //Configurando o mestre detalhe
+        /* Configurando o mestre detalhe, a qualquer alteração no pedido selecionado,
+        a tabela de itens do pedido é atualizada em função do pedido selecionado */
         this.pedidoDBCManagerForMasterDetail.subscribeTSelectedRecord((pedido) -> {
-            this.partialSearch(
+            this.partialSearch(this.pedidoView.getEdtProduto().getText(), this.pedidoView.getCmbTipoChocFiltro().getSelectedItem().toString());
         });
     }
 
