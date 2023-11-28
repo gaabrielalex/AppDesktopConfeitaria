@@ -2,8 +2,6 @@ package edu.ifmt.confeitaria.layers.models.item_pedido;
 
 import java.util.List;
 
-import edu.ifmt.confeitaria.layers.models.produto.Produto;
-import edu.ifmt.confeitaria.layers.models.produto.ProdutoDAO;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperService;
 
 public class ItemPedidoService extends SuperService<ItemPedido> {
