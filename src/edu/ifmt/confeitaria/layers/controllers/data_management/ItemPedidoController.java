@@ -2,6 +2,8 @@ package edu.ifmt.confeitaria.layers.controllers.data_management;
 
 import javax.swing.JFrame;
 
+import edu.ifmt.confeitaria.layers.models.item_pedido.ItemPedido;
+import edu.ifmt.confeitaria.layers.models.item_pedido.ItemPedidoService;
 import edu.ifmt.confeitaria.layers.models.produto.Produto;
 import edu.ifmt.confeitaria.layers.models.produto.ProdutoDAO;
 import edu.ifmt.confeitaria.layers.models.produto.ProdutoService;
@@ -9,9 +11,10 @@ import edu.ifmt.confeitaria.layers.views.data_management.PedidoView;
 import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperController;
 
-public class ItemPedidoController extends SuperController {
+public class ItemPedidoController extends SuperController<ItemPedido> {
     private final PedidoView pedidoView;
-    private DatabaseAccessComponentManager itemPedidoDBCManager;
+    private final ItemPedidoService itemPedidoService;
+    private DatabaseAccessComponentManager<ItemPedido> itemPedidoDBCManager;
 
     public ItemPedidoController(PedidoView pedidoView, DatabaseAccessComponentManager itemPedidoDBCManager) {
         //Injeção de dependências
