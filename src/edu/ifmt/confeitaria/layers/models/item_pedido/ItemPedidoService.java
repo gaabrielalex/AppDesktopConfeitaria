@@ -13,7 +13,7 @@ public class ItemPedidoService extends SuperService<ItemPedido> {
         this.itemPedidoDAO = itemPedidoDAO;
     }
 
-    /* ----- Métodos principais de manipulação de dados ----- */}
+    /* ----- Métodos principais de manipulação de dados ----- */
     @Override
     public List<ItemPedido> selectAll() {
         return this.itemPedidoDAO.selectAll();
