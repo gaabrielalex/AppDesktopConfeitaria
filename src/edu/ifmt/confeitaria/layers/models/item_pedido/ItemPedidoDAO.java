@@ -6,12 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.ifmt.confeitaria.layers.models.cliente.Cliente;
 import edu.ifmt.confeitaria.layers.models.pedido.Pedido;
-import edu.ifmt.confeitaria.layers.models.pedido.Pedido.StatusPagto;
-import edu.ifmt.confeitaria.layers.models.pedido.Pedido.StatusPedido;
 import edu.ifmt.confeitaria.layers.models.produto.Produto;
-import edu.ifmt.confeitaria.layers.models.usuario.Usuario;
 import edu.ifmt.confeitaria.util.database.DBConnection;
 
 public class ItemPedidoDAO {
