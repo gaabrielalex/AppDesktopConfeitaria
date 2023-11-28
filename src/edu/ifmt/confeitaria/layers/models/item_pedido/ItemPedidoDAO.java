@@ -188,33 +188,33 @@ public class ItemPedidoDAO {
         }
     }
 
-    // public boolean delete(Long idItemPedido) {
-    //     if(idItemPedido == null) return false;
-    //     PreparedStatement statement = null;
+    public boolean delete(Long idItemPedido) {
+        if(idItemPedido == null) return false;
+        PreparedStatement statement = null;
 
-    //     //Cria a query
-    //     String sql =    "DELETE FROM produto " +
-    //                     "WHERE id_produto = ?";
+        //Cria a query
+        String sql =    "DELETE FROM produto " +
+                        "WHERE id_produto = ?";
         
-    //     try {
-    //         //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
-    //         statement = DBConnection.getConnection().prepareStatement(sql);
-    //         statement.setLong(1, idItemPedido);
+        try {
+            //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
+            statement = DBConnection.getConnection().prepareStatement(sql);
+            statement.setLong(1, idItemPedido);
             
-    //         //Executa a query
-    //         statement.executeUpdate();
+            //Executa a query
+            statement.executeUpdate();
 
-    //         //Se a exclusão foi realizada com sucesso, retorna true
-    //         return true;
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //         //Se a exclusão não foi realizada com sucesso, retorna false
-    //         return false;
-    //     } finally {
-    //         //Fecha a conexão com o banco de dados e os recursos criados a partir dela
-    //         DBConnection.closeConnection(statement);
-    //     }
-    // }
+            //Se a exclusão foi realizada com sucesso, retorna true
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            //Se a exclusão não foi realizada com sucesso, retorna false
+            return false;
+        } finally {
+            //Fecha a conexão com o banco de dados e os recursos criados a partir dela
+            DBConnection.closeConnection(statement);
+        }
+    }
 
     /* ------ Métodos/Operações auxiliares ------ */
     public List<ItemPedido> resultSetToList(ResultSet resultSet) throws SQLException {
