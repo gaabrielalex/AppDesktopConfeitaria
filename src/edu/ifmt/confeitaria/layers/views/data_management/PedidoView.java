@@ -361,6 +361,7 @@ public class PedidoView extends SuperView {
         dtChooserDtPedido.setDateFormatString("dd/MM/y  H:m");
 
         edtCliente.setEditable(false);
+        edtCliente.setEnabled(false);
 
         lblObs.setText("Observações:");
 
@@ -382,6 +383,7 @@ public class PedidoView extends SuperView {
         ckBRetirada.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         edtCodCliente.setEditable(false);
+        edtCodCliente.setEnabled(false);
 
         lblCodCliente.setText("Código C.:");
 
@@ -398,6 +400,7 @@ public class PedidoView extends SuperView {
         lblDestinatario.setText("Destinatário:");
 
         edtVlrTotalPedido.setEditable(false);
+        edtVlrTotalPedido.setEnabled(false);
 
         javax.swing.GroupLayout pnlEditingPedidoLayout = new javax.swing.GroupLayout(pnlEditingPedido);
         pnlEditingPedido.setLayout(pnlEditingPedidoLayout);
@@ -692,10 +695,13 @@ public class PedidoView extends SuperView {
         });
 
         edtProduto.setEditable(false);
+        edtProduto.setEnabled(false);
 
         edtVlrTotalItemPedido.setEditable(false);
+        edtVlrTotalItemPedido.setEnabled(false);
 
         edtCodProduto.setEditable(false);
+        edtCodProduto.setEnabled(false);
 
         lblCodProduto.setText("Código P.:");
 
