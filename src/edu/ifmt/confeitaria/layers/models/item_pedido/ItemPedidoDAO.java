@@ -61,7 +61,7 @@ public class ItemPedidoDAO {
         boolean selectByTipoChocolate = tipoChocolate != null && !tipoChocolate.isEmpty();
         
         //Cria a query
-        String sql =    "SELECT item.*, ped.*, prod.*, tc.descricao as tipo_chocolate FROM item_pedido item, pedido ped, produto prod LEFT JOIN tipo_chocolate tc ON p.id_tipo_chocolate = tc.id_tipo_chocolate " +
+        String sql =    "SELECT item.*, ped.*, prod.*, tc.descricao as tipo_chocolate FROM item_pedido item, pedido ped, produto prod LEFT JOIN tipo_chocolate tc ON prod.id_tipo_chocolate = tc.id_tipo_chocolate " +
                             "WHERE item.id_pedido = ped.id_pedido" +
                                 "AND item.id_produto = prod.id_produto " +
                                 (selectByProduto ?  "AND unaccent(prod.descricao) ILIKE unaccent(?)" : "") +  // Se o usuário deseja pesquisar pelo produto, adiciona a condição à query
