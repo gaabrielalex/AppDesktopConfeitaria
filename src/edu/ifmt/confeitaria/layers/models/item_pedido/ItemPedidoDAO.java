@@ -155,40 +155,38 @@ public class ItemPedidoDAO {
         }
     }
 
-    // public boolean update(Produto produto, Long originalID) {
-    //     if(originalID == null) return false;
-    //     PreparedStatement statement = null;
+    public boolean update(ItemPedido pedido, Long originalID) {
+        if(originalID == null) return false;
+        PreparedStatement statement = null;
 
-    //     //Cria a query
-    //         String sql =    "UPDATE produto " +
-    //                         "SET id_produto = ?, descricao = ?, vlr_unitario = ?, observacoes = ?," +
-    //                             "id_tipo_chocolate = (select id_tipo_chocolate from tipo_chocolate where descricao = ?) " +
-    //                         "WHERE id_produto = ?";
+        //Cria a query
+            String sql =    "UPDATE item_pedido " +
+                            "SET qtde = ?, vlr_total_item = ?, id_pedido = ?, id_produto = ? " +
+                            "WHERE id_item_pedido = ?";
 
-    //     try {
-    //         //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
-    //         statement = DBConnection.getConnection().prepareStatement(sql);
-    //         statement.setLong(1, produto.getID());
-    //         statement.setString(2, produto.getDescricao());
-    //         statement.setBigDecimal(3, produto.getVlrUnitario());
-    //         statement.setString(4, produto.getObservacoes());
-    //         statement.setString(5, produto.getTipoChocolate());
-    //         statement.setLong(6, originalID);
+        try {
+            //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
+            statement = DBConnection.getConnection().prepareStatement(sql);
+            statement.setInt(1, pedido.getQtde());
+            statement.setBigDecimal(2, pedido.getVlrTotalItem());
+            statement.setLong(3, pedido.getPedido().getID());
+            statement.setLong(4, pedido.getProduto().getID());
+            statement.setLong(5, originalID);
             
-    //         //Executa a query
-    //         statement.executeUpdate();
+            //Executa a query
+            statement.executeUpdate();
 
-    //         //Se a atualização foi realizada com sucesso, retorna true
-    //         return true;
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //         //Se a atualização não foi realizada com sucesso, retorna false
-    //         return false;
-    //     } finally {
-    //         //Fecha a conexão com o banco de dados e os recursos criados a partir dela
-    //         DBConnection.closeConnection(statement);
-    //     }
-    // }
+            //Se a atualização foi realizada com sucesso, retorna true
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            //Se a atualização não foi realizada com sucesso, retorna false
+            return false;
+        } finally {
+            //Fecha a conexão com o banco de dados e os recursos criados a partir dela
+            DBConnection.closeConnection(statement);
+        }
+    }
 
     // public boolean delete(Long idItemPedido) {
     //     if(idItemPedido == null) return false;
