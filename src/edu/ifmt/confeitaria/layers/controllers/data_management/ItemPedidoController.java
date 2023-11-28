@@ -31,7 +31,7 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
 
         //Configurando o DatabaseAccessComponentManager
         List<Component> fields = Arrays.asList(pedidoView.getEdtProduto(), pedidoView.getEdtCodProduto(), 
-            pedidoView.getEdtQtde(), pedidoView.getEdtVlrTotalItemPedido());
+            pedidoView.getEdtQtde(), pedidoView.getEdtVlrTotalItemPedido(), pedidoView.getEdtVlrUnt());
         this.itemPedidoDBCManager.setFields(fields);
         this.itemPedidoDBCManager.configureComponents(ItemPedido.class, this, this.itemPedidoService, pedidoView.getBtnInsertItemPedido(),
             pedidoView.getBtnUpdateItemPedido(), pedidoView.getBtnDeleteItemPedido(), pedidoView.getBtnPostItemPedido(),
