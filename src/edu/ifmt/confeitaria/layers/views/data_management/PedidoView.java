@@ -867,9 +867,7 @@ public class PedidoView extends SuperView {
     }//GEN-LAST:event_btnPesquisarPedidoActionPerformed
 
     private void btnPesquisarItemPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarItemPedidoActionPerformed
-        this.itemPedidoController.partialSearch(this.edtClienteFiltro.getText(), this.edtDestinatarioFiltro.getText(), 
-                this.cmbSttsPagtoFiltro.getSelectedItem().toString().toUpperCase(),
-                this.cmbSttsPedidoFiltro.getSelectedItem().toString().toUpperCase());
+        this.itemPedidoController.partialSearch(this.edtProdutoFiltro.getText(), this.cmbTipoChocFiltro.getSelectedItem().toString());
     }//GEN-LAST:event_btnPesquisarItemPedidoActionPerformed
 
     public static void main(String args[]) {
