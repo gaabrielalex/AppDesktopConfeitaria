@@ -61,8 +61,13 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
 
     @Override
     public ItemPedido fieldsToModel() {
-        // TODO Auto-generated method stub
-        return null;
+        return new ItemPedido(
+            null,
+            this.pedidoView.getEdtQtde().getText().equals("") ? 0 : Integer.parseInt(this.pedidoView.getEdtQtde().getText()),
+            this.pedidoView.getEdtVlrTotalItemPedido().getText().equals("") ? null : this.pedidoView.getEdtVlrTotalItemPedido().getText(),
+            this.pedidoView.getEdtVlrTotalItemPedido().getText(), 
+            Integer.parseInt(this.pedidoView.getEdtQtde().getText()), this.pedidoView.getEdtObs().getText(), 
+            this.pedidoView.getEdtTipoChoc().getText());
     }
 
 }

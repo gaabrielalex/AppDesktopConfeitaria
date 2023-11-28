@@ -155,7 +155,7 @@ public class ItemPedidoDAO {
 
         //Cria a query
             String sql =    "UPDATE item_pedido " +
-                            "SET qtde = ?, vlr_total_item = ?, id_pedido = ?, id_produto = ? " +
+                            "SET qtde = ?, vlr_total_item = ?, id_produto = ? " +
                             "WHERE id_item_pedido = ?";
 
         try {
@@ -163,9 +163,8 @@ public class ItemPedidoDAO {
             statement = DBConnection.getConnection().prepareStatement(sql);
             statement.setInt(1, pedido.getQtde());
             statement.setBigDecimal(2, pedido.getVlrTotalItem());
-            statement.setLong(3, pedido.getPedido().getID());
-            statement.setLong(4, pedido.getProduto().getID());
-            statement.setLong(5, originalID);
+            statement.setLong(3, pedido.getProduto().getID());
+            statement.setLong(4, originalID);
             
             //Executa a query
             statement.executeUpdate();
