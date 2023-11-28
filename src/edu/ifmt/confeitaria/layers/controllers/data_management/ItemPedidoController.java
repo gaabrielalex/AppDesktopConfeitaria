@@ -42,10 +42,12 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
     @Override
     public Object[] modelToTableRow(ItemPedido itemPedido) {
         return new Object[]{
-            // itemPedido.getDescricao(),
-            // itemPedido.getVlrUnitario(),
-            // itemPedido.getObservacoes(),
-            // itemPedido.getTipoChocolate()
+            itemPedido.getID(),
+            itemPedido.getProduto().getDescricao(),
+            itemPedido.getProduto().getTipoChocolate(),
+            itemPedido.getQtde(),
+            itemPedido.getProduto().getVlrUnitario(),
+            itemPedido.getVlrTotalItem(),
         };
     }
 
