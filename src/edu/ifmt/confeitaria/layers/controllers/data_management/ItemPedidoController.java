@@ -88,7 +88,7 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
             itemPedido.getProduto().getTipoChocolate(),
             listaAtual != null && !listaAtual.isEmpty()
             && !(listaAtual.size() == 1 && listaAtual.get(0).equals(this.itemNulo))
-                ? Integer.toString(itemPedidoSelecionado != null ? itemPedidoSelecionado.getQtde() : 0)
+                ? Integer.toString(itemPedido != null ? itemPedido.getQtde() : 0)
                 : "" ,
             itemPedido.getProduto().getVlrUnitario(),
             itemPedido.getVlrTotalItem(),
