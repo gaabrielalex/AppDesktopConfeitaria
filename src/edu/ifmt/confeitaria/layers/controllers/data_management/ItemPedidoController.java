@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
-import edu.ifmt.confeitaria.layers.models.cliente.Cliente;
 import edu.ifmt.confeitaria.layers.models.item_pedido.ItemPedido;
 import edu.ifmt.confeitaria.layers.models.item_pedido.ItemPedidoService;
 import edu.ifmt.confeitaria.layers.models.produto.Produto;
