@@ -1,5 +1,7 @@
 package edu.ifmt.confeitaria.layers.models.item_pedido;
 
+import java.util.List;
+
 import edu.ifmt.confeitaria.layers.models.produto.Produto;
 import edu.ifmt.confeitaria.layers.models.produto.ProdutoDAO;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperService;
@@ -11,18 +13,13 @@ public class ItemPedidoService extends SuperService<ItemPedido> {
         this.itemPedidoDAO = itemPedidoDAO;
     }
 
-    /* ----- Métodos principais de manipulação de dados ----- */
-    public List<String> selectAllTipoChocolate() {
-        //Solicita os dados ao DAO
-        return this.itemPedidoDAO.selectAllTipoChocolate();
-    }
-
+    /* ----- Métodos principais de manipulação de dados ----- */}
     @Override
-    public List<Produto> selectAll() {
+    public List<ItemPedido> selectAll() {
         return this.itemPedidoDAO.selectAll();
     }
     
-    public List<Produto> partialSearch(String nome, String tipoChocolate) {
+    public List<ItemPedido> partialSearch(String nome, String tipoChocolate) {
         //Remove os espaços em branco do início e do fim das strings necessárias
         if(nome != null) nome = nome.stripLeading().stripTrailing();
         
@@ -31,7 +28,7 @@ public class ItemPedidoService extends SuperService<ItemPedido> {
     }
     
     @Override
-    public List<Produto> redoLastPartialSearch() {
+    public List<ItemPedido> redoLastPartialSearch() {
         //Solicita os dados ao DAO
         return this.itemPedidoDAO.redoLastPartialSearch();
     }
