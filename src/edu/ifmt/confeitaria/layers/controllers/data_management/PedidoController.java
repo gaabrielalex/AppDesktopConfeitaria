@@ -98,6 +98,11 @@ public class PedidoController extends SuperController<Pedido> {
         this.pedidoView.getEdtCodCliente().setText(cliente.getID() == null ? "" : cliente.getID().toString());
     }
 
+    public void calculateTotalOrderValue() {
+        double totalOrderValue = Double.parseDouble(this.pedidoView.getEdtVlrTotalPedido().getText().equals("") ? "0" : this.pedidoView.getEdtVlrTotalPedido().getText())
+                + Double.parseDouble(this.pedidoView.getEdtVlrTotalItemPedido().getText().equals("") ? "0" : this.pedidoView.getEdtVlrTotalItemPedido().getText());   
+    }
+
     public void partialSearch(String nomeCliente, String nomeDestinatario, String statusPagto, String statusPedido) {
         if (statusPagto.equals(ViewUtils.ALL_OPTIONS_TEXT) || statusPagto.equals(ViewUtils.ALL_OPTIONS_TEXT.toUpperCase())) {
             statusPagto = null;
