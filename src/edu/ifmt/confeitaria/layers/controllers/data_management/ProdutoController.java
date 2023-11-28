@@ -11,12 +11,14 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
+import edu.ifmt.confeitaria.layers.models.cliente.Cliente;
 import edu.ifmt.confeitaria.layers.models.produto.Produto;
 import edu.ifmt.confeitaria.layers.models.produto.ProdutoService;
 import edu.ifmt.confeitaria.layers.views.data_management.ProdutoView;
 import edu.ifmt.confeitaria.util.abstraction_classes.DatabaseAccessComponentManager;
 import edu.ifmt.confeitaria.util.abstraction_classes.SuperController;
 import edu.ifmt.confeitaria.util.views.ViewUtils;
+import io.reactivex.rxjava3.functions.Consumer;
 
 public class ProdutoController extends SuperController<Produto> {
     private final ProdutoView produtoView;
@@ -57,7 +59,7 @@ public class ProdutoController extends SuperController<Produto> {
         this.produtoView.setVisible(true);
     }
     
-    public void displayViewForLookUp() {
+    public void displayViewForLookUp(Consumer<Produto> produtoConsumer) {
         //Configurações obrigatórias
         this.produtoView.setTitle("Pesquisa de Produtos");
         this.produtoView.setResizable(false);
@@ -65,6 +67,7 @@ public class ProdutoController extends SuperController<Produto> {
 
         //Exibe a view
         this.displayView();
+        this.produtoDBCManager.subscribeTSelectedRecord(produtoConsumer);
     }
 
     public void partialSearch(String descricao, String tipoChocolate) {
