@@ -220,7 +220,7 @@ public class ItemPedidoDAO {
     public List<ItemPedido> resultSetToList(ResultSet resultSet) throws SQLException {
         List<ItemPedido> itensPedido = new ArrayList<>();
         
-        //Percorre o ResultSet preenchendo a lista de produtos
+        //Percorre o ResultSet preenchendo a lista de itens do pedido
         while(resultSet.next()) {
              StatusPagto statusPagto = null;
             StatusPedido statusPedido = null;
