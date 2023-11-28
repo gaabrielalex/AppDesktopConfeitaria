@@ -86,8 +86,8 @@ public class PedidoController extends SuperController<Pedido> {
         alterações acima ne um dos fields, logo, o manager entende que estava havendo uma
         operação de atualização, o que não era o caso, eram apenas configurações iniciais*/
         this.pedidoDBCManager.cancel();
-        ViewUtils.addTextChangeListeners(this.pedidoView.getEdtVlrTotalItemPedido(), this::calculateTotalOrderValue);
-        ViewUtils.addTextChangeListeners(this.pedidoView.getEdtDesconto(), this::calculateTotalOrderValue);
+        // ViewUtils.addTextChangeListeners(this.pedidoView.getEdtVlrTotalItemPedido(), this::calculateTotalOrderValue);
+        // ViewUtils.addTextChangeListeners(this.pedidoView.getEdtDesconto(), this::calculateTotalOrderValue);
         this.pedidoView.setVisible(true);
     }
     
@@ -101,9 +101,9 @@ public class PedidoController extends SuperController<Pedido> {
     }
 
     public void calculateTotalOrderValue() {
-        double totalOrderValue = Double.parseDouble(this.pedidoView.getEdtVlrTotalItemPedido().getText().equals("") ? "0" : this.pedidoView.getEdtVlrTotalPedido().getText())
-                + Double.parseDouble(this.pedidoView.getEdtDesconto().getText().equals("") ? "0" : this.pedidoView.getEdtDesconto().getText());
-        this.pedidoView.getEdtVlrTotalPedido().setText(String.valueOf(totalOrderValue));  
+        // double totalOrderValue = Double.parseDouble(this.pedidoView.getEdtVlrTotalItemPedido().getText().equals("") ? "0" : this.pedidoView.getEdtVlrTotalPedido().getText())
+        //         + Double.parseDouble(this.pedidoView.getEdtDesconto().getText().equals("") ? "0" : this.pedidoView.getEdtDesconto().getText());
+        // this.pedidoView.getEdtVlrTotalPedido().setText(String.valueOf(totalOrderValue));  
     }
 
     public void partialSearch(String nomeCliente, String nomeDestinatario, String statusPagto, String statusPedido) {
