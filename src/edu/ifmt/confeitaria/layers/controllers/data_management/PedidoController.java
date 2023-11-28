@@ -77,9 +77,11 @@ public class PedidoController extends SuperController<Pedido> {
             this.pedidoView.getCmbTipoChocFiltro().addItem(value);
         }
         this.pedidoView.getCmbSttsPagtoFiltro().addItem(ViewUtils.ALL_OPTIONS_TEXT);
-        this.pedidoView.getCmbSttsPedidoFiltro().addItem(ViewUtils.ALL_OPTIONS_TEXT);
         this.pedidoView.getCmbSttsPagtoFiltro().setSelectedItem(ViewUtils.ALL_OPTIONS_TEXT);
+        this.pedidoView.getCmbSttsPedidoFiltro().addItem(ViewUtils.ALL_OPTIONS_TEXT);
         this.pedidoView.getCmbSttsPedidoFiltro().setSelectedItem(ViewUtils.ALL_OPTIONS_TEXT);
+        this.pedidoView.getCmbTipoChocFiltro().addItem(ViewUtils.ALL_OPTIONS_TEXT);
+        this.pedidoView.getCmbTipoChocFiltro().setSelectedItem(ViewUtils.ALL_OPTIONS_TEXT);
         /*Cancela qualquer operação que possa estar sendo realizada, isso porque houve
         alterações acima ne um dos fields, logo, o manager entende que estava havendo uma
         operação de atualização, o que não era o caso, eram apenas configurações iniciais*/
