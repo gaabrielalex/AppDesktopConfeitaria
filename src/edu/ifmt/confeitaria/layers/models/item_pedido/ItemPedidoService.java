@@ -17,12 +17,12 @@ public class ItemPedidoService extends SuperService<ItemPedido> {
         return this.itemPedidoDAO.selectAll();
     }
     
-    public List<ItemPedido> partialSearch(String produto, String tipoChocolate) {
+    public List<ItemPedido> partialSearch(Long idPedido, String produto, String tipoChocolate) {
         //Remove os espaços em branco do início e do fim das strings necessárias
         if(produto != null) produto = produto.stripLeading().stripTrailing();
         
         //Solicita os dados ao DAO
-        return this.itemPedidoDAO.partialSearch(produto, tipoChocolate);
+        return this.itemPedidoDAO.partialSearch(idPedido, produto, tipoChocolate);
     }
     
     @Override
