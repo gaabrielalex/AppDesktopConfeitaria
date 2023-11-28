@@ -193,8 +193,8 @@ public class ItemPedidoDAO {
         PreparedStatement statement = null;
 
         //Cria a query
-        String sql =    "DELETE FROM produto " +
-                        "WHERE id_produto = ?";
+        String sql =    "DELETE FROM item_pedido " +
+                        "WHERE id_item_pedido = ?";
         
         try {
             //Define o PreparedStatement com o SQL, em seguida, configura os parâmetros necessários
