@@ -61,9 +61,7 @@ public class ItemPedidoDAO {
         boolean selectByTipoChocolate = tipoChocolate != null && !tipoChocolate.isEmpty();
         
         //Cria a query
-        String sql =    "SELECT item.*, ped.*, prod.*, tc.descricao as tipo_chocolate FROM item_pedido item, pedido ped, produto prod LEFT JOIN tipo_chocolate tc ON prod.id_tipo_chocolate = tc.id_tipo_chocolate " +
-                            "WHERE item.id_pedido = ped.id_pedido" +
-                                "AND item.id_produto = prod.id_produto " +
+        String sql =    "SELECT item.*, prod.*, tc.descricao as tipo_chocolate FROM item_pedido item, produto prod LEFT JOIN tipo_chocolate tc ON prod.id_tipo_chocolate = tc.id_tipo_chocolate WHERE item.id_produto = prod.id_produto " +
                                 (selectByProduto ?  "AND unaccent(prod.descricao) ILIKE unaccent(?)" : "") +  // Se o usuário deseja pesquisar pelo produto, adiciona a condição à query
                                 (selectByTipoChocolate ? "AND tc.descricao = ?" : "") + // Se o usuário deseja pesquisar pelo tipo do chocolate, adiciona a condição à query
                         "ORDER BY prod.descricao, tc.descricao, item.vlr_total_item";
@@ -222,60 +220,14 @@ public class ItemPedidoDAO {
         
         //Percorre o ResultSet preenchendo a lista de itens do pedido
         while(resultSet.next()) {
-             StatusPagto statusPagto = null;
-            StatusPedido statusPedido = null;
-            try {
-                for (StatusPagto value : StatusPagto.values()) {
-                    if(value.getDescricao() == resultSet.getString("status_pagto").charAt(0)) {
-                        statusPagto = value;
-                        break;
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            try {
-                for (StatusPedido value : StatusPedido.values()) {
-                    if(value.getDescricao() == resultSet.getString("status_pedido").charAt(0)) {
-                        statusPedido = value;
-                        break;
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            Pedido pedido = new Pedido();
+            pedido.setID(resultSet.getLong("id_pedido"));
 
             itensPedido.add(new ItemPedido(
                     resultSet.getLong("id_item_pedido"),
                     resultSet.getInt("qtde"),
                     resultSet.getBigDecimal("vlr_total_item"),
-                    new Pedido(
-                        resultSet.getLong("id_pedido"),
-                        new Usuario(
-                            resultSet.getLong("id_usuario"),
-                            resultSet.getString("nome_usuario"),
-                            resultSet.getString("login"),
-                            resultSet.getString("senha")
-                        ),
-                        new Cliente(
-                            resultSet.getLong("id_cliente"),
-                            resultSet.getString("nome_cliente"),
-                            resultSet.getString("cpf"),
-                            resultSet.getString("telefones"),
-                            resultSet.getString("endereco"),
-                            resultSet.getString("link_endereco")
-                        ),
-                        resultSet.getDate("dt_hr_pedido"),
-                        resultSet.getDate("dt_hr_entrega"),
-                        resultSet.getBigDecimal("vlr_total_pedido"),
-                        resultSet.getBigDecimal("desconto"),
-                        resultSet.getString("nome_destinatario"),
-                        resultSet.getBoolean("retirada_loja"),
-                        statusPagto,
-                        statusPedido,
-                        resultSet.getString("observacoes"),
-                        resultSet.getString("metodo_pagto")
-                    ),
+                    pedido,
                     new Produto(resultSet.getLong("id_produto"),
                         resultSet.getString("descricao"),
                         resultSet.getBigDecimal("vlr_unitario"),
