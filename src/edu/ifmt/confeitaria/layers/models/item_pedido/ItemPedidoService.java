@@ -27,11 +27,11 @@ public class ItemPedidoService extends SuperService<ItemPedido> {
         return this.itemPedidoDAO.partialSearch(produto, tipoChocolate);
     }
     
-    // @Override
-    // public List<ItemPedido> redoLastPartialSearch() {
-    //     //Solicita os dados ao DAO
-    //     return this.itemPedidoDAO.redoLastPartialSearch();
-    // }
+    @Override
+    public List<ItemPedido> redoLastPartialSearch() {
+        //Solicita os dados ao DAO
+        return this.itemPedidoDAO.redoLastPartialSearch();
+    }
     
     // @Override
     // public boolean insert(Produto produto) {
