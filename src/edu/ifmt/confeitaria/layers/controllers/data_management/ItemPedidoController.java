@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import javax.swing.JFrame;
 
+import edu.ifmt.confeitaria.layers.models.cliente.Cliente;
 import edu.ifmt.confeitaria.layers.models.item_pedido.ItemPedido;
 import edu.ifmt.confeitaria.layers.models.item_pedido.ItemPedidoService;
 import edu.ifmt.confeitaria.layers.models.produto.Produto;
@@ -39,7 +40,12 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
     public void displayView() {}
     
     public void requestDisplayProdutoViewForLookUp(JFrame current) {
-        new ProdutoController(current, new ProdutoService(new ProdutoDAO()), new DatabaseAccessComponentManager<Produto>()).displayViewForLookUp();
+        new ProdutoController(current, new ProdutoService(new ProdutoDAO()), new DatabaseAccessComponentManager<Produto>()).displayViewForLookUp(this::setProdutoFields);
+    }
+
+    public void setProdutoFields(Produto produto) {
+        this.pedidoView.getEdtProduto().setText(produto.getDescricao());
+        this.pedidoView.getEdtCodProduto().setText(produto.getID() == null ? "" : produto.getID().toString());
     }
 
     public void partialSearch(String produto, String tipoChocolate) {
