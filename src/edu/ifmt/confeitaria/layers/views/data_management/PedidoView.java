@@ -646,7 +646,7 @@ public class PedidoView extends SuperView {
             tblItemPedido.getColumnModel().getColumn(2).setPreferredWidth(120);
             tblItemPedido.getColumnModel().getColumn(3).setPreferredWidth(69);
             tblItemPedido.getColumnModel().getColumn(4).setPreferredWidth(90);
-            tblItemPedido.getColumnModel().getColumn(5).setPreferredWidth(90);
+            tblItemPedido.getColumnModel().getColumn(5).setPreferredWidth(110);
         }
 
         javax.swing.GroupLayout pnlFiltroItemPedidoLayout = new javax.swing.GroupLayout(pnlFiltroItemPedido);
