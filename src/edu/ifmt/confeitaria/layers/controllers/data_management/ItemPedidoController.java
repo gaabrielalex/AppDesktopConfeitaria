@@ -63,31 +63,35 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
 
     @Override
     public void modelToFields(ItemPedido itemPedido) {
-        // if (itemPedido.getProduto() == null) {
-        //     itemPedido.setProduto(new Produto());
-        // }
-        // this.pedidoView.getEdtProduto().setText(itemPedido.getProduto().getDescricao());
-        // this.pedidoView.getEdtCodProduto().setText(itemPedido.getProduto().getID() == null ? "" : itemPedido.getProduto().getID().toString());
-        this.pedidoView.getEdtQtde().setText(Integer.toString(itemPedido.getQtde()));
-        this.pedidoView.getEdtVlrTotalItemPedido().setText(itemPedido.getVlrTotalItem() == null ? "" : itemPedido.getVlrTotalItem().toString());
+        //ItemPedido não está funcionando por motivo desconhecido
+        ItemPedido itemPedidoSelecionado = this.itemPedidoDBCManager.getTSelectedRecord().getValue();
+
+        if (itemPedidoSelecionado.getProduto() == null) {
+            itemPedidoSelecionado.setProduto(new Produto());
+        }
+        this.pedidoView.getEdtProduto().setText(itemPedidoSelecionado.getProduto().getDescricao());
+        this.pedidoView.getEdtCodProduto().setText(itemPedidoSelecionado.getProduto().getID() == null ? "" : itemPedidoSelecionado.getProduto().getID().toString());
+        this.pedidoView.getEdtQtde().setText(Integer.toString(itemPedidoSelecionado.getQtde()));
+        this.pedidoView.getEdtVlrTotalItemPedido().setText(itemPedidoSelecionado.getVlrTotalItem() == null ? "" : itemPedidoSelecionado.getVlrTotalItem().toString());
     }
 
     @Override
     public ItemPedido fieldsToModel() {
         ItemPedido itemPedidoSelecionado = this.itemPedidoDBCManager.getTSelectedRecord().getValue();
 
-        return new ItemPedido(
-            null,
-            this.pedidoView.getEdtQtde().getText().equals("") ? 0 : Integer.parseInt(this.pedidoView.getEdtQtde().getText()),
-            this.pedidoView.getEdtVlrTotalItemPedido().getText().equals("") ? null : new BigDecimal(this.pedidoView.getEdtVlrTotalItemPedido().getText()),
-            itemPedidoSelecionado.getPedido(),
-            new Produto(
-                this.pedidoView.getEdtCodProduto().getText().equals("") ? null : Long.parseLong(this.pedidoView.getEdtCodProduto().getText()),
-                this.pedidoView.getEdtProduto().getText(),
-                itemPedidoSelecionado.getProduto().getVlrUnitario(),
-                itemPedidoSelecionado.getProduto().getObservacoes(),
-                itemPedidoSelecionado.getProduto().getTipoChocolate()
-            )
-        );
+        return new ItemPedido();
+        // return new ItemPedido(
+        //     null,
+        //     this.pedidoView.getEdtQtde().getText().equals("") ? 0 : Integer.parseInt(this.pedidoView.getEdtQtde().getText()),
+        //     this.pedidoView.getEdtVlrTotalItemPedido().getText().equals("") ? null : new BigDecimal(this.pedidoView.getEdtVlrTotalItemPedido().getText()),
+        //     itemPedidoSelecionado.getPedido(),
+        //     new Produto(
+        //         this.pedidoView.getEdtCodProduto().getText().equals("") ? null : Long.parseLong(this.pedidoView.getEdtCodProduto().getText()),
+        //         this.pedidoView.getEdtProduto().getText(),
+        //         itemPedidoSelecionado.getProduto().getVlrUnitario(),
+        //         itemPedidoSelecionado.getProduto().getObservacoes(),
+        //         itemPedidoSelecionado.getProduto().getTipoChocolate()
+        //     )
+        // );
     }
 }
