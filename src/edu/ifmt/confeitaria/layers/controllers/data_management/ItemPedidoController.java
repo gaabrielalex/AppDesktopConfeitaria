@@ -16,9 +16,10 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
     private final ItemPedidoService itemPedidoService;
     private DatabaseAccessComponentManager<ItemPedido> itemPedidoDBCManager;
 
-    public ItemPedidoController(PedidoView pedidoView, DatabaseAccessComponentManager itemPedidoDBCManager) {
+    public ItemPedidoController(PedidoView pedidoView, ItemPedidoService itemPedidoService, DatabaseAccessComponentManager<ItemPedido> itemPedidoDBCManager) {
         //Injeção de dependências
         this.pedidoView = pedidoView;
+        this.itemPedidoService = itemPedidoService;
         this.itemPedidoDBCManager = itemPedidoDBCManager;
 
         //Configurando o DatabaseAccessComponentManager
