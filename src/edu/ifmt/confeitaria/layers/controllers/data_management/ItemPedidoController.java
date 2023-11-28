@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 
 import edu.ifmt.confeitaria.layers.models.item_pedido.ItemPedido;
 import edu.ifmt.confeitaria.layers.models.item_pedido.ItemPedidoService;
+import edu.ifmt.confeitaria.layers.models.pedido.Pedido;
 import edu.ifmt.confeitaria.layers.models.produto.Produto;
 import edu.ifmt.confeitaria.layers.models.produto.ProdutoDAO;
 import edu.ifmt.confeitaria.layers.models.produto.ProdutoService;
@@ -21,6 +22,7 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
     private final PedidoView pedidoView;
     private final ItemPedidoService itemPedidoService;
     private DatabaseAccessComponentManager<ItemPedido> itemPedidoDBCManager;
+    private DatabaseAccessComponentManager<Pedido> pedidoDBCManagerForMasterDetail;
     ItemPedido itemNulo = new ItemPedido(
         null,
         0,
@@ -29,11 +31,13 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
         new Produto()
     );
 
-    public ItemPedidoController(PedidoView pedidoView, ItemPedidoService itemPedidoService, DatabaseAccessComponentManager<ItemPedido> itemPedidoDBCManager) {
+    public ItemPedidoController(PedidoView pedidoView, ItemPedidoService itemPedidoService,
+            DatabaseAccessComponentManager<ItemPedido> itemPedidoDBCManager, DatabaseAccessComponentManager<Pedido> pedidoDBCManagerForMasterDetail) {
         //Injeção de dependências
         this.pedidoView = pedidoView;
         this.itemPedidoService = itemPedidoService;
         this.itemPedidoDBCManager = itemPedidoDBCManager;
+        this.pedidoDBCManagerForMasterDetail = pedidoDBCManagerForMasterDetail;
 
         //Configurando o DatabaseAccessComponentManager
         List<Component> fields = Arrays.asList(pedidoView.getEdtProduto(), pedidoView.getEdtCodProduto(), 
@@ -64,8 +68,10 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
         if(tipoChocolate.equals(ViewUtils.ALL_OPTIONS_TEXT)) {
             tipoChocolate = null;
         }
+        /*A lista de itens do pedido é atualizada com base no pedido selecionado, ou seja, o pedido selecionado
+        fará com que apenas os itens daquele pedido sejam exibidos na tabela de itens do pedido*/
         this.itemPedidoDBCManager.setTemporaryTDataList(
-            this.itemPedidoService.partialSearch(this.itemPedidoDBCManager.getTSelectedRecord().getValue().getID(),
+            this.itemPedidoService.partialSearch(this.pedidoDBCManagerForMasterDetail.getTSelectedRecord().getValue().getID(),
                     produto, tipoChocolate));
     }
 
