@@ -120,7 +120,7 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
             null,
             this.pedidoView.getEdtQtde().getText().equals("") ? 0 : Integer.parseInt(this.pedidoView.getEdtQtde().getText()),
             this.pedidoView.getEdtVlrTotalItemPedido().getText().equals("") ? null : new BigDecimal(this.pedidoView.getEdtVlrTotalItemPedido().getText()),
-            itemPedidoSelecionado.getPedido(),
+            this.pedidoDBCManagerForMasterDetail.getTSelectedRecord().getValue(),
             new Produto(
                 this.pedidoView.getEdtCodProduto().getText().equals("") ? null : Long.parseLong(this.pedidoView.getEdtCodProduto().getText()),
                 this.pedidoView.getEdtProduto().getText(),
