@@ -23,7 +23,7 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
         this.itemPedidoDBCManager = itemPedidoDBCManager;
 
         //Configurando o DatabaseAccessComponentManager
-        this.itemPedidoDBCManager.configureComponents(null, this, null, pedidoView.getBtnInsertItemPedido(),
+        this.itemPedidoDBCManager.configureComponents(ItemPedido.class, this, this.itemPedidoService, pedidoView.getBtnInsertItemPedido(),
             pedidoView.getBtnUpdateItemPedido(), pedidoView.getBtnDeleteItemPedido(), pedidoView.getBtnPostItemPedido(),
             pedidoView.getBtnCancelItemPedido(), pedidoView.getBtnRefreshItemPedido(), pedidoView.getTblItemPedido());
     }
