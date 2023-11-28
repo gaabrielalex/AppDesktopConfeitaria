@@ -48,11 +48,12 @@ public class ItemPedidoDAO {
         return this.partialSearch(null, null);
     }
     
-    public List<ItemPedido> partialSearch(String produto, String tipoChocolate) {
+    public List<ItemPedido> partialSearch(Long idPedido, String produto, String tipoChocolate) {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
         /*Define por quais campos o usuário deseja realizar a pesquisa*/
+        boolean selectByIdPedido = idPedido != null && idPedido > 0;
         boolean selectByProduto = produto != null && !produto.isEmpty();
         boolean selectByTipoChocolate = tipoChocolate != null && !tipoChocolate.isEmpty();
         
