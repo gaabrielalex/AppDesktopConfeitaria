@@ -1,5 +1,7 @@
 package edu.ifmt.confeitaria.layers.controllers.data_management;
 
+import java.math.BigDecimal;
+
 import javax.swing.JFrame;
 
 import edu.ifmt.confeitaria.layers.models.item_pedido.ItemPedido;
@@ -61,13 +63,20 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
 
     @Override
     public ItemPedido fieldsToModel() {
+        ItemPedido itemPedidoSelecionado = this.itemPedidoDBCManager.getTSelectedRecord().getValue();
+
         return new ItemPedido(
             null,
             this.pedidoView.getEdtQtde().getText().equals("") ? 0 : Integer.parseInt(this.pedidoView.getEdtQtde().getText()),
-            this.pedidoView.getEdtVlrTotalItemPedido().getText().equals("") ? null : this.pedidoView.getEdtVlrTotalItemPedido().getText(),
-            this.pedidoView.getEdtVlrTotalItemPedido().getText(), 
-            Integer.parseInt(this.pedidoView.getEdtQtde().getText()), this.pedidoView.getEdtObs().getText(), 
-            this.pedidoView.getEdtTipoChoc().getText());
+            this.pedidoView.getEdtVlrTotalItemPedido().getText().equals("") ? null : new BigDecimal(this.pedidoView.getEdtVlrTotalItemPedido().getText()),
+            itemPedidoSelecionado.getPedido(),
+            new Produto(
+                this.pedidoView.getEdtCodProduto().getText().equals("") ? null : Long.parseLong(this.pedidoView.getEdtCodProduto().getText()),
+                this.pedidoView.getEdtProduto().getText(),
+                itemPedidoSelecionado.getProduto().getVlrUnitario(),
+                itemPedidoSelecionado.getProduto().getObservacoes(),
+                itemPedidoSelecionado.getProduto().getTipoChocolate()
+            )
+        );
     }
-
 }
