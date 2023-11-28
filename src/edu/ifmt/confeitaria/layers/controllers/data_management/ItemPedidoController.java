@@ -21,6 +21,13 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
     private final PedidoView pedidoView;
     private final ItemPedidoService itemPedidoService;
     private DatabaseAccessComponentManager<ItemPedido> itemPedidoDBCManager;
+    ItemPedido itemNulo = new ItemPedido(
+        null,
+        0,
+        null,
+        null,
+        new Produto()
+    );
 
     public ItemPedidoController(PedidoView pedidoView, ItemPedidoService itemPedidoService, DatabaseAccessComponentManager<ItemPedido> itemPedidoDBCManager) {
         //Injeção de dependências
@@ -64,6 +71,8 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
 
     @Override
     public Object[] modelToTableRow(ItemPedido itemPedido) {
+        ItemPedido itemPedidoSelecionado = this.itemPedidoDBCManager.getTSelectedRecord().getValue();
+        List<ItemPedido> listaAtual = this.itemPedidoDBCManager.getTemporaryTDataList().getValue();
         if (itemPedido.getProduto() == null) {
             itemPedido.setProduto(new Produto());
         }
@@ -71,7 +80,10 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
             itemPedido.getID() == null ? "" : itemPedido.getID(),
             itemPedido.getProduto().getDescricao(),
             itemPedido.getProduto().getTipoChocolate(),
-            itemPedido.getQtde(),
+            listaAtual != null && !listaAtual.isEmpty()
+            && !(listaAtual.size() == 1 && listaAtual.get(0).equals(this.itemNulo))
+                ? Integer.toString(itemPedidoSelecionado != null ? itemPedidoSelecionado.getQtde() : 0)
+                : "" ,
             itemPedido.getProduto().getVlrUnitario(),
             itemPedido.getVlrTotalItem(),
         };
@@ -85,17 +97,10 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
         if (itemPedidoSelecionado.getProduto() == null) {
             itemPedidoSelecionado.setProduto(new Produto());
         }
-        ItemPedido itemNulo = new ItemPedido(
-            null,
-            0,
-            null,
-            null,
-            new Produto()
-        );
         this.pedidoView.getEdtProduto().setText(itemPedidoSelecionado.getProduto().getDescricao());
         this.pedidoView.getEdtCodProduto().setText(itemPedidoSelecionado.getProduto().getID() == null ? "" : itemPedidoSelecionado.getProduto().getID().toString());
         this.pedidoView.getEdtQtde().setText(listaAtual != null && !listaAtual.isEmpty()
-            && !(listaAtual.size() == 1 && listaAtual.get(0).equals(itemNulo))
+            && !(listaAtual.size() == 1 && listaAtual.get(0).equals(this.itemNulo))
                 ? Integer.toString(itemPedidoSelecionado.getQtde())
                 : "" );
         this.pedidoView.getEdtVlrUnt().setText(itemPedidoSelecionado.getProduto().getVlrUnitario() == null ? "" : itemPedidoSelecionado.getProduto().getVlrUnitario().toString());
