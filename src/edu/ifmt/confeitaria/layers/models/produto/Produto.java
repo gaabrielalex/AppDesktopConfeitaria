@@ -97,6 +97,4 @@ public class Produto extends SuperModel {
             return false;
         return true;
     }
-
-    
 }
