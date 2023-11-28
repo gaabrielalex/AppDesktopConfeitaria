@@ -86,6 +86,7 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
         this.pedidoView.getEdtProduto().setText(itemPedidoSelecionado.getProduto().getDescricao());
         this.pedidoView.getEdtCodProduto().setText(itemPedidoSelecionado.getProduto().getID() == null ? "" : itemPedidoSelecionado.getProduto().getID().toString());
         this.pedidoView.getEdtQtde().setText(Integer.toString(itemPedidoSelecionado.getQtde()));
+        this.pedidoView.getEdtVlrUnt().setText(itemPedidoSelecionado.getProduto().getVlrUnitario() == null ? "" : itemPedidoSelecionado.getProduto().getVlrUnitario().toString());
         this.pedidoView.getEdtVlrTotalItemPedido().setText(itemPedidoSelecionado.getVlrTotalItem() == null ? "" : itemPedidoSelecionado.getVlrTotalItem().toString());
     }
 
