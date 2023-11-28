@@ -57,7 +57,9 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
         if(tipoChocolate.equals(ViewUtils.ALL_OPTIONS_TEXT)) {
             tipoChocolate = null;
         }
-        this.itemPedidoDBCManager.setTemporaryTDataList(this.itemPedidoService.partialSearch(produto, tipoChocolate));
+        this.itemPedidoDBCManager.setTemporaryTDataList(
+            this.itemPedidoService.partialSearch(this.itemPedidoDBCManager.getTSelectedRecord().getValue().getID(),
+                    produto, tipoChocolate));
     }
 
     @Override
