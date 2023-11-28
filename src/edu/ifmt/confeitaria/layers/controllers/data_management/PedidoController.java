@@ -118,7 +118,6 @@ public class PedidoController extends SuperController<Pedido> {
         if(pedido.getUsuario() == null) {
             pedido.setUsuario(new Usuario());
         }
-
         return new Object[]{
             pedido.getID() == null ? "" : pedido.getID(),
             pedido.getCliente().getNome(),
