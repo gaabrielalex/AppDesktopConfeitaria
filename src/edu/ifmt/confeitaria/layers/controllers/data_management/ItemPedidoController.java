@@ -62,6 +62,8 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
         this.pedidoView.getEdtProduto().setText(produto.getDescricao());
         this.pedidoView.getEdtCodProduto().setText(produto.getID() == null ? "" : produto.getID().toString());
         this.pedidoView.getEdtVlrUnt().setText(produto.getVlrUnitario() == null ? "" : produto.getVlrUnitario().toString());
+        //Improviso para já preencher todo a parte de produto do item pedido
+        this.itemPedidoDBCManager.getTSelectedRecord().getValue().setProduto(produto);
     }
 
     public void partialSearch(String produto, String tipoChocolate) {
@@ -123,7 +125,7 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
             new Produto(
                 this.pedidoView.getEdtCodProduto().getText().equals("") ? null : Long.parseLong(this.pedidoView.getEdtCodProduto().getText()),
                 this.pedidoView.getEdtProduto().getText(),
-                itemPedidoSelecionado.getProduto().getVlrUnitario(),
+                this.pedidoView.getEdtVlrUnt().getText().equals("") ? null : new BigDecimal(this.pedidoView.getEdtVlrUnt().getText()),
                 itemPedidoSelecionado.getProduto().getObservacoes(),
                 itemPedidoSelecionado.getProduto().getTipoChocolate()
             )
