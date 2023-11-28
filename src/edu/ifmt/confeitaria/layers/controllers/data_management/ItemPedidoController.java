@@ -1,6 +1,9 @@
 package edu.ifmt.confeitaria.layers.controllers.data_management;
 
+import java.awt.Component;
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.JFrame;
 
@@ -27,6 +30,9 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
         this.itemPedidoDBCManager = itemPedidoDBCManager;
 
         //Configurando o DatabaseAccessComponentManager
+        List<Component> fields = Arrays.asList(pedidoView.getEdtProduto(), pedidoView.getEdtCodProduto(), 
+            pedidoView.getEdtQtde(), pedidoView.getEdtVlrTotalItemPedido());
+        this.itemPedidoDBCManager.setFields(fields);
         this.itemPedidoDBCManager.configureComponents(ItemPedido.class, this, this.itemPedidoService, pedidoView.getBtnInsertItemPedido(),
             pedidoView.getBtnUpdateItemPedido(), pedidoView.getBtnDeleteItemPedido(), pedidoView.getBtnPostItemPedido(),
             pedidoView.getBtnCancelItemPedido(), pedidoView.getBtnRefreshItemPedido(), pedidoView.getTblItemPedido());
