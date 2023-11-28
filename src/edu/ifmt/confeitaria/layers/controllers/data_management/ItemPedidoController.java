@@ -40,18 +40,22 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
     }
 
     @Override
-    public Object[] modelToTableRow(Object object) {
-        // TODO Auto-generated method stub
-       return null;
+    public Object[] modelToTableRow(ItemPedido itemPedido) {
+        return new Object[]{
+            // itemPedido.getDescricao(),
+            // itemPedido.getVlrUnitario(),
+            // itemPedido.getObservacoes(),
+            // itemPedido.getTipoChocolate()
+        };
     }
 
     @Override
-    public void modelToFields(Object object) {
+    public void modelToFields(ItemPedido itemPedido) {
         // TODO Auto-generated method stub
     }
 
     @Override
-    public Object fieldsToModel() {
+    public ItemPedido fieldsToModel() {
         // TODO Auto-generated method stub
         return null;
     }
