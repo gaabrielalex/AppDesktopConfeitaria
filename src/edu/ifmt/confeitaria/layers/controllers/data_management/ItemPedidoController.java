@@ -51,6 +51,9 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
 
     @Override
     public Object[] modelToTableRow(ItemPedido itemPedido) {
+        if (itemPedido.getProduto() == null) {
+            itemPedido.setProduto(new Produto());
+        }
         return new Object[]{
             itemPedido.getID() == null ? "" : itemPedido.getID(),
             itemPedido.getProduto().getDescricao(),
