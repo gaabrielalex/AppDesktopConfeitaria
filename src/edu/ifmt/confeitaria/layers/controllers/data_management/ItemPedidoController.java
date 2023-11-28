@@ -77,7 +77,6 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
 
     @Override
     public Object[] modelToTableRow(ItemPedido itemPedido) {
-        ItemPedido itemPedidoSelecionado = this.itemPedidoDBCManager.getTSelectedRecord().getValue();
         List<ItemPedido> listaAtual = this.itemPedidoDBCManager.getTemporaryTDataList().getValue();
         if (itemPedido.getProduto() == null) {
             itemPedido.setProduto(new Produto());
