@@ -53,8 +53,8 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
 
     @Override
     public void modelToFields(ItemPedido itemPedido) {
-        // this.pedidoView.getEdtProduto().setText(itemPedido.getProduto().getDescricao());
-        // this.pedidoView.getEdtTipoChoc().setText(itemPedido.getProduto().getTipoChocolate());
+        this.pedidoView.getEdtProduto().setText(itemPedido.getProduto().getDescricao());
+        this.pedidoView.getEdtTipoChoc().setText(itemPedido.getProduto().getTipoChocolate());
     }
 
     @Override

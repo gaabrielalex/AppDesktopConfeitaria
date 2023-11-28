@@ -955,6 +955,22 @@ public class PedidoView extends SuperView {
         return btnCancelItemPedido;
     }
 
+    public javax.swing.JTextField getEdtCodProduto() {
+        return edtCodProduto;
+    }
+
+    public javax.swing.JTextField getEdtProduto() {
+        return edtProduto;
+    }
+
+    public javax.swing.JTextField getEdtQtde() {
+        return edtQtde;
+    }
+
+    public javax.swing.JTextField getEdtVlrTotalItemPedido() {
+        return edtVlrTotalItemPedido;
+    }
+
     public javax.swing.JComboBox<String> getCmbTipoChocFiltro() {
         return cmbTipoChocFiltro;
     }
