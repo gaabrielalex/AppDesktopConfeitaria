@@ -59,6 +59,10 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
         this.tSelectedRecord.subscribe(consumer);
     }
 
+    public BehaviorSubject<List<T>> getTemporaryTDataList() {
+        return temporaryTDataList;
+    }
+
     private void updateTemporaryTDataList(List<T> tDataList) {
         /*Verifica se a lista de dados temporária está vazia, se estiver, 
         adiciona um registro em branco na lista para evitar bugs*/
