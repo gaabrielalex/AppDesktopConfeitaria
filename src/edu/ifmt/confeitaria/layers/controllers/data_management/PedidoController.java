@@ -94,7 +94,11 @@ public class PedidoController extends SuperController<Pedido> {
         this.pedidoDBCManager.refresh();
         
         //Configurando os campos que são calculados automaticamente com base em outros campos
-        this.itemPedidoDBCManager.su
+        this.itemPedidoDBCManager.subscribeTemporaryTDataList(
+            (itemPedidoList) -> {
+                this.calculateTotalOrderValue();
+            }
+        );
         ViewUtils.addTextChangeListeners(this.pedidoView.getEdtDesconto(), this::calculateTotalOrderValue);
         ViewUtils.addTextChangeListeners(this.pedidoView.getEdtQtde(), this::calculateTotalValueOrderItem);
         ViewUtils.addTextChangeListeners(this.pedidoView.getEdtVlrUnt(), this::calculateTotalValueOrderItem);
