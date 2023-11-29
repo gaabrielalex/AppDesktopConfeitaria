@@ -186,53 +186,22 @@
                                   </Group>
                               </Group>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="edtObs" max="32767" attributes="0"/>
-                                      <EmptySpace min="-2" pref="230" max="-2" attributes="0"/>
-                                  </Group>
                                   <Group type="102" attributes="0">
                                       <Component id="cmbSttsPedido" min="-2" pref="150" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                                       <Component id="lblSttsPagto" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="312" pref="386" max="32767" attributes="0"/>
+                                      <EmptySpace min="312" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <Component id="edtDestinatario" min="-2" pref="202" max="-2" attributes="0"/>
-                                              <EmptySpace min="6" pref="26" max="32767" attributes="0"/>
-                                              <Group type="103" groupAlignment="1" attributes="0">
-                                                  <Component id="ckBRetirada" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="cmbSttsPagto" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="edtSubTotalPedido" min="-2" pref="150" max="-2" attributes="0"/>
-                                              <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="lblVlrTotalPedido" min="-2" pref="34" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="edtVlrTotalPedido" min="-2" pref="150" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="lblDesconto" max="32767" attributes="0"/>
-                                          <Component id="lblMtdPagto" pref="58" max="32767" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="cmbMtdPagto" min="-2" pref="130" max="-2" attributes="0"/>
-                                          <Component id="edtDesconto" min="-2" pref="130" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="edtCliente" alignment="1" min="-2" pref="222" max="-2" attributes="0"/>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="dtChooserDtPedido" min="-2" pref="150" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="lblDtEntrega" min="-2" pref="54" max="-2" attributes="0"/>
+                                          <Component id="lblDesconto" alignment="1" min="-2" pref="54" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="1" attributes="0">
+                                              <Component id="edtCliente" alignment="1" min="-2" pref="222" max="-2" attributes="0"/>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="dtChooserDtPedido" min="-2" pref="150" max="-2" attributes="0"/>
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                  <Component id="lblDtEntrega" min="-2" pref="54" max="-2" attributes="0"/>
+                                              </Group>
                                           </Group>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
@@ -247,6 +216,43 @@
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="btnPesquisarCliente" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Group type="102" attributes="0">
+                                                      <Component id="edtDestinatario" min="-2" pref="202" max="-2" attributes="0"/>
+                                                      <EmptySpace min="6" max="32767" attributes="0"/>
+                                                      <Group type="103" groupAlignment="1" attributes="0">
+                                                          <Component id="ckBRetirada" min="-2" max="-2" attributes="0"/>
+                                                          <Component id="cmbSttsPagto" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
+                                                      </Group>
+                                                  </Group>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="edtSubTotalPedido" min="-2" pref="150" max="-2" attributes="0"/>
+                                                      <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
+                                                      <Component id="edtDesconto" min="-2" pref="150" max="-2" attributes="0"/>
+                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="1" attributes="0">
+                                                  <Component id="lblMtdPagto" min="-2" pref="58" max="-2" attributes="0"/>
+                                                  <Component id="lblVlrTotalPedido" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Component id="edtObs" max="32767" attributes="0"/>
+                                              <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="cmbMtdPagto" pref="130" max="32767" attributes="0"/>
+                                          <Component id="edtVlrTotalPedido" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -283,13 +289,17 @@
                           <Component id="dtChooserDtEntrega" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="edtDesconto" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblDesconto" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblVlrTotalPedido" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="edtVlrTotalPedido" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblSubTotalPedido" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="edtSubTotalPedido" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="edtDesconto" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblDesconto" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblSubTotalPedido" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="edtSubTotalPedido" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                              <Component id="lblVlrTotalPedido" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="edtVlrTotalPedido" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
