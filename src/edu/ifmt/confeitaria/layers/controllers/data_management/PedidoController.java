@@ -87,6 +87,7 @@ public class PedidoController extends SuperController<Pedido> {
         alterações acima ne um dos fields, logo, o manager entende que estava havendo uma
         operação de atualização, o que não era o caso, eram apenas configurações iniciais*/
         this.pedidoDBCManager.cancel();
+        this.pedidoDBCManager.refresh();
         // ViewUtils.addTextChangeListeners(this.pedidoView.getEdtVlrTotalItemPedido(), this::calculateTotalOrderValue);
         // ViewUtils.addTextChangeListeners(this.pedidoView.getEdtDesconto(), this::calculateTotalOrderValue);
         this.pedidoView.setVisible(true);
