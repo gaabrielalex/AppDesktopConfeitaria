@@ -33,9 +33,9 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
     private Class<T> modelClass;
     private SuperController<T> controller;
     private SuperService<T> service;
-    private BehaviorSubject<List<T>> temporaryTDataList;
-    private BehaviorSubject<T> tSelectedRecord;
-    private BehaviorSubject<Integer> selectedRecordIndex;
+    private BehaviorSubject<List<T>> temporaryTDataList = BehaviorSubject.create();
+    private BehaviorSubject<T> tSelectedRecord = BehaviorSubject.create();
+    private BehaviorSubject<Integer> selectedRecordIndex = BehaviorSubject.create();
     private Operation currentOperation;
     private boolean activateUpdateWhenFieldsChange;
     private boolean activateInsertWhenFieldsChange;
@@ -172,9 +172,9 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
         this.tableModel = (DefaultTableModel) table.getModel();
 
         //Criando os observables
-        this.temporaryTDataList = BehaviorSubject.create();
-        this.tSelectedRecord = BehaviorSubject.create();
-        this.selectedRecordIndex = BehaviorSubject.create();
+        // this.temporaryTDataList = BehaviorSubject.create();
+        // this.tSelectedRecord = BehaviorSubject.create();
+        // this.selectedRecordIndex = BehaviorSubject.create();
 
         //Setando os valores iniciais dos atributos necessários
         this.activateUpdateWhenFieldsChange = true;
