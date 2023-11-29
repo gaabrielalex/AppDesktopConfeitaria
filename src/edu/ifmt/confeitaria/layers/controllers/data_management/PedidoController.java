@@ -124,6 +124,7 @@ public class PedidoController extends SuperController<Pedido> {
             discount = 0;
         }
         totalOrderValue = totalOrderValue - discount;
+        this.pedidoView.getEdtVlrTotalPedido().setText(Double.toString(totalOrderValue));
     }
     
     public void calculateTotalValueOrderItem() {
