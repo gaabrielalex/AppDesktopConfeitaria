@@ -25,9 +25,9 @@ public class Pedido extends SuperModel {
 
     public enum StatusPedido {
         ATIVO('A'),
-        PRONTO('P'),
+        CANCELADO('C'),
         ENTREGUE('E'),
-        CANCELADO('C');
+        PRONTO('P');
 
         private char descricao;
 
