@@ -113,8 +113,8 @@ public class PedidoController extends SuperController<Pedido> {
         double discount = 0;
         for (ItemPedido itemPedido : this.itemPedidoDBCManager.getTemporaryTDataList().getValue()) {
             try {
-                totalOrderValue += itemPedido.getVlrTotalItemPedido().doubleValue();
-            } catch (Exception  e) {
+                totalOrderValue += itemPedido.getVlrTotalItem().doubleValue();
+            } catch (Exception e) {
                 totalOrderValue += 0;
             }
         }
