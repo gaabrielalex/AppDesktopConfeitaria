@@ -2,6 +2,7 @@ package edu.ifmt.confeitaria.layers.controllers.data_management;
 
 import java.awt.Component;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -83,8 +84,10 @@ public class ItemPedidoController extends SuperController<ItemPedido> {
         /*A lista de itens do pedido é atualizada com base no pedido selecionado, ou seja, o pedido selecionado
         fará com que apenas os itens daquele pedido sejam exibidos na tabela de itens do pedido*/
         this.itemPedidoDBCManager.setTemporaryTDataList(
-            this.itemPedidoService.partialSearch(this.pedidoDBCManagerForMasterDetail.getTSelectedRecord().getValue().getID(),
-                    produto, tipoChocolate));
+            (this.pedidoDBCManagerForMasterDetail.getCurrentOperation() != DatabaseAccessComponentManager.Operation.INSERT
+                    ? this.itemPedidoService.partialSearch(this.pedidoDBCManagerForMasterDetail.getTSelectedRecord().getValue().getID(),
+                            produto, tipoChocolate)
+                    : new ArrayList<ItemPedido>()));
     }
 
     @Override
