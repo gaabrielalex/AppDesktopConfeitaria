@@ -385,7 +385,7 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
         }
     }
 
-    private void refresh() {  
+    public void refresh() {  
         this.resetManagerDefaultSettings();
         this.updateTemporaryTDataList(this.service.redoLastPartialSearch());
     } 
