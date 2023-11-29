@@ -149,6 +149,9 @@ public class ItemPedidoDAO {
             e.printStackTrace();
             //Se a inserção não foi realizada com sucesso, retorna false
             return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         } finally {
             //Fecha a conexão com o banco de dados e os recursos criados a partir dela
             DBConnection.closeConnection(statement);
