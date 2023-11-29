@@ -91,6 +91,8 @@ public class PedidoController extends SuperController<Pedido> {
         this.pedidoDBCManager.refresh();
         // ViewUtils.addTextChangeListeners(this.pedidoView.getEdtVlrTotalItemPedido(), this::calculateTotalOrderValue);
         // ViewUtils.addTextChangeListeners(this.pedidoView.getEdtDesconto(), this::calculateTotalOrderValue);
+        ViewUtils.addTextChangeListeners(this.pedidoView.getEdtQtde(), this::calculateTotalValueOrderItem);
+        ViewUtils.addTextChangeListeners(this.pedidoView.getEdtVlrUnt(), this::calculateTotalValueOrderItem);
         this.pedidoView.setVisible(true);
     }
     
@@ -107,6 +109,23 @@ public class PedidoController extends SuperController<Pedido> {
         // double totalOrderValue = Double.parseDouble(this.pedidoView.getEdtVlrTotalItemPedido().getText().equals("") ? "0" : this.pedidoView.getEdtVlrTotalPedido().getText())
         //         + Double.parseDouble(this.pedidoView.getEdtDesconto().getText().equals("") ? "0" : this.pedidoView.getEdtDesconto().getText());
         // this.pedidoView.getEdtVlrTotalPedido().setText(String.valueOf(totalOrderValue));  
+    }
+    
+    public void calculateTotalValueOrderItem() {
+        double qtde;
+        double vlrUnt;
+        try {
+            qtde = Double.parseDouble(this.pedidoView.getEdtQtde().getText());
+        } catch (NumberFormatException e) {
+            qtde = 0;
+        }
+        try {
+            vlrUnt = Double.parseDouble(this.pedidoView.getEdtVlrUnt().getText());
+        } catch (NumberFormatException e) {
+            vlrUnt = 0;
+        }
+        double totalValue = qtde * vlrUnt;
+        this.pedidoView.getEdtVlrTotalItemPedido().setText(Double.toString(totalValue));
     }
 
     public void partialSearch(String nomeCliente, String nomeDestinatario, String statusPagto, String statusPedido) {
