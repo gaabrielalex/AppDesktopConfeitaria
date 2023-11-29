@@ -86,13 +86,7 @@ public class PedidoController extends SuperController<Pedido> {
         this.pedidoView.getCmbSttsPedidoFiltro().setSelectedItem(ViewUtils.ALL_OPTIONS_TEXT);
         this.pedidoView.getCmbTipoChocFiltro().addItem(ViewUtils.ALL_OPTIONS_TEXT);
         this.pedidoView.getCmbTipoChocFiltro().setSelectedItem(ViewUtils.ALL_OPTIONS_TEXT);
-        /*Cancela qualquer operação que possa estar sendo realizada, isso porque houve
-        alterações acima ne um dos fields, logo, o manager entende que estava havendo uma
-        operação de atualização, o que não era o caso, eram apenas configurações iniciais*/
-        this.pedidoDBCManager.cancel();
-        //Atualizando os dados para sincronizar o mestre detalhe
-        this.pedidoDBCManager.refresh();
-        
+
         //Configurando os campos que são calculados automaticamente com base em outros campos
         this.itemPedidoDBCManager.subscribeTemporaryTDataList(
             (itemPedidoList) -> {
@@ -102,6 +96,13 @@ public class PedidoController extends SuperController<Pedido> {
         ViewUtils.addTextChangeListeners(this.pedidoView.getEdtDesconto(), this::calculateTotalOrderValue);
         ViewUtils.addTextChangeListeners(this.pedidoView.getEdtQtde(), this::calculateTotalValueOrderItem);
         ViewUtils.addTextChangeListeners(this.pedidoView.getEdtVlrUnt(), this::calculateTotalValueOrderItem);
+
+        /* Cancela qualquer operação que possa estar sendo realizada, isso porque houve
+        alterações acima em parte dos fields, logo, o manager entende que estava havendo uma
+        operação de atualização, o que não era o caso, eram apenas configurações iniciais */
+        this.pedidoDBCManager.cancel();
+        //Atualizando os dados para sincronizar o mestre detalhe
+        this.pedidoDBCManager.refresh();
         this.pedidoView.setVisible(true);
     }
     
