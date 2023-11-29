@@ -118,6 +118,11 @@ public class PedidoController extends SuperController<Pedido> {
                 totalOrderValue += 0;
             }
         }
+        try {
+            discount = Double.parseDouble(this.pedidoView.getEdtDesconto().getText());
+        } catch (Exception e) {
+            discount = 0;
+        }
     }
     
     public void calculateTotalValueOrderItem() {
