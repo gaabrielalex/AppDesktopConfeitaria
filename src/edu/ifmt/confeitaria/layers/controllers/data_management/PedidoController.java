@@ -93,7 +93,7 @@ public class PedidoController extends SuperController<Pedido> {
         //Atualizando os dados para sincronizar o mestre detalhe
         this.pedidoDBCManager.refresh();
         // ViewUtils.addTextChangeListeners(this.pedidoView.getEdtVlrTotalItemPedido(), this::calculateTotalOrderValue);
-        // ViewUtils.addTextChangeListeners(this.pedidoView.getEdtDesconto(), this::calculateTotalOrderValue);
+        ViewUtils.addTextChangeListeners(this.pedidoView.getEdtDesconto(), this::calculateTotalOrderValue);
         ViewUtils.addTextChangeListeners(this.pedidoView.getEdtQtde(), this::calculateTotalValueOrderItem);
         ViewUtils.addTextChangeListeners(this.pedidoView.getEdtVlrUnt(), this::calculateTotalValueOrderItem);
         this.pedidoView.setVisible(true);
