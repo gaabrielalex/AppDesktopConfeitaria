@@ -31,6 +31,7 @@ public class PedidoController extends SuperController<Pedido> {
     private final PedidoService pedidoService;
     private final ProdutoService produtoService;
     private DatabaseAccessComponentManager<Pedido> pedidoDBCManager;
+    private DatabaseAccessComponentManager<ItemPedido> itemPedidoDBCManager;
     
     public PedidoController(JFrame previousView, PedidoService pedidoService, ProdutoService produtoService, DatabaseAccessComponentManager<Pedido> pedidoDBCManager) {
         //Injeção de dependências
@@ -42,8 +43,10 @@ public class PedidoController extends SuperController<Pedido> {
         this.pedidoView = new PedidoView(this, null, previousView);
 
         //Configura corretamente o ItemPedidoController
-        this.pedidoView.setItemPedidoController(new ItemPedidoController(this.pedidoView,
-                new ItemPedidoService(new ItemPedidoDAO()), new DatabaseAccessComponentManager<ItemPedido>(), this.pedidoDBCManager));
+        ItemPedidoController itemPedidoController = new ItemPedidoController(this.pedidoView,
+                new ItemPedidoService(new ItemPedidoDAO()), new DatabaseAccessComponentManager<ItemPedido>(), this.pedidoDBCManager);
+        this.pedidoView.setItemPedidoController(itemPedidoController);
+        this.itemPedidoDBCManager = itemPedidoController.getItemPedidoDBCManager();
 
         //Configurando o DatabaseAccessComponentManager
         List<Component> fields = Arrays.asList(pedidoView.getEdtCliente(), pedidoView.getEdtCliente(), 
@@ -106,9 +109,9 @@ public class PedidoController extends SuperController<Pedido> {
     }
 
     public void calculateTotalOrderValue() {
-        // double totalOrderValue = Double.parseDouble(this.pedidoView.getEdtVlrTotalItemPedido().getText().equals("") ? "0" : this.pedidoView.getEdtVlrTotalPedido().getText())
-        //         + Double.parseDouble(this.pedidoView.getEdtDesconto().getText().equals("") ? "0" : this.pedidoView.getEdtDesconto().getText());
-        // this.pedidoView.getEdtVlrTotalPedido().setText(String.valueOf(totalOrderValue));  
+        double totalOrderValue;
+        double discount;
+        
     }
     
     public void calculateTotalValueOrderItem() {
