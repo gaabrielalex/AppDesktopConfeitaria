@@ -186,8 +186,8 @@ public class PedidoController extends SuperController<Pedido> {
             pedido.getMetodoPagto(),
             pedido.getNomeDestinatario(),
             pedido.isRetiradaLoja(),
-            pedido.getStatusPagto() == null ? null : ViewUtils.customToLowerCase( pedido.getStatusPagto().toString()),
             pedido.getStatusPedido() == null ? null : ViewUtils.customToLowerCase(pedido.getStatusPedido().toString()),
+            pedido.getStatusPagto() == null ? null : ViewUtils.customToLowerCase( pedido.getStatusPagto().toString()),
             pedido.getObservacoes(),
             pedido.getUsuario() == null ? "" : pedido.getUsuario().getNome(),
         };
