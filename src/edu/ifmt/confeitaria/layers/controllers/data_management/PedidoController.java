@@ -134,10 +134,10 @@ public class PedidoController extends SuperController<Pedido> {
     }
     
     public void calculateTotalValueOrderItem() {
-        double qtde;
+        int qtde;
         double vlrUnt;
         try {
-            qtde = Double.parseDouble(this.pedidoView.getEdtQtde().getText());
+            qtde = Integer.parseInt(this.pedidoView.getEdtQtde().getText());
         } catch (Exception e) {
             qtde = 0;
         }
@@ -146,7 +146,7 @@ public class PedidoController extends SuperController<Pedido> {
         } catch (Exception e) {
             vlrUnt = 0;
         }
-        double totalValue = qtde * vlrUnt;
+        double totalValue = vlrUnt * qtde;
         this.pedidoView.getEdtVlrTotalItemPedido().setText(Double.toString(totalValue));
     }
 
