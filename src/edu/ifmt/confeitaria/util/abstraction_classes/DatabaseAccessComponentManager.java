@@ -55,6 +55,10 @@ public class DatabaseAccessComponentManager<T extends SuperModel> {
     private List<Component> fields;
 
     //GETTERS, SETTERS E OBSERVABLES
+    public void subscribeTemporaryTDataList(Consumer<List<T>> consumer) {
+        this.temporaryTDataList.subscribe(consumer);
+    }
+
     public void subscribeTSelectedRecord(Consumer<T> consumer) {
         this.tSelectedRecord.subscribe(consumer);
     }
