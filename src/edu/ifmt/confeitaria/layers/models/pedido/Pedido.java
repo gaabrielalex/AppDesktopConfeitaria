@@ -9,8 +9,8 @@ import edu.ifmt.confeitaria.util.abstraction_classes.SuperModel;
 
 public class Pedido extends SuperModel {
     public enum StatusPagto {
-        PAGO('P'),
-        ABERTO('A');
+        ABERTO('A'),
+        PAGO('P');
 
         private char descricao;
 
