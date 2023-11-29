@@ -987,6 +987,10 @@ public class PedidoView extends SuperView {
         return btnCancelItemPedido;
     }
 
+    public javax.swing.JTextField getEdtProdutoFiltro() {
+        return edtProdutoFiltro;
+    }
+
     public javax.swing.JTextField getEdtVlrUnt() {
         return edtVlrUnt;
     }
