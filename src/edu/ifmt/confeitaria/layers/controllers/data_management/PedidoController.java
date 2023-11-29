@@ -115,11 +115,12 @@ public class PedidoController extends SuperController<Pedido> {
     }
 
     public void calculateTotalOrderValue() {
+        double subtotal = 0;
         double totalOrderValue = 0;
         double discount = 0;
         for (ItemPedido itemPedido : this.itemPedidoDBCManager.getTemporaryTDataList().getValue()) {
             try {
-                totalOrderValue = totalOrderValue + itemPedido.getVlrTotalItem().doubleValue();
+                subtotal = subtotal + itemPedido.getVlrTotalItem().doubleValue();
             } catch (Exception e) {
                 totalOrderValue += 0;
             }
@@ -129,8 +130,10 @@ public class PedidoController extends SuperController<Pedido> {
         } catch (Exception e) {
             discount = 0;
         }
-        totalOrderValue = totalOrderValue - discount;
+        
+        totalOrderValue = subtotal - discount;
         this.pedidoView.getEdtVlrTotalPedido().setText(Double.toString(totalOrderValue));
+        this.pedidoView.getEdtSubTotalPedido().setText(Double.toString(subtotal));
     }
     
     public void calculateTotalValueOrderItem() {

@@ -1002,6 +1002,10 @@ public class PedidoView extends SuperView {
         return btnCancelItemPedido;
     }
 
+    public javax.swing.JTextField getEdtSubTotalPedido() {
+        return edtSubTotalPedido;
+    }
+
     public javax.swing.JTextField getEdtProdutoFiltro() {
         return edtProdutoFiltro;
     }
