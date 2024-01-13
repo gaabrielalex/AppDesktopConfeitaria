@@ -18,7 +18,7 @@ public class DBConnection {
     //Configuração do banco de dados
     private static final String URL = "jdbc:postgresql://localhost:5432/DB_CONFEITARIA";
     private static final String USER = "postgres";
-    private static final String PASSWORD = "admin";
+    private static final String PASSWORD = "12345678";
     private static final String DRIVER = "org.postgresql.Driver";
 
     //APLICAÇÃO DO PADRÃO SINGLETON
